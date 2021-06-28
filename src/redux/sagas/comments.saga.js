@@ -21,6 +21,8 @@ function* postNewComment (action) {
         // axios request to add a new comment, action.payload contains the comment body and the id of the 
         // brewery being commented on
         yield axios.post(`/api/comments`, action.payload);
+        // update comments reducer with new data for the brewery that was just added to
+        yield put( {type: 'FETCH_BREWERY_COMMENTS', payload: action.payload.breweryId })
     } catch (error) {
         console.error('Error with postNewComment in commentsSaga', error);
     }

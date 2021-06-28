@@ -28,12 +28,24 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
         })
 });
 
+
 // handles POST requests to add a new user comment to the comments table
 router.post('/', rejectUnauthenticated, (req, res) => {
-    console.log('in POST', req.body);
-    
-    res.sendStatus(201);
-})
+    // sanitized SQL string to add a new comment
+    const queryText = `INSERT INTO "comments" ("comment", "user_id", "brewery_id")
+                       VALUES ($1, $2, $3);`;
+    // save values to add, using req.user to find the currently logged in user id
+    const values = [req.body.newComment, req.user.id, req.body.breweryId];
+    // POST request  to DB
+    pool.query(queryText, values)
+        .then(result => {
+            res.sendStatus(201);
+        })
+        .catch(error => {
+            console.log('ERROR: POST new comment', error);
+            res.sendStatus(500);
+        })
+});
 
 
 module.exports = router;
