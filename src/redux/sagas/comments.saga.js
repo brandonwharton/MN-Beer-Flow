@@ -5,13 +5,11 @@ import axios from 'axios';
 function* fetchBreweryComments (action) {
     // id to find is what's sent in action.payload
     const breweryId = action.payload;
-    console.log('Got to fetchBreweryComments', breweryId);
-    
     try {
         // axios request to get comments for the brewery
-        // const comments = yield axios.get(`/api/brewery/${breweryId}`);
-        // send brewery data to brewery reducer
-        // yield put({ type: 'SET_BREWERY_DATA', payload: breweryInfo.data });
+        const comments = yield axios.get(`/api/comments/${breweryId}`);
+        // send comments data to comments reducer
+        yield put({ type: 'SET_COMMENTS_DATA', payload: comments.data });
 
     } catch (error) {
         console.error('Error with fetchBreweryComments in brewerySaga', error);
