@@ -24,6 +24,14 @@ function BreweryDetails() {
             <Typography variant="h3" component="h3">
                 {brewery?.name}
             </Typography>
+            {/* Add to favorites/ on your favorites rendering goes here */}
+            <img src={brewery?.image_url} alt={brewery?.name} />
+            {/* Ratings details go here */}
+            <Typography variant="h5" component="h5">
+                {brewery?.city}
+            </Typography>
+            {/* Comments go here */}
+            {/* Back button goes here */}
         </div>
     )
 }
