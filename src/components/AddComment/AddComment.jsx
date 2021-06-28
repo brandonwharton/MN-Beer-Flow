@@ -24,7 +24,11 @@ function AddComment({breweryId}) {
 
     // click handler to dispatch newComment to comments saga
     const handleClick = () => {
-        dispatch({ type: 'CREATE_NEW_COMMENT', payload: newComment });
+        // send the newComment body along with the id of the brewery it's being added to
+        dispatch({ type: 'CREATE_NEW_COMMENT', payload: { 
+            newComment: newComment, 
+            breweryId: breweryId 
+        }});
         // clear input
         setNewComment('');
     }

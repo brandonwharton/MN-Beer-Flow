@@ -28,4 +28,12 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
         })
 });
 
+// handles POST requests to add a new user comment to the comments table
+router.post('/', rejectUnauthenticated, (req, res) => {
+    console.log('in POST', req.body);
+    
+    res.sendStatus(201);
+})
+
+
 module.exports = router;

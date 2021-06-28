@@ -66,7 +66,7 @@ function BreweryDetails() {
             <Grid container className={classes.root} spacing={2} justify={'center'}>
                 <Grid item xs={10}>
                     {comments?.map(comment => (
-                        <Card className={classes.card}>
+                        <Card key={comment.id} className={classes.card}>
                             <CardContent>
                                 <Typography variant="body1" component="p">
                                     {comment.username} wrote:
