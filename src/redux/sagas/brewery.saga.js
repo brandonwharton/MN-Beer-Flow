@@ -3,7 +3,6 @@ import axios from 'axios';
 
 // worker Saga: makes a GET request to get details for a single brewery based on provided DB id
 function* fetchSingleBrewery (action) {
-    console.log('Got to fetchBreweryDetails for:', action.payload);
     // id to find is what's sent in action.payload
     const breweryId = action.payload;
     try {

@@ -21,6 +21,8 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 // my components
 import BreweryDetails from '../BreweryDetails/BreweryDetails';
+// Material-UI components
+import '@fontsource/roboto';
 
 
 import './App.css';
