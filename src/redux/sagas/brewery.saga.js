@@ -9,8 +9,8 @@ function* fetchSingleBrewery (action) {
     try {
         // axios request to get details about the brewery
         const breweryInfo = yield axios.get(`/api/brewery/${breweryId}`);
-        console.log(breweryInfo);
-        
+        // send brewery data to brewery reducer
+        yield put({ type: 'SET_BREWERY_DATA', payload: breweryInfo.data });
 
     } catch (error) {
         console.error('Error with fetchBreweryDetails in brewerySaga', error);
