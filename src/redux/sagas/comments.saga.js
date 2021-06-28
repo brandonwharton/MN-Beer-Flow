@@ -11,7 +11,20 @@ function* fetchBreweryComments (action) {
         // send comments data to comments reducer
         yield put({ type: 'SET_COMMENTS_DATA', payload: comments.data });
     } catch (error) {
-        console.error('Error with fetchBreweryComments in brewerySaga', error);
+        console.error('Error with fetchBreweryComments in commentsSaga', error);
+    }
+}
+
+// worker Saga: makes a POST request to add a new comment to the comments table
+function* postNewComment (action) {
+    try {
+        // axios request to add a new comment, action.payload contains the comment body and the id of the 
+        // brewery being commented on
+        yield axios.post(`/api/comments`, action.payload);
+        // update comments reducer with new data for the brewery that was just added to
+        yield put( {type: 'FETCH_BREWERY_COMMENTS', payload: action.payload.breweryId })
+    } catch (error) {
+        console.error('Error with postNewComment in commentsSaga', error);
     }
 }
 
@@ -19,6 +32,8 @@ function* fetchBreweryComments (action) {
 function* commentsSaga() {
     // request from BreweryDetails to get the comments data for a single brewery from DB
     yield takeLatest('FETCH_BREWERY_COMMENTS', fetchBreweryComments);
+    // request to add a new comment to a brewery
+    yield takeLatest('CREATE_NEW_COMMENT', postNewComment);
 }
 
 export default commentsSaga;

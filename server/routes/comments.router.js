@@ -11,10 +11,11 @@ const router = express.Router();
 // handles GET requests to GET the comments for a single brewery from the DB for the BreweryDetails component
 router.get('/:id', rejectUnauthenticated, (req, res) => {
     // sanitized SQL string to get comments related to a single brewery, along with the username of whoever made
-    // the comment
+    // the comment. Order them by newest comment first.
     const queryText = `SELECT "comments".*, "user".username FROM "comments"
                        JOIN "user" ON "user".id = "comments".user_id
-                       WHERE "comments".brewery_id = $1;`;
+                       WHERE "comments".brewery_id = $1
+                       ORDER BY "comments".id DESC;`;
     // GET request to DB using provided id
     pool.query(queryText, [req.params.id])
         .then(result => {
@@ -26,5 +27,25 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
             res.sendStatus(500);
         })
 });
+
+
+// handles POST requests to add a new user comment to the comments table
+router.post('/', rejectUnauthenticated, (req, res) => {
+    // sanitized SQL string to add a new comment
+    const queryText = `INSERT INTO "comments" ("comment", "user_id", "brewery_id")
+                       VALUES ($1, $2, $3);`;
+    // save values to add, using req.user to find the currently logged in user id
+    const values = [req.body.newComment, req.user.id, req.body.breweryId];
+    // POST request  to DB
+    pool.query(queryText, values)
+        .then(result => {
+            res.sendStatus(201);
+        })
+        .catch(error => {
+            console.log('ERROR: POST new comment', error);
+            res.sendStatus(500);
+        })
+});
+
 
 module.exports = router;
