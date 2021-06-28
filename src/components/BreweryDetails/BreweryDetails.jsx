@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 // components
+import AddToFavorites from '../AddToFavorites/AddToFavorites';
 import AddComment from '../AddComment/AddComment';
 // Material-UI components
 import Typography from '@material-ui/core/Typography';
@@ -56,13 +57,13 @@ function BreweryDetails() {
                 {brewery?.name}
             </Typography>
             {/* Add to favorites/ on your favorites rendering goes here */}
+            <AddToFavorites breweryId={id} />
             <img src={brewery?.image_url} alt={brewery?.name} />
             {/* Ratings details go here */}
             <Typography variant="h5" component="h5">
                 {brewery?.city}
             </Typography>
             <AddComment breweryId={id} />
-
             <Grid container className={classes.root} spacing={2} justify={'center'}>
                 <Grid item xs={10}>
                     {comments?.map(comment => (
