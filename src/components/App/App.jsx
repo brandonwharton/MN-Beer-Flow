@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-
+// provided boilerplate components
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
@@ -19,6 +19,11 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+// my components
+import BreweryDetails from '../BreweryDetails/BreweryDetails';
+// Material-UI components
+import '@fontsource/roboto';
+
 
 import './App.css';
 
@@ -100,6 +105,12 @@ function App() {
             authRedirect="/user"
           >
             <LandingPage />
+          </ProtectedRoute>
+          {/******************** My Routes *********************/}
+          <ProtectedRoute
+            path="/details/:id"
+            children={<BreweryDetails />}
+          >
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}
