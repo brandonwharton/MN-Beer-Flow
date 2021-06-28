@@ -12,14 +12,13 @@ function* fetchSingleBrewery (action) {
         yield put({ type: 'SET_BREWERY_DATA', payload: breweryInfo.data });
 
     } catch (error) {
-        console.error('Error with fetchBreweryDetails in brewerySaga', error);
+        console.error('Error with fetchSingleBrewery in brewerySaga', error);
     }
-    
 }
 
 
-
 function* brewerySaga() {
+    // request from BreweryDetails to get a single brewery from DB
     yield takeLatest('FETCH_SINGLE_BREWERY', fetchSingleBrewery);
 }
 

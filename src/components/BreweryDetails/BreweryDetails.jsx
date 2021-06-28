@@ -16,9 +16,10 @@ function BreweryDetails() {
     // on navigation to specific details page, fetch details for specified brewery
     useEffect(()=> {
         dispatch({ type: 'FETCH_SINGLE_BREWERY', payload: id });
+        dispatch({ type: 'FETCH_BREWERY_COMMENTS', payload: id })
     }, []);
 
-    console.log(brewery);
+
     return (
         <div>
             <Typography variant="h3" component="h3">
