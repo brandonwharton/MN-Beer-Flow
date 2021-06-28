@@ -10,8 +10,11 @@ const router = express.Router();
 
 // handles GET requests to GET the comments for a single brewery from the DB for the BreweryDetails component
 router.get('/:id', rejectUnauthenticated, (req, res) => {
-    // sanitized SQL string to get comments related to a single brewery
-    const queryText = `SELECT * FROM "comments" WHERE "comments".brewery_id = $1;`;
+    // sanitized SQL string to get comments related to a single brewery, along with the username of whoever made
+    // the comment
+    const queryText = `SELECT "comments".*, "user".username FROM "comments"
+                       JOIN "user" ON "user".id = "comments".user_id
+                       WHERE "comments".brewery_id = $1;`;
     // GET request to DB using provided id
     pool.query(queryText, [req.params.id])
         .then(result => {

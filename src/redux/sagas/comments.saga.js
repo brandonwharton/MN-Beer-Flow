@@ -10,7 +10,6 @@ function* fetchBreweryComments (action) {
         const comments = yield axios.get(`/api/comments/${breweryId}`);
         // send comments data to comments reducer
         yield put({ type: 'SET_COMMENTS_DATA', payload: comments.data });
-
     } catch (error) {
         console.error('Error with fetchBreweryComments in brewerySaga', error);
     }
@@ -18,7 +17,7 @@ function* fetchBreweryComments (action) {
 
 
 function* commentsSaga() {
-    // request from BreweryDetails to get the comments for a single brewery from DB
+    // request from BreweryDetails to get the comments data for a single brewery from DB
     yield takeLatest('FETCH_BREWERY_COMMENTS', fetchBreweryComments);
 }
 
