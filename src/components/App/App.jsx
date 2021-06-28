@@ -106,9 +106,9 @@ function App() {
           </ProtectedRoute>
           {/******************** My Routes *********************/}
           <ProtectedRoute
-            path="/details"
+            path="/details/:id"
+            children={<BreweryDetails />}
           >
-            <BreweryDetails />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}

@@ -14,10 +14,10 @@ function BreweryDetails() {
     // on navigation to specific details page, fetch details for specified brewery
     useEffect(()=> {
         dispatch({type: 'FETCH_SINGLE_BREWERY', payload: id});
-    })
+    });
 
     return (
-        <h2>In BreweryDetails</h2>
+        <h2>In BreweryDetails: {id}</h2>
     )
 }
 
