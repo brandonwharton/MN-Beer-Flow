@@ -1,15 +1,27 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-function* fetchBreweryDetails(action) {
+// worker Saga: makes a GET request to get details for a single brewery based on provided DB id
+function* fetchSingleBrewery (action) {
     console.log('Got to fetchBreweryDetails for:', action.payload);
+    // id to find is what's sent in action.payload
+    const breweryId = action.payload;
+    try {
+        // axios request to get details about the brewery
+        const breweryInfo = yield axios.get(`/api/brewery/${breweryId}`);
+        console.log(breweryInfo);
+        
+
+    } catch (error) {
+        console.error('Error with fetchBreweryDetails in brewerySaga', error);
+    }
     
 }
 
 
 
 function* brewerySaga() {
-    yield takeLatest('FETCH_SINGLE_BREWERY', fetchBreweryDetails);
+    yield takeLatest('FETCH_SINGLE_BREWERY', fetchSingleBrewery);
 }
 
 export default brewerySaga;
