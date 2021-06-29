@@ -11,7 +11,7 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const breweryRouter = require('./routes/brewery.router');
 const commentsRouter = require('./routes/comments.router');
-const favoritesRouter = require('./routes/favorites.router');
+const ratingsRouter = require('./routes/ratings.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -28,7 +28,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/brewery', breweryRouter);
 app.use('/api/comments', commentsRouter);
-app.use('/api/favorites', favoritesRouter);
+app.use('/api/ratings', ratingsRouter);
 
 // Serve static files
 app.use(express.static('build'));

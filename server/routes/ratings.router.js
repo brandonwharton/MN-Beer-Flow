@@ -8,6 +8,13 @@ const userStrategy = require('../strategies/user.strategy');
 
 const router = express.Router();
 
+// handles GET requests to see if an individual brewery is marked as a user favorite
+router.get('/:id', rejectUnauthenticated, (req, res) => {
+    console.log('Got to Ratings/Favorites GET for:', req.params.id);
+    res.sendStatus(200);
+})
+
+
 
 // handles POST requests to add a brewery to a user's list of favorites
 router.post('/', rejectUnauthenticated, (req, res) => {
