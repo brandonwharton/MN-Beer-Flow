@@ -32,7 +32,8 @@ function* addToFavorites (action) {
     try {
         // axios request to add a brewery to the user's favorites
         yield axios.post(`/api/ratings`, {breweryId: action.payload});
-        // TO DO: Update favorites on DOM
+        // GET updated favorites information for the newly favorite brewery to update DOM
+        yield put({ type: 'FETCH_SINGLE_FAVORITE', payload: action.payload })
     } catch (error) {
         console.error('Error with addToFavorites in ratingsSaga', error);
     }
