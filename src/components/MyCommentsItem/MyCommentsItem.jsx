@@ -30,9 +30,9 @@ function MyCommentsItem({comment}) {
     const dispatch = useDispatch();
 
     // click handler for Remove Comment buttons to delete the comment
-    const handleClick = (id) => {
+    const handleClick = (commentId, userId) => {
         // dispatch an action to delete the selected comment
-        dispatch({ type: 'REMOVE_USER_COMMENT', payload: id });
+        dispatch({ type: 'REMOVE_USER_COMMENT', payload: { commentId: commentId, userId: userId }});
     }
 
     return (
@@ -49,7 +49,7 @@ function MyCommentsItem({comment}) {
                 <Button
                     variant="contained"
                     color="secondary"
-                    onClick={() => handleClick(comment.id)}
+                    onClick={() => handleClick(comment.id, comment.user_id)}
                 >
                     Remove Comment
                 </Button>

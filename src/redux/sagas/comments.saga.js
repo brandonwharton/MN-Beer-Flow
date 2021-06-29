@@ -36,7 +36,7 @@ function* postNewComment (action) {
         // brewery being commented on
         yield axios.post(`/api/comments`, action.payload);
         // update comments reducer with new data for the brewery that was just added to
-        yield put( {type: 'FETCH_BREWERY_COMMENTS', payload: action.payload.breweryId })
+        yield put({ type: 'FETCH_BREWERY_COMMENTS', payload: action.payload.breweryId })
     } catch (error) {
         console.error('Error with postNewComment in commentsSaga', error);
     }
@@ -44,11 +44,14 @@ function* postNewComment (action) {
 
 // worker Saga: makes a DELETE request to remove a specific comment from the database
 function* removeUserComment (action) {
-    // id to be deleted is in action.payload
-    const commentId = action.payload
+    // id to be deleted and user that submitted the request are in action.payload
+    const commentId = action.payload.commentId;
+    const userId = action.payload.userId;
     try {
         // axios request to delete the selected comment
         yield axios.delete(`/api/comments/${commentId}`);
+        // update comments reducer now that comment has been deleted
+        yield put({ type: 'FETCH_USER_COMMENTS', payload: userId })
     } catch (error) {
         console.error('Error with removeUserComment in commentsSaga', error);
     }
