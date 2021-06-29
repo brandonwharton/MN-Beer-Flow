@@ -10,8 +10,10 @@ const router = express.Router();
 
 // handles GET requests to GET all comments created by the current user from the DB for the MyCommentsList component
 router.get('/', rejectUnauthenticated, (req, res) => {
-    // sanitized SQL string to get all comments created by current user
-    const queryText = `SELECT * FROM "comments" WHERE "comments".user_id = $1;`
+    // sanitized SQL string to get all comments created by current user along with the brewery name that they relate to
+    const queryText = `SELECT "comments".*, "brewery".name FROM "comments"
+                       JOIN "brewery" ON "comments".brewery_id = "brewery".id
+                       WHERE "comments".user_id = $1;`
     // GET request to DB using current user id
     pool.query(queryText, [req.user.id])
         .then(result => {

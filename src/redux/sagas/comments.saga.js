@@ -6,9 +6,8 @@ function* fetchUserComments () {
     try {
         // axios request to the comments router for user's comments
         const userComments = yield axios.get(`/api/comments`);
-        console.log(userComments.data);
-        
-
+        // send user's comment data to the comments reducer
+        yield put({ type: 'SET_COMMENTS_DATA', payload: userComments.data });
     } catch (error) {
         console.error('Error with fetchUserComments in commentsSaga', error)
     }
@@ -22,9 +21,9 @@ function* fetchBreweryComments (action) {
     const breweryId = action.payload;
     try {
         // axios request to get comments for the brewery
-        const comments = yield axios.get(`/api/comments/${breweryId}`);
+        const breweryComments = yield axios.get(`/api/comments/${breweryId}`);
         // send comments data to comments reducer
-        yield put({ type: 'SET_COMMENTS_DATA', payload: comments.data });
+        yield put({ type: 'SET_COMMENTS_DATA', payload: breweryComments.data });
     } catch (error) {
         console.error('Error with fetchBreweryComments in commentsSaga', error);
     }
