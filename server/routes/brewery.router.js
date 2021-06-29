@@ -14,9 +14,9 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     const queryText = `SELECT "brewery".*, "user".username FROM "brewery"
                        JOIN "user_brewery" ON "user_brewery".brewery_id = "brewery".id
                        JOIN "user" ON "user_brewery".user_id = "user".id
-                       WHERE ("user_brewery".user_id = 3 AND "user_brewery".is_favorite = TRUE);`;
+                       WHERE ("user_brewery".user_id = $1 AND "user_brewery".is_favorite = TRUE);`;
     // GET request to DB using provided id
-    pool.query(queryText)
+    pool.query(queryText, [req.user.id])
         .then(result => {
             // send back the results
             res.send(result.rows);
