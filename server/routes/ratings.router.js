@@ -10,9 +10,24 @@ const router = express.Router();
 
 // handles GET requests to see if an individual brewery is marked as a user favorite
 router.get('/:id', rejectUnauthenticated, (req, res) => {
-    console.log('Got to Ratings/Favorites GET for:', req.params.id);
-    res.sendStatus(200);
-})
+    // sanitized SQL string to get favorites data for the current user for a specified brewery
+    // no results will come back if the brewery isn't a favorite AND the user hasn't rated the brewery yet
+    // one result will come back as true if the user has marked as favorite, or as false if the user has rated
+    // the brewery without marking it as a favorite as well
+    const queryText = `SELECT "user_brewery".is_favorite, "user".username, "brewery".name FROM "user_brewery"
+                       JOIN "user" ON "user_brewery".user_id = "user".id
+                       JOIN "brewery" ON "user_brewery".brewery_id = "brewery".id
+                       WHERE "brewery".id = $1 AND "user".id = $2;`
+    // GET request to DB
+    pool.query(queryText, [req.params.id, req.user.id])
+        .then(result => {
+            console.log(result.rows);
+            res.send(result.rows)
+        })
+        .catch(error => {
+            console.log('ERROR: GET favorites for a single brewery', error)
+        })
+});
 
 
 
