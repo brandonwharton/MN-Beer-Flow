@@ -21,6 +21,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 // my components
 import MyFavoritesList from '../MyFavoritesList/MyFavoritesList';
+import MyCommentsList from '../MyCommentsList/MyCommentsList';
 import BreweryDetails from '../BreweryDetails/BreweryDetails';
 // Material-UI components
 import '@fontsource/roboto';
@@ -114,7 +115,12 @@ function App() {
           >
             <MyFavoritesList />
           </ProtectedRoute>
-          
+          <ProtectedRoute
+            exact
+            path="/mycomments"
+          >
+              <MyCommentsList />
+          </ProtectedRoute>          
           <ProtectedRoute
             path="/details/:id"
             children={<BreweryDetails />}

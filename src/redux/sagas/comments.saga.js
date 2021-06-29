@@ -1,6 +1,18 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
+// worker Saga: makes a GET request to get all the comments created by the current user
+function* fetchUserComments () {
+    try {
+        const userComments = yield axios.get(`/api/comments`);
+
+    } catch (error) {
+        console.error('Error with fetchUserComments in commentsSaga', error)
+    }
+}
+
+
+
 // worker Saga: makes a GET request to get the comments for a single brewery based on provided DB id
 function* fetchBreweryComments (action) {
     // id to find is what's sent in action.payload
@@ -30,6 +42,8 @@ function* postNewComment (action) {
 
 
 function* commentsSaga() {
+    // request from MyCommentsList to get all data for comments created by the current user
+    yield takeLatest('FETCH_USER_COMMENTS', fetchUserComments);
     // request from BreweryDetails to get the comments data for a single brewery from DB
     yield takeLatest('FETCH_BREWERY_COMMENTS', fetchBreweryComments);
     // request to add a new comment to a brewery
