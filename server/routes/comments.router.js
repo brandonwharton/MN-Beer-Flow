@@ -8,6 +8,23 @@ const userStrategy = require('../strategies/user.strategy');
 
 const router = express.Router();
 
+// handles GET requests to GET all comments created by the current user from the DB for the MyCommentsList component
+router.get('/', rejectUnauthenticated, (req, res) => {
+    // sanitized SQL string to get all comments created by current user
+    const queryText = `SELECT * FROM "comments" WHERE "comments".user_id = $1;`
+    // GET request to DB using current user id
+    pool.query(queryText, [req.user.id])
+        .then(result => {
+            // send back the result
+            res.send(result.rows);
+        })
+        .catch(error => {
+            console.log('ERROR: GET comments for current user', error);
+            res.sendStatus(500);
+        })
+})
+
+
 // handles GET requests to GET the comments for a single brewery from the DB for the BreweryDetails component
 router.get('/:id', rejectUnauthenticated, (req, res) => {
     // sanitized SQL string to get comments related to a single brewery, along with the username of whoever made

@@ -4,7 +4,10 @@ import axios from 'axios';
 // worker Saga: makes a GET request to get all the comments created by the current user
 function* fetchUserComments () {
     try {
+        // axios request to the comments router for user's comments
         const userComments = yield axios.get(`/api/comments`);
+        console.log(userComments.data);
+        
 
     } catch (error) {
         console.error('Error with fetchUserComments in commentsSaga', error)
