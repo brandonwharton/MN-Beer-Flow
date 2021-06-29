@@ -55,7 +55,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
                        VALUES ($1, $2, $3);`;
     // save values to add, using req.user to find the currently logged in user id
     const values = [req.body.newComment, req.user.id, req.body.breweryId];
-    // POST request  to DB
+    // POST request to DB
     pool.query(queryText, values)
         .then(result => {
             res.sendStatus(201);
@@ -69,11 +69,18 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 
 // handles DELETE requests to remove a user's comment from the database
 router.delete('/:id', rejectUnauthenticated, (req, res) => {
-    // sanitized SQL string to delete a specific comment
-    console.log(req.params.id);
-    res.sendStatus(200);
-    
-})
+    // sanitized SQL string to delete a specific comment from a user, ensuring the correct user id as well
+    const queryText = `DELETE FROM "comments" WHERE "comments".id = $1 AND "comments".user_id = $2;`
+    // DELETE request to DB
+    pool.query(queryText, [req.params.id, req.user.id])
+        .then(response => {
+            res.sendStatus(200);
+        })
+        .catch(error => {
+            console.log('ERROR: DELETE a user comment', error);
+            res.sendStatus(500);
+        })
+});
 
 
 module.exports = router;
