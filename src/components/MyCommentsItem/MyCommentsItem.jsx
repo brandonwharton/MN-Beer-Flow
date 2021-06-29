@@ -3,6 +3,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
 
 // Material-UI styles
 const useStyles = makeStyles(theme => ({
@@ -24,16 +26,30 @@ function MyCommentsItem({comment}) {
     // use the correct Material-UI styles
     const classes = useStyles();
 
+    // click handler for Remove Comment buttons to delete the comment
+    const handleClick = (id) => {
+        console.log('Clicked!', id);
+    }
+
     return (
         <Card className={classes.card}>
             <CardContent>
-                <Typography variant="h5" component="h5">
+                <Typography variant="h6" component="h6">
                     {comment.name} 
                 </Typography>
                 <Typography variant="body2" component="p">
                     {comment.comment}
                 </Typography>
             </CardContent>
+            <CardActions>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => handleClick(comment.id)}
+                >
+                    Remove Comment
+                </Button>
+            </CardActions>
         </Card>
     )
 }
