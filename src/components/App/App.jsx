@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 // my components
+import MyFavoritesList from '../MyFavoritesList/MyFavoritesList';
 import BreweryDetails from '../BreweryDetails/BreweryDetails';
 // Material-UI components
 import '@fontsource/roboto';
@@ -39,8 +40,8 @@ function App() {
       <div>
         <Nav />
         <Switch>
-          {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-          <Redirect exact from="/" to="/home" />
+          {/* Visiting localhost:3000 will redirect to localhost:3000/myfavorites */}
+          <Redirect exact from="/" to="/myfavorites" />
 
           {/* Visiting localhost:3000/about will show the about page. */}
           <Route
@@ -107,6 +108,13 @@ function App() {
             <LandingPage />
           </ProtectedRoute>
           {/******************** My Routes *********************/}
+          <ProtectedRoute
+            exact
+            path="/myfavorites"
+          >
+            <MyFavoritesList />
+          </ProtectedRoute>
+          
           <ProtectedRoute
             path="/details/:id"
             children={<BreweryDetails />}

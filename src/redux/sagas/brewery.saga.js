@@ -1,6 +1,18 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
+// worker Saga: makes a GET request to get details for user's favorite breweries
+function* fetchUserFavorites() {
+    try {
+        const userFavorites = yield axios.get(`/api/brewery`);
+        // send favorite breweries data to brewery reducer
+        yield put({ type: 'SET_BREWERY_DATA', payload: userFavorites.data });
+    } catch (error) {
+        console.error('Error with fetchUserFavorites in brewerySaga', error);
+    }
+}
+
+
 // worker Saga: makes a GET request to get details for a single brewery based on provided DB id
 function* fetchSingleBrewery (action) {
     // id to find is what's sent in action.payload
@@ -18,6 +30,8 @@ function* fetchSingleBrewery (action) {
 
 
 function* brewerySaga() {
+    // request from MyFavoritesList to get all breweries on the current user's list of favorites
+    yield takeLatest('FETCH_USER_FAVORITES', fetchUserFavorites);
     // request from BreweryDetails to get a single brewery from DB
     yield takeLatest('FETCH_SINGLE_BREWERY', fetchSingleBrewery);
 }

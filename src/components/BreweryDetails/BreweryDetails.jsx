@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
 function BreweryDetails() {
     // use the correct Material-UI styles
     const classes = useStyles();
-    // dispatch hook for sagas
+
     const dispatch = useDispatch();
     // hold database ID for page that was navigated to
     const { id } = useParams();
