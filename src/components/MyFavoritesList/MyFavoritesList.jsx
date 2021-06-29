@@ -39,6 +39,7 @@ function MyFavoritesList() {
         dispatch({ type: 'FETCH_USER_FAVORITES' });
     }, [])
 
+
     // change handler for search input
     const handleChange = (event) => {
         // adjust search input state on input change
@@ -47,10 +48,30 @@ function MyFavoritesList() {
 
     // submit handler for the search favorites feature
     const handleSearch = () => {
-        console.log('clicked');
+        // filter through the favoriteBreweryList array looking for search matches to a brewery name
+        const tempArray = favoriteBreweryList.filter(brewery => {
+            console.log('brewery names', brewery.name);
+            // return any name matches ignoring case
+            if (brewery.name.toUpperCase().includes(searchInput.toUpperCase())) {
+                return brewery;
+            }
+        })
+        // set the searchedArray state to the filtered array
+        setSearchedArray(tempArray);
+        // clear input
+        setSearchInput('');
     }
 
-    
+    // conditional rendering for search results
+    const renderFavorites = () => {
+        if (searchedArray.length !== 0) {
+            favoriteBreweryList?.map(brewery => {
+                return <MyFavoritesItem key={brewery.id} brewery={brewery}/>
+            })
+        }
+    }
+
+    console.log(searchedArray);
     return (
         <div>
             <Typography variant="h3" component="h3">
@@ -73,9 +94,18 @@ function MyFavoritesList() {
             </FormControl>
             <Grid container className={classes.root} spacing={2} justify={'center'}>
                 <Grid item xs={10}>
-                    {favoriteBreweryList?.map(brewery => (
-                        <MyFavoritesItem key={brewery.id} brewery={brewery}/>
-                    ))}
+                    {/* conditionally render either the full list of user favorites or the search results if a search was done */}
+                    {renderFavorites()}
+                    {searchedArray.length === 0 ?
+                        favoriteBreweryList?.map(brewery => (
+                            <MyFavoritesItem key={brewery.id} brewery={brewery}/>
+                        ))
+                        :
+                        searchedArray.map(brewery => (
+                            <MyFavoritesItem key={brewery.id} brewery={brewery}/>
+                        ))
+                    }
+
                 </Grid>
             </Grid>
         </div>
