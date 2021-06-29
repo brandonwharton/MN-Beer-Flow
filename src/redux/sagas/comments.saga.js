@@ -42,6 +42,18 @@ function* postNewComment (action) {
     }
 }
 
+// worker Saga: makes a DELETE request to remove a specific comment from the database
+function* removeUserComment (action) {
+    // id to be deleted is in action.payload
+    const commentId = action.payload
+    try {
+        // axios request to delete the selected comment
+        yield axios.delete(`/api/comments/${commentId}`);
+    } catch (error) {
+        console.error('Error with removeUserComment in commentsSaga', error);
+    }
+}
+
 
 function* commentsSaga() {
     // request from MyCommentsList to get all data for comments created by the current user
@@ -50,6 +62,8 @@ function* commentsSaga() {
     yield takeLatest('FETCH_BREWERY_COMMENTS', fetchBreweryComments);
     // request to add a new comment to a brewery
     yield takeLatest('CREATE_NEW_COMMENT', postNewComment);
+    // request to delete a user comment on clicking the remove comment button from MyCommentsItem
+    yield takeLatest('REMOVE_USER_COMMENT', removeUserComment);
 }
 
 export default commentsSaga;

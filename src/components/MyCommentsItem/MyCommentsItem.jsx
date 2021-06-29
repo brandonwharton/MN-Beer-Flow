@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
+import { useDispatch } from 'react-redux';
 
 // Material-UI styles
 const useStyles = makeStyles(theme => ({
@@ -26,9 +27,12 @@ function MyCommentsItem({comment}) {
     // use the correct Material-UI styles
     const classes = useStyles();
 
+    const dispatch = useDispatch();
+
     // click handler for Remove Comment buttons to delete the comment
     const handleClick = (id) => {
-        console.log('Clicked!', id);
+        // dispatch an action to delete the selected comment
+        dispatch({ type: 'REMOVE_USER_COMMENT', payload: id });
     }
 
     return (

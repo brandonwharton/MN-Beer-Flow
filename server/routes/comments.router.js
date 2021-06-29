@@ -67,4 +67,13 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 });
 
 
+// handles DELETE requests to remove a user's comment from the database
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
+    // sanitized SQL string to delete a specific comment
+    console.log(req.params.id);
+    res.sendStatus(200);
+    
+})
+
+
 module.exports = router;
