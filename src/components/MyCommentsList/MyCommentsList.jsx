@@ -1,6 +1,8 @@
 // hooks
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+// components
+import MyCommentsItem from '../MyCommentsItem/MyCommentsItem';
 
 // component that displays a list of the user's list of written comments
 function MyCommentsList() {
@@ -14,7 +16,12 @@ function MyCommentsList() {
 
     console.log(userCommentsList);
     return(
-        <h2>In MyCommentsList</h2>
+        <div>
+            {userCommentsList.map(comment => (
+                <MyCommentsItem key={comment.id} comment={comment} />
+            ))}
+        </div>
+
     )
 }
 
