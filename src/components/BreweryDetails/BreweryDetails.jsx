@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 // components
 import AddToFavorites from '../AddToFavorites/AddToFavorites';
+import MyRatings from '../MyRatings/MyRatings';
 import AddComment from '../AddComment/AddComment';
 // Material-UI components
 import Typography from '@material-ui/core/Typography';
@@ -71,10 +72,13 @@ function BreweryDetails() {
             }
 
             <img src={brewery?.image_url} alt={brewery?.name} />
-            {/* Ratings details go here */}
             <Typography variant="h5" component="h5">
                 {brewery?.city}
             </Typography>
+
+            <MyRatings breweryId={id} />
+            {/* Need average ratings here */}
+            
             <AddComment breweryId={id} />
             <Grid container className={classes.root} spacing={2} justify={'center'}>
                 <Grid item xs={10}>
