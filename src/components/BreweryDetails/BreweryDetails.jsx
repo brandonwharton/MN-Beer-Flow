@@ -51,8 +51,8 @@ function BreweryDetails() {
     useEffect(()=> {
         dispatch({ type: 'FETCH_SINGLE_BREWERY', payload: id });
         dispatch({ type: 'FETCH_BREWERY_COMMENTS', payload: id });
-        // request to see if the brewery navigated to is on the current user's favorites list
-        dispatch({ type: 'FETCH_SINGLE_FAVORITE', payload: id });
+        // dispatch to ratings Saga to get ratings data and favorites data for the current user
+        dispatch({ type: 'FETCH_SINGLE_RATING_FAVORITE', payload: id });
     }, []);
 
     console.log(ratings);
