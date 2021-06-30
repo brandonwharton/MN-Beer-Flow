@@ -31,7 +31,7 @@ function* fetchSingleBrewery (action) {
 
 function* brewerySaga() {
     // request from MyFavoritesList to get all breweries on the current user's list of favorites
-    yield takeLatest('FETCH_USER_FAVORITES', fetchUserFavorites);
+    yield takeLatest('FETCH_FAVORITE_BREWERIES', fetchUserFavorites);
     // request from BreweryDetails to get a single brewery from DB
     yield takeLatest('FETCH_SINGLE_BREWERY', fetchSingleBrewery);
 }

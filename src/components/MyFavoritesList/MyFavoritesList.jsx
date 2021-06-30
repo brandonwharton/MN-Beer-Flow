@@ -36,8 +36,8 @@ function MyFavoritesList() {
 
     // on page load, get user's favorites
     useEffect(() => {
-        // dispatch brewery saga to GET any breweries marked as user favorites
-        dispatch({ type: 'FETCH_USER_FAVORITES' });
+        // dispatch to brewery saga to GET any breweries marked as user favorites
+        dispatch({ type: 'FETCH_FAVORITE_BREWERIES' });
     }, [])
 
 
