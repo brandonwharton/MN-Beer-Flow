@@ -32,6 +32,7 @@ function MyFavoritesList() {
     // states for handling the search input and the filtered search results array
     const [searchInput, setSearchInput] = useState('');
     const [searchedArray, setSearchedArray] = useState([]);
+    const [foundNoResults, setFoundNoResults] = useState(false);
 
     // on page load, get user's favorites
     useEffect(() => {
@@ -48,30 +49,29 @@ function MyFavoritesList() {
 
     // submit handler for the search favorites feature
     const handleSearch = () => {
+        // reset foundNoResults to remove conditionally rendered no results message
+        setFoundNoResults(false);
+
+        let tempArray = []
         // filter through the favoriteBreweryList array looking for search matches to a brewery name
-        const tempArray = favoriteBreweryList.filter(brewery => {
+        tempArray = favoriteBreweryList.filter(brewery => {
             console.log('brewery names', brewery.name);
             // return any name matches ignoring case
             if (brewery.name.toUpperCase().includes(searchInput.toUpperCase())) {
                 return brewery;
             }
         })
-        // set the searchedArray state to the filtered array
+        // set state for the conditional for foundNoResults to true if no results were found to render no results message
+        if (tempArray.length === 0) {
+            setFoundNoResults(true);
+        }
+        // set the searchedArray state to the filtered array, will be empty if no search results appear
         setSearchedArray(tempArray);
         // clear input
         setSearchInput('');
     }
 
-    // conditional rendering for search results
-    const renderFavorites = () => {
-        if (searchedArray.length !== 0) {
-            favoriteBreweryList?.map(brewery => {
-                return <MyFavoritesItem key={brewery.id} brewery={brewery}/>
-            })
-        }
-    }
 
-    console.log(searchedArray);
     return (
         <div>
             <Typography variant="h3" component="h3">
@@ -94,8 +94,13 @@ function MyFavoritesList() {
             </FormControl>
             <Grid container className={classes.root} spacing={2} justify={'center'}>
                 <Grid item xs={10}>
+                    {/* conditionally render a no results message for failed searches */}
+                    {foundNoResults && 
+                    <Typography variant="h4" component="h4">
+                        No Results Found
+                    </Typography>}
+                    
                     {/* conditionally render either the full list of user favorites or the search results if a search was done */}
-                    {renderFavorites()}
                     {searchedArray.length === 0 ?
                         favoriteBreweryList?.map(brewery => (
                             <MyFavoritesItem key={brewery.id} brewery={brewery}/>
