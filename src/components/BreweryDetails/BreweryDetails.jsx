@@ -45,7 +45,7 @@ function BreweryDetails() {
     // access data from comments reducer, data comes in as an array of comment objects
     const comments = useSelector(store => store.commentsList);
     // access data from ratings reducer
-    const ratings = useSelector(store => store.ratingsData);
+    const ratingsData = useSelector(store => store.ratingsData);
 
     // on navigation to specific details page, fetch details for specified brewery
     useEffect(()=> {
@@ -53,9 +53,9 @@ function BreweryDetails() {
         dispatch({ type: 'FETCH_BREWERY_COMMENTS', payload: id });
         // dispatch to ratings Saga to get ratings data and favorites data for the current user
         dispatch({ type: 'FETCH_SINGLE_RATING_FAVORITE', payload: id });
-    }, []);
+    }, [id]);
 
-    console.log(ratings);
+    console.log(ratingsData);
     return (
         <div>
             <Typography variant="h3" component="h3">
@@ -63,7 +63,7 @@ function BreweryDetails() {
             </Typography>
             
             {/* conditionally render either a message saying a brewery is on user's favorites or an add to favorites button */}
-            {ratings.isFavorite ? 
+            {ratingsData.isFavorite ? 
                 <Typography variant="h5" component="h5">
                     One of your Favorites
                 </Typography> 
@@ -76,7 +76,7 @@ function BreweryDetails() {
                 {brewery?.city}
             </Typography>
 
-            <MyRatings breweryId={id} />
+            <MyRatings breweryId={id} rating={ratingsData.rating}/>
             {/* Need average ratings here */}
             
             <AddComment breweryId={id} />

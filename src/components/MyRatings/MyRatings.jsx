@@ -1,6 +1,7 @@
 // hooks
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 // import PropTypes from 'prop-types';
 // Material-UI components
 import { withStyles } from '@material-ui/core/styles';
@@ -20,51 +21,55 @@ const StyledRating = withStyles({
 })(Rating);
 
 
-// // check to see if this is necessary
-// function IconContainer(props) {
-//     const { value, ...other } = props;
-//     return <span {...other}>{customIcons[value].icon}</span>
-// }
+// check to see if this is necessary
+function IconContainer(props) {
+    const { value, ...other } = props;
+    return <span {...other}>{customIcons[value].icon}</span>
+}
 
-// IconContainer.propTypes = {
-//     value: PropTypes.number.isRequired,
-// };
-// // through here
+IconContainer.propTypes = {
+    value: PropTypes.number.isRequired,
+};
+// through here
 
 
 // component for displaying user brewery ratings, allowing user to adjust ratings fluidly
-function MyRatings({breweryId}) {
+function MyRatings({breweryId, rating}) {
     const dispatch = useDispatch();
 
-    const [rating, setRating] = useState(0);
+    const [displayedRating, setDisplayedRating] = useState(0)
 
-    // useEffect(() => {
-        
-    // }, [])
+    const ratingsData = useSelector(store => store.ratingsData);
+
+    useEffect(() => {
+        dispatch({ type: 'FETCH_SINGLE_RATING_FAVORITE', payload: breweryId })
+        setDisplayedRating(rating);
+    }, [])
 
     const handleChange = (event) => {
         dispatch({ type: 'SET_RATING_VALUE', payload: {
             newRating: Number(event.target.value), 
             breweryId: breweryId
         }})
-        setRating(Number(event.target.value));
     }
 
-    
+    console.log('in MyRatings', ratingsData, rating);
     return (
         <div>
             <Box component="fieldset" mb={3} borderColor="transparent">
                 <Typography component="legend">Your Rating</Typography>
+                {ratingsData &&
                 <Rating
                     name="simple-controlled"
                     size="large"
-                    value={rating}
+                    // defaultValue={ratingsData.rating}
+                    value={ratingsData.rating}
                     // precision={0.5} : play around with this, may be too small
                     onChange={() => handleChange(event)}
                     // onChange={(event, newRating) => {
                     //     setRating(newRating);
                     // }}
-                />
+                    />}
             </Box>
         </div>
     )

@@ -1,7 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-// worker Saga: makes a GET request to the ratings router to see if a brewery is on the user's favorites
+// worker Saga: makes a GET request to the ratings router to get any ratings and favorites data for a brewery and a user
 function* fetchRatingFavoriteData (action) {
     // breweryId that needs to be checked is action.payload
     const breweryId = action.payload;
@@ -21,7 +21,7 @@ function* fetchRatingFavoriteData (action) {
             yield put({ type: 'SET_RATING_FAVORITES_DATA', payload: ratingAndFavorite.data[0]})   
         }
     } catch (error) {
-        console.error('Error with checkIfFavorite in ratingsSaga')
+        console.error('Error with fetchRatingFavoriteData in ratingsSaga')
     }
     
 }
@@ -29,11 +29,14 @@ function* fetchRatingFavoriteData (action) {
 
 // worker Saga: makes a POST request to UPSERT a user's new rating for a brewery
 function* setUserRating (action) {
+    console.log('in set user rating', action.payload);
+    
     // action.payload contains the id to be changed and the new rating
     try {
         // axios request to POST ratings data
         yield axios.post(`/api/ratings`, action.payload);
-
+        // update DOM now that the user has changed a rating
+        yield put({ type:'FETCH_SINGLE_RATING_FAVORITE', payload: action.payload.breweryId })
     } catch (error) {
         console.error('Error with setUserRating in ratingsSaga')
     }
