@@ -7,20 +7,21 @@ function* fetchRatingFavoriteData (action) {
     const breweryId = action.payload;
     try {
         // axios request to GET favorites data from the ratings router
-        const checkFavorite = yield axios.get(`/api/ratings/${breweryId}`);
+        const ratingAndFavorite = yield axios.get(`/api/ratings/${breweryId}`);
+        console.log('got an answer', ratingAndFavorite.data);
         
         // change state in ratings reducer depending on returning data, will either be 0 or 1 element in an array
         
         // if no data came back it means user hasn't rated the target brewery or made it a favorite, 
-        if (checkFavorite.data.length === 0) {
-            // set isFavorite to be false in ratings reducer
-            yield put({ type: 'SET_FAVORITES_DATA', payload: false })
+        if (ratingAndFavorite.data.length === 0) {
+            // set isFavorite to be false and rating to be 0 in ratings reducer
+            yield put({ type: 'SET_RATING_FAVORITES_DATA', payload: { is_favorite: false, rating: 0 }})
         } else {
-        // if data came back, set isFavorite to true or false based on data provided in is_favorite column from the database
-            yield put({ type: 'SET_FAVORITES_DATA', payload: checkFavorite.data[0].is_favorite})   
+        // if data came back, send the data to the ratings reducer
+            yield put({ type: 'SET_RATING_FAVORITES_DATA', payload: ratingAndFavorite.data[0]})   
         }
     } catch (error) {
-        console.error('Error with checkIfFavorite in favoritesSaga')
+        console.error('Error with checkIfFavorite in ratingsSaga')
     }
     
 }

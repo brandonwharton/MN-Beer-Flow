@@ -2,11 +2,13 @@
 // reducer to hold state of ratings data and favorites data for breweries
 const ratingsData = (state = {}, action) => {
     switch(action.type) {
-        case 'SET_FAVORITES_DATA':
-        // add or change favorites data only, leave any ratings the same
+        case 'SET_RATING_FAVORITES_DATA':
+        console.log(action.payload);
+        
+        // set the ratings and favorites data for the brewery being looked at
             return {
-                ...state,
-                isFavorite: action.payload
+                isFavorite: action.payload.is_favorite,
+                rating: action.payload.rating
             }
         default:
             return state;
