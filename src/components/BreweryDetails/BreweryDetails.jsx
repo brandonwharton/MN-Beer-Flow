@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 // components
 import AddToFavorites from '../AddToFavorites/AddToFavorites';
+import MyRatings from '../MyRatings/MyRatings';
 import AddComment from '../AddComment/AddComment';
 // Material-UI components
 import Typography from '@material-ui/core/Typography';
@@ -44,17 +45,17 @@ function BreweryDetails() {
     // access data from comments reducer, data comes in as an array of comment objects
     const comments = useSelector(store => store.commentsList);
     // access data from ratings reducer
-    const ratings = useSelector(store => store.ratingsData);
+    const ratingsData = useSelector(store => store.ratingsData);
 
     // on navigation to specific details page, fetch details for specified brewery
     useEffect(()=> {
         dispatch({ type: 'FETCH_SINGLE_BREWERY', payload: id });
         dispatch({ type: 'FETCH_BREWERY_COMMENTS', payload: id });
-        // request to see if the brewery navigated to is on the current user's favorites list
-        dispatch({ type: 'FETCH_SINGLE_FAVORITE', payload: id });
-    }, []);
+        // dispatch to ratings Saga to get ratings data and favorites data for the current user
+        dispatch({ type: 'FETCH_SINGLE_RATING_FAVORITE', payload: id });
+    }, [id]);
 
-    console.log(ratings);
+    console.log(ratingsData);
     return (
         <div>
             <Typography variant="h3" component="h3">
@@ -62,7 +63,7 @@ function BreweryDetails() {
             </Typography>
             
             {/* conditionally render either a message saying a brewery is on user's favorites or an add to favorites button */}
-            {ratings.isFavorite ? 
+            {ratingsData.isFavorite ? 
                 <Typography variant="h5" component="h5">
                     One of your Favorites
                 </Typography> 
@@ -71,10 +72,13 @@ function BreweryDetails() {
             }
 
             <img src={brewery?.image_url} alt={brewery?.name} />
-            {/* Ratings details go here */}
             <Typography variant="h5" component="h5">
                 {brewery?.city}
             </Typography>
+
+            <MyRatings breweryId={id} rating={ratingsData.rating}/>
+            {/* Need average ratings here */}
+            
             <AddComment breweryId={id} />
             <Grid container className={classes.root} spacing={2} justify={'center'}>
                 <Grid item xs={10}>
