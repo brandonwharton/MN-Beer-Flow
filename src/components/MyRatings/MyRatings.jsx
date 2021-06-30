@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+// hooks
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+// import PropTypes from 'prop-types';
 // Material-UI components
 import { withStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+
 
 const StyledRating = withStyles({
   iconFilled: {
@@ -17,29 +20,37 @@ const StyledRating = withStyles({
 })(Rating);
 
 
-// check to see if this is necessary
-function IconContainer(props) {
-    const { value, ...other } = props;
-    return <span {...other}>{customIcons[value].icon}</span>
-}
+// // check to see if this is necessary
+// function IconContainer(props) {
+//     const { value, ...other } = props;
+//     return <span {...other}>{customIcons[value].icon}</span>
+// }
 
-IconContainer.propTypes = {
-    value: PropTypes.number.isRequired,
-};
-// through here
+// IconContainer.propTypes = {
+//     value: PropTypes.number.isRequired,
+// };
+// // through here
 
 
 // component for displaying user brewery ratings, allowing user to adjust ratings fluidly
 function MyRatings({breweryId}) {
+    const dispatch = useDispatch();
 
+    const [rating, setRating] = useState(0);
 
-    const [rating, setRating] = useState('');
+    // useEffect(() => {
+        
+    // }, [])
 
     const handleChange = (event) => {
-        setRating(event.target.value);
+        dispatch({ type: 'SET_RATING_VALUE', payload: {
+            newRating: Number(event.target.value), 
+            id: breweryId
+        }})
+        setRating(Number(event.target.value));
     }
 
-    console.log(rating);
+    
     return (
         <div>
             <Box component="fieldset" mb={3} borderColor="transparent">
