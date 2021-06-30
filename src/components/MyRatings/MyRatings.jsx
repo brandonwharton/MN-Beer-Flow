@@ -1,5 +1,5 @@
 // hooks
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 // import PropTypes from 'prop-types';
@@ -37,14 +37,11 @@ IconContainer.propTypes = {
 function MyRatings({breweryId, rating}) {
     const dispatch = useDispatch();
 
-    const [displayedRating, setDisplayedRating] = useState(0)
+    // const ratingsData = useSelector(store => store.ratingsData);
 
-    const ratingsData = useSelector(store => store.ratingsData);
-
-    useEffect(() => {
-        dispatch({ type: 'FETCH_SINGLE_RATING_FAVORITE', payload: breweryId })
-        setDisplayedRating(rating);
-    }, [])
+    // useEffect(() => {
+    //     dispatch({ type: 'FETCH_SINGLE_RATING_FAVORITE', payload: breweryId })
+    // }, [])
 
     const handleChange = (event) => {
         dispatch({ type: 'SET_RATING_VALUE', payload: {
@@ -53,23 +50,17 @@ function MyRatings({breweryId, rating}) {
         }})
     }
 
-    console.log('in MyRatings', ratingsData, rating);
     return (
         <div>
             <Box component="fieldset" mb={3} borderColor="transparent">
                 <Typography component="legend">Your Rating</Typography>
-                {ratingsData &&
                 <Rating
                     name="simple-controlled"
                     size="large"
-                    // defaultValue={ratingsData.rating}
-                    value={ratingsData.rating}
+                    value={rating}
                     // precision={0.5} : play around with this, may be too small
                     onChange={() => handleChange(event)}
-                    // onChange={(event, newRating) => {
-                    //     setRating(newRating);
-                    // }}
-                    />}
+                />
             </Box>
         </div>
     )

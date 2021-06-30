@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 // components
 import MyFavoritesItem from '../MyFavoritesItem/MyFavoritesItem';
+import MyRatings from '../MyRatings/MyRatings';
 
 
 // Material-UI styles
@@ -103,7 +104,10 @@ function MyFavoritesList() {
                     {/* conditionally render either the full list of user favorites or the search results if a search was done */}
                     {searchedArray.length === 0 ?
                         favoriteBreweryList?.map(brewery => (
-                            <MyFavoritesItem key={brewery.id} brewery={brewery}/>
+                            <div key={brewery.id}>
+                                <MyFavoritesItem brewery={brewery}/>
+                                <MyRatings breweryId={brewery.id} rating={brewery.rating} />
+                            </div>
                         ))
                         :
                         searchedArray.map(brewery => (
