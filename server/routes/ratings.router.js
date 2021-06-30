@@ -69,18 +69,16 @@ router.post('/', rejectUnauthenticated, (req, res) => {
                        DO UPDATE SET "rating" = $3;`;
     // save values to add, using req.user to find the currently logged in user id
     const values = [req.user.id, req.body.breweryId, req.body.newRating];
-    console.log('values in ratings UPSERT', values);
-    
-    // POST request  to DB
-    // pool.query(queryText, values)
-    //     .then(result => {
-    //         res.sendStatus(201);
-    //     })
-    //     .catch(error => {
-    //         console.log('ERROR: POST new favorites row', error);
-    //         res.sendStatus(500);
-    //     })
-    res.sendStatus(200)
+
+    // POST request to DB
+    pool.query(queryText, values)
+        .then(result => {
+            res.sendStatus(201);
+        })
+        .catch(error => {
+            console.log('ERROR: POST new favorites row', error);
+            res.sendStatus(500);
+        })
 });
 
 module.exports = router;
