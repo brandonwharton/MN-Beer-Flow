@@ -20,7 +20,7 @@ function* checkIfFavorite (action) {
             yield put({ type: 'SET_FAVORITES_DATA', payload: checkFavorite.data[0].is_favorite})   
         }
     } catch (error) {
-        console.error('Error with checkIfFavorite in ratingsSaga')
+        console.error('Error with checkIfFavorite in favoritesSaga')
     }
     
 }
@@ -31,11 +31,11 @@ function* checkIfFavorite (action) {
 function* addToFavorites (action) {
     try {
         // axios request to add a brewery to the user's favorites
-        yield axios.post(`/api/ratings`, {breweryId: action.payload});
+        yield axios.post(`/api/ratings/favorite`, {breweryId: action.payload});
         // GET updated favorites information for the newly favorite brewery to update DOM
         yield put({ type: 'FETCH_SINGLE_FAVORITE', payload: action.payload })
     } catch (error) {
-        console.error('Error with addToFavorites in ratingsSaga', error);
+        console.error('Error with addToFavorites in favoritesSaga', error);
     }
 }
 

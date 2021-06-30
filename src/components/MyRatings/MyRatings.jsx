@@ -45,7 +45,7 @@ function MyRatings({breweryId}) {
     const handleChange = (event) => {
         dispatch({ type: 'SET_RATING_VALUE', payload: {
             newRating: Number(event.target.value), 
-            id: breweryId
+            breweryId: breweryId
         }})
         setRating(Number(event.target.value));
     }
