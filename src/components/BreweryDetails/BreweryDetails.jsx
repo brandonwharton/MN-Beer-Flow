@@ -76,7 +76,7 @@ function BreweryDetails() {
                 {brewery?.city}
             </Typography>
 
-            <MyRatings breweryId={id} rating={ratingsData.rating}/>
+            <MyRatings breweryId={id} origin={'breweryDetails'} rating={ratingsData.rating}/>
             {/* Need average ratings here */}
             
             <AddComment breweryId={id} />

@@ -10,8 +10,8 @@ const router = express.Router();
 
 // Handles GET requests to GET all breweries marked as a user's favorites for the MyFavoritesList component
 router.get('/', rejectUnauthenticated, (req, res) => {
-    // sanitized SQL string to get all brewery data and the username of current user for user's favorites
-    const queryText = `SELECT "brewery".*, "user".username FROM "brewery"
+    // sanitized SQL string to get all brewery data, the user's rating, and the username of current user for user's favorites display
+    const queryText = `SELECT "brewery".*, "user".username, "user_brewery".rating FROM "brewery"
                        JOIN "user_brewery" ON "user_brewery".brewery_id = "brewery".id
                        JOIN "user" ON "user_brewery".user_id = "user".id
                        WHERE ("user_brewery".user_id = $1 AND "user_brewery".is_favorite = TRUE);`;

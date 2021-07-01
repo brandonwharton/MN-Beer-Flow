@@ -1,5 +1,7 @@
 // hooks
 import { useHistory } from 'react-router';
+// components
+import MyRatings from '../MyRatings/MyRatings';
 // Material-UI components
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -7,6 +9,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent'
+import CardActionArea from '@material-ui/core/CardActionArea'
 
 // will likely need card actions for ratings
 
@@ -42,6 +45,7 @@ function MyFavoritesItem({brewery}) {
         // send the user to the details page for the specific brewery
         history.push(`/details/${id}`);
     }
+    
     return (
         <Card className={classes.card} onClick={() => handleClick(brewery.id) }>
             <CardHeader
@@ -52,9 +56,9 @@ function MyFavoritesItem({brewery}) {
                 className={classes.media}
                 image={brewery.image_url}
             />
-            <CardContent>
-                {/* Ratings details will go here */}
-            </CardContent>
+            <CardActionArea>
+                {/* <MyRatings breweryId={brewery.id} /> */}
+            </CardActionArea>
         </Card>
     )
 }
