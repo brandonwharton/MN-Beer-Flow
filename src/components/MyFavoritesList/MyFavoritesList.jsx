@@ -72,6 +72,14 @@ function MyFavoritesList() {
         setSearchInput('');
     }
 
+    const renderBreweries = (brewery) => {
+        return (<div key={brewery.id}>
+                    <MyFavoritesItem brewery={brewery}/>
+                    <MyRatings breweryId={brewery.id} origin={'myFavorites'} rating={brewery.rating} />
+                </div>
+        )
+    }
+
 
     return (
         <div>

@@ -18,6 +18,8 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     // GET request to DB using provided id
     pool.query(queryText, [req.user.id])
         .then(result => {
+            console.log('results.rows in favorite brewery GET', result.rows);
+            
             // send back the results
             res.send(result.rows);
         })
