@@ -1,5 +1,8 @@
 // hooks
 import { useHistory } from "react-router";
+// components
+import AverageRating from '../AverageRating/AverageRating';
+import AddToFavorites from '../AddToFavorites/AddToFavorites';
 // Material-UI components
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -8,6 +11,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent'
 import CardActionArea from '@material-ui/core/CardActionArea'
+
 
 
 // Material-UI styles
@@ -34,25 +38,37 @@ const useStyles = makeStyles((theme) => ({
 function SearchBreweryResult({brewery}) {
     const history = useHistory();
     const classes = useStyles();
+
+    const handleClick = (id) => {
+        // on click of the brewery card, send user to the details view for that brewery
+        history.push(`/details/${id}`)
+    }
     
     
-    console.log(brewery);
     return(
-        <Card className={classes.card} onClick={() => handleClick(brewery.id) }>
-            <CardHeader
+        <Card className={classes.card} >
+            <CardHeader 
                 title={brewery.name}
+                onClick={() => handleClick(brewery.id) }
             >
             </CardHeader>
             <CardMedia
                 className={classes.media}
                 image={brewery.image_url}
+                onClick={() => handleClick(brewery.id) }
             />
             {/* evaluate needs below this */}
-            <CardContent>
+            <CardContent
+                onClick={() => handleClick(brewery.id) }
+            >
                 <Typography variant="h6" component="h6">
                     {brewery.city}
                 </Typography>
+                <AverageRating averageRating={brewery.average_rating} />
             </CardContent>
+            <CardActionArea>
+                <AddToFavorites breweryId={brewery.id} origin={'searchResults'}/>
+            </CardActionArea>
         </Card>
     )
 }
