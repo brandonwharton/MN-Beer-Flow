@@ -63,7 +63,7 @@ function BreweryDetails() {
             </Typography>
             
             {/* conditionally render either a message saying a brewery is on user's favorites or an add to favorites button */}
-            {ratingsData.isFavorite ? 
+            {ratingsData.userRatingsData.isFavorite ? 
                 <Typography variant="h5" component="h5">
                     One of your Favorites
                 </Typography> 
@@ -76,7 +76,7 @@ function BreweryDetails() {
                 {brewery?.city}
             </Typography>
 
-            <MyRatings breweryId={id} origin={'breweryDetails'} rating={ratingsData.rating}/>
+            <MyRatings breweryId={id} origin={'breweryDetails'} rating={ratingsData.userRatingsData.rating}/>
             {/* Need average ratings here */}
             
             <AddComment breweryId={id} />

@@ -1,6 +1,7 @@
+import { combineReducers } from 'redux';
 
 // reducer to hold state of ratings data and favorites data for breweries
-const ratingsData = (state = {isFavorite: false, rating: 0}, action) => {
+const userRatingsData = (state = {isFavorite: false, rating: 0}, action) => {
     switch(action.type) {
         case 'SET_RATING_FAVORITES_DATA':
         console.log('in ratingsData reducer:', action.payload);
@@ -15,4 +16,15 @@ const ratingsData = (state = {isFavorite: false, rating: 0}, action) => {
     }
 }
 
-export default ratingsData;
+const averageRatingsData = (state = { rating: 0}, action) => {
+    // switch(action.type) {
+
+    // }
+    return state
+}
+
+export default combineReducers({
+    userRatingsData,
+    averageRatingsData,
+  });
+
