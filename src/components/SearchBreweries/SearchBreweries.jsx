@@ -1,5 +1,7 @@
 // hooks
 import { useHistory, useParams } from "react-router";
+// components
+import SearchBreweryResult from '../SearchBreweryResult/SearchBreweryResult';
 // Material-UI components
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
@@ -55,7 +57,14 @@ function SearchBreweries() {
                     Search
                 </Button>
             </FormControl>
-            <h3>{query}</h3>
+            {/* conditionally render search results */}
+            {query &&
+            <div>
+                {breweryList.map(brewery => (
+                    <SearchBreweryResult key={brewery.id} brewery={brewery} />
+                ))}
+            </div>   
+            }
         </div>
     )
 }
