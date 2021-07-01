@@ -32,9 +32,15 @@ function* fetchSingleBrewery (action) {
 function* fetchSearchResults (action) {
     try {
         const allBreweries = yield axios.get(`/api/brewery`);
-        console.log(allBreweries.data);
-        
-
+        // filter through the full result from DB, searching for name matches
+        const searchedBreweries = allBreweries.data.filter(brewery => {
+            // return any name matches ignoring case to the search query in action.payload
+            if (brewery.name.toUpperCase().includes(action.payload.toUpperCase())) {
+                return brewery;
+            }
+        })
+        // send filtered brewery data to brewery reducer
+        yield put({ type: 'SET_BREWERY_DATA', payload: searchedBreweries });
     } catch (error) {
         console.error('Error with fetchSearchResults in brewerySaga', error)
     }
