@@ -37,7 +37,7 @@ router.get('/average/:id', rejectUnauthenticated, (req, res) => {
     // no results will come back if the brewery isn't a marked as a favorite or rated by anybody yet
     // if any users have marked a brewery as one of their favorites or rated that brewery it will send back one result
     // with that brewery name and an array of all ratings for that brewery
-    const queryText = `SELECT ARRAY_AGG ("user_brewery".rating) AS "all_ratings", "brewery".name FROM "user_brewery"
+    const queryText = `SELECT AVG("user_brewery".rating) AS "average_rating", "brewery".name FROM "user_brewery"
                        JOIN "brewery" ON "user_brewery".brewery_id = "brewery".id
                        WHERE "brewery".id = $1
                        GROUP BY "brewery".name;`

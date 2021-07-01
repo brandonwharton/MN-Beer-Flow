@@ -58,7 +58,6 @@ function BreweryDetails() {
     }, [id]);
  
 
-    console.log('brewery details average rating', ratingsData.averageRatingsData);
     return (
         <div>
             <Typography variant="h3" component="h3">
@@ -80,7 +79,7 @@ function BreweryDetails() {
             </Typography>
 
             <MyRatings breweryId={id} origin={'breweryDetails'} rating={ratingsData.userRatingsData.rating} />
-            <AverageRating breweryId={id} averageRating={ratingsData.averageRatingsData.averageRating} />
+            <AverageRating averageRating={ratingsData.averageRatingsData.averageRating} />
             {/* Need average ratings here */}
             
             <AddComment breweryId={id} />
