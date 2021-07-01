@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 // components
 import AddToFavorites from '../AddToFavorites/AddToFavorites';
 import MyRatings from '../MyRatings/MyRatings';
+import AverageRating from '../AverageRating/AverageRating';
 import AddComment from '../AddComment/AddComment';
 // Material-UI components
 import Typography from '@material-ui/core/Typography';
@@ -53,9 +54,10 @@ function BreweryDetails() {
         dispatch({ type: 'FETCH_BREWERY_COMMENTS', payload: id });
         // dispatch to ratings Saga to get ratings data and favorites data for the current user
         dispatch({ type: 'FETCH_SINGLE_RATING_FAVORITE', payload: id });
+        dispatch({ type: 'FETCH_AVERAGE_RATING', payload: id });
     }, [id]);
+ 
 
-    console.log(ratingsData);
     return (
         <div>
             <Typography variant="h3" component="h3">
@@ -63,7 +65,7 @@ function BreweryDetails() {
             </Typography>
             
             {/* conditionally render either a message saying a brewery is on user's favorites or an add to favorites button */}
-            {ratingsData.isFavorite ? 
+            {ratingsData.userRatingsData.isFavorite ? 
                 <Typography variant="h5" component="h5">
                     One of your Favorites
                 </Typography> 
@@ -76,7 +78,8 @@ function BreweryDetails() {
                 {brewery?.city}
             </Typography>
 
-            <MyRatings breweryId={id} origin={'breweryDetails'} rating={ratingsData.rating}/>
+            <MyRatings breweryId={id} origin={'breweryDetails'} rating={ratingsData.userRatingsData.rating} />
+            <AverageRating averageRating={ratingsData.averageRatingsData.averageRating} />
             {/* Need average ratings here */}
             
             <AddComment breweryId={id} />
