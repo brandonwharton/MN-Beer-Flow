@@ -23,6 +23,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import MyFavoritesList from '../MyFavoritesList/MyFavoritesList';
 import MyCommentsList from '../MyCommentsList/MyCommentsList';
 import BreweryDetails from '../BreweryDetails/BreweryDetails';
+import SearchBreweries from '../SearchBreweries/SearchBreweries';
 // Material-UI components
 import '@fontsource/roboto';
 
@@ -126,7 +127,16 @@ function App() {
             children={<BreweryDetails />}
           >
           </ProtectedRoute>
-
+          <ProtectedRoute
+            exact
+            path="/search"
+          >
+            <SearchBreweries />
+          </ProtectedRoute>
+          <ProtectedRoute
+            path="/search/:query"
+            children={<SearchBreweries />}
+          ></ProtectedRoute>
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
             <h1>404</h1>
