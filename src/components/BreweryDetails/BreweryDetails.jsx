@@ -56,8 +56,8 @@ function BreweryDetails() {
         dispatch({ type: 'FETCH_SINGLE_RATING_FAVORITE', payload: id });
         dispatch({ type: 'FETCH_AVERAGE_RATING', payload: id });
     }, [id]);
-
-    console.log(ratingsData);
+ 
+    
     return (
         <div>
             <Typography variant="h3" component="h3">

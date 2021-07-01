@@ -7,9 +7,7 @@ function* fetchRatingFavoriteData (action) {
     const breweryId = action.payload;
     try {
         // axios request to GET favorites data from the ratings router
-        const ratingAndFavorite = yield axios.get(`/api/ratings/${breweryId}`);
-        console.log('got an answer', ratingAndFavorite.data);
-        
+        const ratingAndFavorite = yield axios.get(`/api/ratings/${breweryId}`);   
         // change state in ratings reducer depending on returning data, will either be 0 or 1 element in an array
         
         // if no data came back it means user hasn't rated the target brewery or made it a favorite, 
@@ -33,18 +31,16 @@ function* fetchAverageRating (action) {
         try {
             // axios request to GET favorites data from the ratings router
             const averageRatings = yield axios.get(`/api/ratings/average/${breweryId}`);
-            console.log('got an answer', averageRatings.data);
-            
             // change state in ratings reducer depending on returning data, will either be 0 or 1 element in an array
             
-            // if no data came back it means user hasn't rated the target brewery or made it a favorite, 
-            // if (ratingAndFavorite.data.length === 0) {
-            //     // set isFavorite to be false and rating to be 0 in ratings reducer
-            //     yield put({ type: 'SET_RATING_FAVORITES_DATA', payload: { is_favorite: false, rating: 0 }})
-            // } else {
-            // // if data came back, send the data to the ratings reducer
-            //     yield put({ type: 'SET_RATING_FAVORITES_DATA', payload: ratingAndFavorite.data[0]})   
-            // }
+            // if no data came back it means no user has rated the target brewery or made it a favorite, 
+            if (averageRatings.data.length === 0) {
+                // dispatch that sets the average rating for a brewery to 0
+                yield put({ type: 'SET_NO_AVERAGE_RATING' })
+            } else {
+            // if data came back, send the data to the ratings reducer
+                yield put({ type: 'SET_AVERAGE_RATING', payload: averageRatings.data[0] });
+            }
         } catch (error) {
             console.error('Error with fetchAverageRating in ratingsSaga')
         }

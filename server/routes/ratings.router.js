@@ -10,7 +10,7 @@ const router = express.Router();
 
 // handles GET requests for a user's ratings and is_favorite data for a specific brewery
 router.get('/:id', rejectUnauthenticated, (req, res) => {
-    // sanitized SQL string to get favorites data for the current user for a specified brewery
+    // sanitized SQL string to get favorites and ratings data for the current user for a specified brewery
     // no results will come back if the brewery isn't a favorite AND the user hasn't rated the brewery yet
     // one result will come back if the user has marked the brewery as a favorite, if they've rated the brewery,
     // or if both have been done
@@ -21,12 +21,34 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
     // GET request to DB
     pool.query(queryText, [req.params.id, req.user.id])
         .then(result => {
-            console.log(result.rows);
-            
+            // send back the result
             res.send(result.rows)
         })
         .catch(error => {
             console.log('ERROR: GET favorites for a single brewery', error)
+        })
+});
+
+// handles GET requests to get any ratings data for a brewery in order to calculate an average rating
+router.get('/average/:id', rejectUnauthenticated, (req, res) => {
+    console.log('got to average GET', req.params.id);
+    
+    // sanitized SQL string to get all ratings data associated with a single brewery if any exists
+    // no results will come back if the brewery isn't a marked as a favorite or rated by anybody yet
+    // if any users have marked a brewery as one of their favorites or rated that brewery it will send back one result
+    // with that brewery name and an array of all ratings for that brewery
+    const queryText = `SELECT ARRAY_AGG ("user_brewery".rating) AS "all_ratings", "brewery".name FROM "user_brewery"
+                       JOIN "brewery" ON "user_brewery".brewery_id = "brewery".id
+                       WHERE "brewery".id = $1
+                       GROUP BY "brewery".name;`
+    // GET request to DB
+    pool.query(queryText, [req.params.id])
+        .then(result => {
+            // send back the result
+            res.send(result.rows)
+        })
+        .catch(error => {
+            console.log('ERROR: GET average ratings for a single brewery', error)
         })
 });
 
