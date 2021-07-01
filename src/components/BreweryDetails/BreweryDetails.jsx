@@ -54,6 +54,7 @@ function BreweryDetails() {
         dispatch({ type: 'FETCH_BREWERY_COMMENTS', payload: id });
         // dispatch to ratings Saga to get ratings data and favorites data for the current user
         dispatch({ type: 'FETCH_SINGLE_RATING_FAVORITE', payload: id });
+        dispatch({ type: 'FETCH_AVERAGE_RATING', payload: id });
     }, [id]);
 
     console.log(ratingsData);

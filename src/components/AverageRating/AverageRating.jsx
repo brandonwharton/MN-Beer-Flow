@@ -34,12 +34,7 @@ IconContainer.propTypes = {
 
 // component for displaying a read-only list of average rating for breweries
 function AverageRating({breweryId}) {
-    const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch({ type: 'FETCH_AVERAGE_RATING '});
-    }, [])
-    
     return (
 
         <h3>In AverageRating {breweryId}</h3>
