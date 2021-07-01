@@ -56,6 +56,7 @@ function MyFavoritesItem({brewery}) {
                 className={classes.media}
                 image={brewery.image_url}
             />
+            {/* evaluate needs below this */}
             <CardActionArea>
                 {/* <MyRatings breweryId={brewery.id} /> */}
             </CardActionArea>

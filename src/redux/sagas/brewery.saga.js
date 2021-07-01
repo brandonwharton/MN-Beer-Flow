@@ -39,6 +39,12 @@ function* fetchSearchResults (action) {
                 return brewery;
             }
         })
+        // replace all null values with 0
+        searchedBreweries.forEach(brewery => {
+            if (brewery.average_rating === null) {
+                return brewery.average_rating = 0;
+            }
+        })
         // send filtered brewery data to brewery reducer
         yield put({ type: 'SET_BREWERY_DATA', payload: searchedBreweries });
     } catch (error) {
