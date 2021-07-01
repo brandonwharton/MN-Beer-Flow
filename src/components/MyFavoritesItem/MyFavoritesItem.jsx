@@ -45,7 +45,7 @@ function MyFavoritesItem({brewery}) {
         // send the user to the details page for the specific brewery
         history.push(`/details/${id}`);
     }
-    console.log('in MyFavoritesItem', brewery.id);
+    
     return (
         <Card className={classes.card} onClick={() => handleClick(brewery.id) }>
             <CardHeader

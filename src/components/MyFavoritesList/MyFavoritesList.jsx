@@ -106,12 +106,15 @@ function MyFavoritesList() {
                         favoriteBreweryList?.map(brewery => (
                             <div key={brewery.id}>
                                 <MyFavoritesItem brewery={brewery}/>
-                                <MyRatings breweryId={brewery.id} rating={brewery.rating} />
+                                <MyRatings breweryId={brewery.id} origin={'myFavorites'} rating={brewery.rating} />
                             </div>
                         ))
                         :
                         searchedArray.map(brewery => (
-                            <MyFavoritesItem key={brewery.id} brewery={brewery}/>
+                            <div key={brewery.id}>
+                                <MyFavoritesItem brewery={brewery}/>
+                                <MyRatings breweryId={brewery.id} origin={'myFavorites'} rating={brewery.rating} />
+                            </div>
                         ))
                     }
 

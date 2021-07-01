@@ -34,7 +34,7 @@ IconContainer.propTypes = {
 
 
 // component for displaying user brewery ratings, allowing user to adjust ratings fluidly
-function MyRatings({breweryId, rating}) {
+function MyRatings({breweryId, origin, rating}) {
     const dispatch = useDispatch();
 
     // const ratingsData = useSelector(store => store.ratingsData);
@@ -46,7 +46,9 @@ function MyRatings({breweryId, rating}) {
     const handleChange = (event) => {
         dispatch({ type: 'SET_RATING_VALUE', payload: {
             newRating: Number(event.target.value), 
-            breweryId: breweryId
+            breweryId: breweryId,
+            // origin are props that contain a string with the name of the component that the rating is a child of to assist in saga refresh after updates
+            origin: origin
         }})
     }
 

@@ -35,8 +35,12 @@ function* setUserRating (action) {
     try {
         // axios request to POST ratings data
         yield axios.post(`/api/ratings`, action.payload);
-        // update DOM now that the user has changed a rating
-        yield put({ type:'FETCH_SINGLE_RATING_FAVORITE', payload: action.payload.breweryId })
+        // update DOM now that the user has changed a rating depending on the origin of the update request
+        if (action.payload.origin === 'breweryDetails') {
+            yield put({ type:'FETCH_SINGLE_RATING_FAVORITE', payload: action.payload.breweryId });
+        } else if (action.payload.origin === 'myFavorites') {
+            yield put ({ type: 'FETCH_FAVORITE_BREWERIES' });
+        }
     } catch (error) {
         console.error('Error with setUserRating in ratingsSaga')
     }
