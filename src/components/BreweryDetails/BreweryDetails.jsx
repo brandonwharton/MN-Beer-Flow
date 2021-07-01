@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 // components
 import AddToFavorites from '../AddToFavorites/AddToFavorites';
 import MyRatings from '../MyRatings/MyRatings';
+import AverageRating from '../AverageRating/AverageRating';
 import AddComment from '../AddComment/AddComment';
 // Material-UI components
 import Typography from '@material-ui/core/Typography';
@@ -77,6 +78,7 @@ function BreweryDetails() {
             </Typography>
 
             <MyRatings breweryId={id} origin={'breweryDetails'} rating={ratingsData.userRatingsData.rating}/>
+            <AverageRating breweryId={id} />
             {/* Need average ratings here */}
             
             <AddComment breweryId={id} />
