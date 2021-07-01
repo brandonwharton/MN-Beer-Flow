@@ -27,12 +27,11 @@ const averageRatingsData = (state = { averageRating: 0}, action) => {
                 return { averageRating: 0 };
             } else {
                 // calculate average rating for whatever length all_ratings array provided
-                const ratingSum = allRatings.reduce( (accumulator, currentValue) => accumulator + currentValue)
-                console.log('ratingSum:', ratingSum);
-                
+                const ratingSum = allRatings.reduce( (accumulator, currentValue) => (accumulator + currentValue))
+                const averageRating = ratingSum / allRatings.length
+                // set average rating with calculated value
+                return { averageRating: averageRating }
             }
-            console.log('in set average rating', action.payload);
-            return state;
         default:
             return state;
     }

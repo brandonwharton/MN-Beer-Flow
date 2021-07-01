@@ -57,7 +57,8 @@ function BreweryDetails() {
         dispatch({ type: 'FETCH_AVERAGE_RATING', payload: id });
     }, [id]);
  
-    
+
+    console.log('brewery details average rating', ratingsData.averageRatingsData);
     return (
         <div>
             <Typography variant="h3" component="h3">
@@ -78,8 +79,8 @@ function BreweryDetails() {
                 {brewery?.city}
             </Typography>
 
-            <MyRatings breweryId={id} origin={'breweryDetails'} rating={ratingsData.userRatingsData.rating}/>
-            <AverageRating breweryId={id} />
+            <MyRatings breweryId={id} origin={'breweryDetails'} rating={ratingsData.userRatingsData.rating} />
+            <AverageRating breweryId={id} averageRating={ratingsData.averageRatingsData.averageRating} />
             {/* Need average ratings here */}
             
             <AddComment breweryId={id} />
