@@ -4,7 +4,7 @@ import axios from 'axios';
 // worker Saga: makes a GET request to get details for user's favorite breweries
 function* fetchUserFavorites() {
     try {
-        const userFavorites = yield axios.get(`/api/brewery`);
+        const userFavorites = yield axios.get(`/api/brewery/user`);
         // send favorite breweries data to brewery reducer
         yield put({ type: 'SET_BREWERY_DATA', payload: userFavorites.data });
     } catch (error) {
@@ -28,12 +28,38 @@ function* fetchSingleBrewery (action) {
     }
 }
 
+// worker Saga: makes a GET request for all breweries, then filters them using a search query before sending them to the brewery reducer
+function* fetchSearchResults (action) {
+    try {
+        const allBreweries = yield axios.get(`/api/brewery`);
+        // filter through the full result from DB, searching for name matches
+        const searchedBreweries = allBreweries.data.filter(brewery => {
+            // return any name matches ignoring case to the search query in action.payload
+            if (brewery.name.toUpperCase().includes(action.payload.toUpperCase())) {
+                return brewery;
+            }
+        })
+        // replace all null values with 0
+        searchedBreweries.forEach(brewery => {
+            if (brewery.average_rating === null) {
+                return brewery.average_rating = 0;
+            }
+        })
+        // send filtered brewery data to brewery reducer
+        yield put({ type: 'SET_BREWERY_DATA', payload: searchedBreweries });
+    } catch (error) {
+        console.error('Error with fetchSearchResults in brewerySaga', error)
+    }
+}
+
 
 function* brewerySaga() {
     // request from MyFavoritesList to get all breweries on the current user's list of favorites
     yield takeLatest('FETCH_FAVORITE_BREWERIES', fetchUserFavorites);
     // request from BreweryDetails to get a single brewery from DB
     yield takeLatest('FETCH_SINGLE_BREWERY', fetchSingleBrewery);
+    // request from the SearchBreweries *****CHANGE THIS****** component to get a searched list of breweries
+    yield takeLatest('FETCH_SEARCH_RESULTS', fetchSearchResults);
 }
 
 export default brewerySaga;

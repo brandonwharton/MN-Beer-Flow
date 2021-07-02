@@ -80,7 +80,7 @@ function BreweryDetails() {
 
             <MyRatings breweryId={id} origin={'breweryDetails'} rating={ratingsData.userRatingsData.rating} />
             <AverageRating averageRating={ratingsData.averageRatingsData.averageRating} />
-            {/* Need average ratings here */}
+
             
             <AddComment breweryId={id} />
             <Grid container className={classes.root} spacing={2} justify={'center'}>

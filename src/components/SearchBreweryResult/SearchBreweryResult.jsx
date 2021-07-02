@@ -1,7 +1,8 @@
 // hooks
-import { useHistory } from 'react-router';
+import { useHistory } from "react-router";
 // components
-import MyRatings from '../MyRatings/MyRatings';
+import AverageRating from '../AverageRating/AverageRating';
+import AddToFavorites from '../AddToFavorites/AddToFavorites';
 // Material-UI components
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -11,7 +12,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent'
 import CardActionArea from '@material-ui/core/CardActionArea'
 
-// will likely need card actions for ratings
 
 
 // Material-UI styles
@@ -33,22 +33,21 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-// component that displays the clickable cards on MyFavoritesList
-function MyFavoritesItem({brewery}) {
-    // use the correct Material-UI styles
-    const classes = useStyles();
-    // bring in useHistory for navigation
-    const history = useHistory();
 
-    // click handler for somebody clicking on a brewery card, sends them to the details page for that brewery
+// component to display the clickable cards after brewery searches
+function SearchBreweryResult({brewery}) {
+    const history = useHistory();
+    const classes = useStyles();
+
     const handleClick = (id) => {
-        // send the user to the details page for the specific brewery
-        history.push(`/details/${id}`);
+        // on click of the brewery card, send user to the details view for that brewery
+        history.push(`/details/${id}`)
     }
     
-    return (
-        <Card className={classes.card} onClick={() => handleClick(brewery.id) }>
-            <CardHeader
+    
+    return(
+        <Card className={classes.card} onClick={() => handleClick(brewery.id)}>
+            <CardHeader 
                 title={brewery.name}
             >
             </CardHeader>
@@ -57,11 +56,14 @@ function MyFavoritesItem({brewery}) {
                 image={brewery.image_url}
             />
             {/* evaluate needs below this */}
-            <CardActionArea>
-                {/* <MyRatings breweryId={brewery.id} /> */}
-            </CardActionArea>
+            <CardContent>
+                <Typography variant="h6" component="h6">
+                    {brewery.city}
+                </Typography>
+                <AverageRating averageRating={brewery.average_rating} />
+            </CardContent>    
         </Card>
     )
 }
 
-export default MyFavoritesItem;
+export default SearchBreweryResult;
