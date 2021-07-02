@@ -30,14 +30,14 @@ router.get('/user', rejectUnauthenticated, (req, res) => {
 
 // Handles GET requests to GET a single brewery from the DB for the BreweryDetails component
 router.get('/:id', rejectUnauthenticated, (req, res) => {
-    // sanitized SQL string to get a single brewery, bring the user rating data and an average_rating along to keep 
-    // controlled data in various components
+    // sanitized SQL string to get a single brewery, bring the user rating data and an average_rating as columns to keep
+    // controlled data in MyFavorites and SearchBreweries from breaking when moving into and out of BreweryDetails
     const queryText = `SELECT "brewery".*, "user_brewery".rating, AVG("user_brewery".rating) AS "average_rating" FROM "brewery" 
-                       JOIN "user_brewery" ON "user_brewery".brewery_id = "brewery".id
-                       WHERE "brewery".id = $1 AND "user_brewery".user_id = $2
+                       FULL OUTER JOIN "user_brewery" ON "user_brewery".brewery_id = "brewery".id
+                       WHERE "brewery".id = $1
                        GROUP BY "brewery".id, "user_brewery".rating`;
     // GET request to DB using provided id
-    pool.query(queryText, [req.params.id, req.user.id])
+    pool.query(queryText, [req.params.id])
         .then(result => {
             // send back the result
             res.send(result.rows);
