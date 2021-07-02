@@ -4,12 +4,10 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 // components
+import SearchBar from '../SearchBar/SearchBar';
 import SearchBreweryResult from '../SearchBreweryResult/SearchBreweryResult';
 // Material-UI components
 import { makeStyles } from '@material-ui/core/styles';
-import FormControl from '@material-ui/core/FormControl';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
@@ -41,36 +39,9 @@ function SearchBreweries() {
         }
     }, [query])
 
-    // change handler to change the searchString state as user input is filled
-    const handleChange = (event) => {
-        setSearchString(event.target.value);
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        history.push(`/search/${searchString}`);
-
-    }
-
-
     return (
         <div>
-            <FormControl onSubmit={handleSubmit}>
-                <TextField
-                    label="Search Breweries"
-                    helperText="by name only"
-                    variant="outlined"
-                    onChange={handleChange}
-                    value={searchString}
-                />
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSubmit}
-                >
-                    Search
-                </Button>
-            </FormControl>
+            <SearchBar />
             {/* conditionally render search results */}
             {query &&
                 <div>
