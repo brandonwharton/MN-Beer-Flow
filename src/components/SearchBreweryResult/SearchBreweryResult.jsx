@@ -66,9 +66,8 @@ function SearchBreweryResult({brewery}) {
                 </Typography>
                 <AverageRating averageRating={brewery.average_rating} />
             </CardContent>
-            <CardActionArea>
-                <AddToFavorites breweryId={brewery.id} origin={'searchResults'}/>
-            </CardActionArea>
+            <AddToFavorites breweryId={brewery.id} origin={'searchResults'}/>
+            
         </Card>
     )
 }

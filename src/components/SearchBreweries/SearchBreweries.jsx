@@ -39,7 +39,7 @@ function SearchBreweries() {
 
     }
 
-    console.log('in SearchBreweries: results', breweryList);
+
     return (
         <div>
             <FormControl onSubmit={handleSubmit}>

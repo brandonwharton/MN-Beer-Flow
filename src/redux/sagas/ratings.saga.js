@@ -60,6 +60,7 @@ function* setUserRating (action) {
         // update DOM now that the user has changed a rating depending on the origin of the update request
         if (action.payload.origin === 'breweryDetails') {
             yield put({ type:'FETCH_SINGLE_RATING_FAVORITE', payload: action.payload.breweryId });
+            yield put({ type: 'FETCH_AVERAGE_RATING', payload: action.payload.breweryId });
         } else if (action.payload.origin === 'myFavorites') {
             yield put ({ type: 'FETCH_FAVORITE_BREWERIES' });
         }

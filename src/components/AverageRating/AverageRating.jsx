@@ -35,7 +35,7 @@ IconContainer.propTypes = {
 // component for displaying a read-only list of average rating for breweries
 function AverageRating({averageRating}) {
 
-    console.log('in averageRating', averageRating);
+
     return (
         <div>
             <Box component="fieldset" mb={3} borderColor="transparent">
