@@ -46,28 +46,22 @@ function SearchBreweryResult({brewery}) {
     
     
     return(
-        <Card className={classes.card} >
+        <Card className={classes.card} onClick={() => handleClick(brewery.id)}>
             <CardHeader 
                 title={brewery.name}
-                onClick={() => handleClick(brewery.id) }
             >
             </CardHeader>
             <CardMedia
                 className={classes.media}
                 image={brewery.image_url}
-                onClick={() => handleClick(brewery.id) }
             />
             {/* evaluate needs below this */}
-            <CardContent
-                onClick={() => handleClick(brewery.id) }
-            >
+            <CardContent>
                 <Typography variant="h6" component="h6">
                     {brewery.city}
                 </Typography>
                 <AverageRating averageRating={brewery.average_rating} />
-            </CardContent>
-            <AddToFavorites breweryId={brewery.id} origin={'searchResults'}/>
-            
+            </CardContent>    
         </Card>
     )
 }
