@@ -7,7 +7,7 @@ import { useHistory } from 'react-router';
 
 // component for an AddToFavorites button on the BreweryDetails view that adds the current brewery to user's 
 // favorites list
-function AddToFavorites({breweryId, origin}) {
+function AddToFavorites({breweryId}) {
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -15,10 +15,6 @@ function AddToFavorites({breweryId, origin}) {
     const handleClick = () => {
         // send a dispatch to add brewery to the user's favorites
         dispatch({ type: 'CREATE_NEW_FAVORITE', payload: breweryId });
-        // if the button was clicked from a SearchBreweryResult card, send user to BreweryDetails for that brewery
-        if (origin === 'searchResults') {
-            history.push(`/details/${breweryId}`)
-        }
     }
 
     return (
