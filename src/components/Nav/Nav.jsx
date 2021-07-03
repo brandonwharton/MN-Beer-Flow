@@ -47,6 +47,9 @@ function Nav() {
             <Link className="navLink" to="/search">
               Search
             </Link>
+            <Link className="navLink" to="/random">
+              Random Brewery
+            </Link>
             <Button 
               aria-controls="simple-menu"
               aria-hasopup="true"
