@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 // my components
+import Header from '../Header/Header';
 import MyFavoritesList from '../MyFavoritesList/MyFavoritesList';
 import MyCommentsList from '../MyCommentsList/MyCommentsList';
 import BreweryDetails from '../BreweryDetails/BreweryDetails';
@@ -40,6 +41,7 @@ function App() {
   return (
     <Router>
       <div>
+        <Header />
         <Nav />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/myfavorites */}
@@ -59,11 +61,11 @@ function App() {
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
             Even though it seems like they are different pages, the user is always on localhost:3000/user */}
           <ProtectedRoute
-            // logged in shows UserPage else shows LoginPage
+            // logged in shows MyFavorites page else shows LoginPage
             exact
-            path="/user"
+            path="/myfavorites"
           >
-            <UserPage />
+            <MyFavoritesList />
           </ProtectedRoute>
 
           <ProtectedRoute
@@ -83,7 +85,7 @@ function App() {
             // - else shows LoginPage at /login
             exact
             path="/login"
-            authRedirect="/user"
+            authRedirect="/myfavorites"
           >
             <LoginPage />
           </ProtectedRoute>
@@ -94,7 +96,7 @@ function App() {
             // - else shows RegisterPage at "/registration"
             exact
             path="/registration"
-            authRedirect="/user"
+            authRedirect="/myfavorites"
           >
             <RegisterPage />
           </ProtectedRoute>
@@ -105,7 +107,7 @@ function App() {
             // - else shows LandingPage at "/home"
             exact
             path="/home"
-            authRedirect="/user"
+            authRedirect="/myfavorites"
           >
             <LandingPage />
           </ProtectedRoute>
