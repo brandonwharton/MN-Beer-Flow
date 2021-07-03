@@ -52,14 +52,35 @@ function* fetchSearchResults (action) {
     }
 }
 
+// worker Saga: makes a GET request for the user's favorite breweries, selects one at random, and sends user to the BreweryDetails page for that brewery
+function* fetchRandomFavoriteBrewery() {
+    try {
+        const userFavorites = yield axios.get(`/api/brewery/user`);
+        console.log('list of favorites in random', userFavorites.data);
+        // selects a random number between 0 and the number of elements in the userFavorites array
+        const randomIndex = Math.floor(Math.random() * userFavorites.data.length);
+        const randomFavorite = userFavorites.data[randomIndex];
+        console.log('random favorite', randomFavorite);
+        
+         
+
+        // send favorite breweries data to brewery reducer
+        // yield put({ type: 'SET_BREWERY_DATA', payload: userFavorites.data });
+    } catch (error) {
+        console.error('Error with fetchUserFavorites in brewerySaga', error);
+    }
+}
+
 
 function* brewerySaga() {
     // request from MyFavoritesList to get all breweries on the current user's list of favorites
     yield takeLatest('FETCH_FAVORITE_BREWERIES', fetchUserFavorites);
     // request from BreweryDetails to get a single brewery from DB
     yield takeLatest('FETCH_SINGLE_BREWERY', fetchSingleBrewery);
-    // request from the SearchBreweries *****CHANGE THIS****** component to get a searched list of breweries
+    // request from the SearchBar component to get search results 
     yield takeLatest('FETCH_SEARCH_RESULTS', fetchSearchResults);
+    // request from the RandomBrewery component to get a random brewery from the user's favorites and navigate to that detail page
+    yield takeLatest('FETCH_RANDOM_FAVORITE_BREWERY', fetchRandomFavoriteBrewery)
 }
 
 export default brewerySaga;
