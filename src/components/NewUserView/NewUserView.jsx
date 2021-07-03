@@ -1,3 +1,5 @@
+// components
+import SearchBar from '../SearchBar/SearchBar';
 // Material-UI components
 import Typography from '@material-ui/core/Typography';
 
@@ -19,7 +21,7 @@ function NewUserView() {
             <Typography variant="body1" component="p">
                 Your favorites list is currently empty. Search for new breweries to add here
             </Typography>
-            {/* Search bar and button here */}
+            <SearchBar />
         </div>
     )
 }
