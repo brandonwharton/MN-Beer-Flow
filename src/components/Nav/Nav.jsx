@@ -13,8 +13,8 @@ function Nav() {
   };
 
   if (user.id != null) {
-    loginLinkData.path = '/user';
-    loginLinkData.text = 'Home';
+    loginLinkData.path = '/myfavorites';
+    loginLinkData.text = 'My Favorites';
   }
 
   return (
@@ -29,9 +29,6 @@ function Nav() {
 
         {user.id && (
           <>
-            <Link className="navLink" to="/myfavorites">
-              My Favorites
-            </Link>
             <Link className="navLink" to="/mycomments">
               My Comments
             </Link>

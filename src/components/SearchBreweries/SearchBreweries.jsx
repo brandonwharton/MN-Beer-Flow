@@ -39,6 +39,15 @@ function SearchBreweries() {
         }
     }, [query])
 
+
+    const showNoResults = () => {
+        if (query && breweryList.length === 0) {
+            return <Typography variant="h3" component = "h3">
+                No Results Found
+            </Typography>
+        }
+    }
+
     return (
         <div>
             <SearchBar />
@@ -55,9 +64,9 @@ function SearchBreweries() {
                             ))}
                         </Grid>
                     </Grid>
-
                 </div>
             }
+            {showNoResults()}
         </div>
     )
 }
