@@ -25,6 +25,7 @@ import MyFavoritesList from '../MyFavoritesList/MyFavoritesList';
 import MyCommentsList from '../MyCommentsList/MyCommentsList';
 import BreweryDetails from '../BreweryDetails/BreweryDetails';
 import SearchBreweries from '../SearchBreweries/SearchBreweries';
+import RandomBrewery from '../RandomBrewery/RandomBrewery';
 // Material-UI components
 import '@fontsource/roboto';
 
@@ -138,7 +139,13 @@ function App() {
           <ProtectedRoute
             path="/search/:query"
             children={<SearchBreweries />}
-          ></ProtectedRoute>
+          >
+          </ProtectedRoute>
+          <ProtectedRoute
+            path="/random"
+          >
+            <RandomBrewery />
+          </ProtectedRoute>
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
             <h1>404</h1>
