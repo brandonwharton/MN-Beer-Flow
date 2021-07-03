@@ -28,6 +28,7 @@ function* fetchSingleBrewery (action) {
     }
 }
 
+
 // worker Saga: makes a GET request for all breweries, then filters them using a search query before sending them to the brewery reducer
 function* fetchSearchResults (action) {
     try {
@@ -52,27 +53,45 @@ function* fetchSearchResults (action) {
     }
 }
 
-// worker Saga: makes a GET request for the user's favorite breweries, selects one at random, and sends user to the BreweryDetails page for that brewery
-function* fetchRandomFavoriteBrewery() {
+
+// worker Saga: makes a GET request for the user's favorite breweries, selects one at random, 
+// and sends user to the BreweryDetails page for that brewery
+function* fetchRandomFavoriteBrewery (action) {
     try {
+        // GET request to get the array of user's favorites
         const userFavorites = yield axios.get(`/api/brewery/user`);
-        console.log('list of favorites in random', userFavorites.data);
         // selects a random number between 0 and the number of elements in the userFavorites array
         const randomIndex = Math.floor(Math.random() * userFavorites.data.length);
+        // uses the randomly generated number to store a random brewery from the array of favorites
         const randomFavorite = userFavorites.data[randomIndex];
-        console.log('random favorite', randomFavorite);
-        
-         
-
-        // send favorite breweries data to brewery reducer
-        // yield put({ type: 'SET_BREWERY_DATA', payload: userFavorites.data });
+        // action.payload is a callback function that takes in a brewery id and navigates to the BreweryDetails page for that id
+        yield action.payload(randomFavorite.id);
     } catch (error) {
-        console.error('Error with fetchUserFavorites in brewerySaga', error);
+        console.error('Error with fetchRandomFavoriteBrewery in brewerySaga', error);
     }
 }
 
 
-function* brewerySaga() {
+// worker Saga: makes a GET request for every brewery in the database, selects one at random, 
+// and sends user to the BreweryDetails page for that brewery
+function* fetchAnyRandomBrewery (action) {
+    try {
+        // GET request to get the array of user's favorites
+        const allBreweries = yield axios.get(`/api/brewery`);
+        // selects a random number between 0 and the number of elements in the userFavorites array
+        const randomIndex = Math.floor(Math.random() * allBreweries.data.length);
+        // uses the randomly generated number to store a random brewery from the array of favorites
+        const randomBrewery = allBreweries.data[randomIndex];
+        // action.payload is a callback function that takes in a brewery id and navigates to the BreweryDetails page for that id
+        yield action.payload(randomBrewery.id);
+    } catch (error) {
+        console.error('Error with fetchAnyRandomBrewery in brewerySaga', error);
+    }
+}
+
+
+
+function* brewerySaga () {
     // request from MyFavoritesList to get all breweries on the current user's list of favorites
     yield takeLatest('FETCH_FAVORITE_BREWERIES', fetchUserFavorites);
     // request from BreweryDetails to get a single brewery from DB
@@ -81,6 +100,8 @@ function* brewerySaga() {
     yield takeLatest('FETCH_SEARCH_RESULTS', fetchSearchResults);
     // request from the RandomBrewery component to get a random brewery from the user's favorites and navigate to that detail page
     yield takeLatest('FETCH_RANDOM_FAVORITE_BREWERY', fetchRandomFavoriteBrewery)
+    // request from the RandomBrewery component to get a random brewery from among the entire database and navigate to that detail page
+    yield takeLatest('FETCH_ANY_RANDOM_BREWERY', fetchAnyRandomBrewery)
 }
 
 export default brewerySaga;
