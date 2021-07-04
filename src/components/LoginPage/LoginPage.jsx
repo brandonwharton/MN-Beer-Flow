@@ -7,6 +7,7 @@ function LoginPage() {
 
   return (
     <div>
+      <img src="/login.jpg" alt="beer glass" />
       <LoginForm />
 
       <center>
