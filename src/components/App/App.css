@@ -115,3 +115,20 @@ input {
 .App-my-favorites {
   background-color: #f1cba7;
 }
+
+.App-header-position {
+  min-height: 20vw;
+  max-height: 20vw;
+}
+
+.App-nav-position {
+  min-height: 12vw;
+  max-height: 12vw;
+}
+
+.App-main-position {
+  min-height: 68vw;
+  max-height: 68vw;
+  padding: 5vw;
+  overflow: scroll;
+}

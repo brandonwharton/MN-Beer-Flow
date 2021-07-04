@@ -79,7 +79,7 @@ function MyFavoritesList() {
         <div>
             {/* Conditionally render the favorites view normally if the user has anything in their favorites */}
             {favoriteBreweryList.length > 0 ?
-                <section className="App-my-favorites">
+                <section className="App-my-favorites App-main-position">
                 <Typography variant="h3" component="h3">
                     {user.username}'s Favorites
                 </Typography>
