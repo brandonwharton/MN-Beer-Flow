@@ -80,13 +80,13 @@ function MyFavoritesList() {
             {/* Conditionally render the favorites view normally if the user has anything in their favorites */}
             {favoriteBreweryList.length > 0 ?
                 <section className="App-my-favorites App-main-position">
-                <Typography variant="h3" component="h3">
+                <Typography variant="h4" component="h4">
                     {user.username}'s Favorites
                 </Typography>
-                <FormControl onSubmit={handleSearch}>
+                <FormControl onSubmit={handleSearch} className="search-field">
                     <TextField 
                         label="search favorites"
-                        helperText="by name only"
+                        // helperText="by name only"
                         value={searchInput}
                         onChange={handleChange}
                     />

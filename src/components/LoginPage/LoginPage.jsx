@@ -1,12 +1,14 @@
 import React from 'react';
 import LoginForm from '../LoginForm/LoginForm';
 import { useHistory } from 'react-router-dom';
+// Material-UI Components
+import Button from '@material-ui/core/Button';
 
 function LoginPage() {
   const history = useHistory();
 
   return (
-    <div>
+    <div className="App-main-position">
       <img src="/login.jpg" alt="beer glass" />
       <LoginForm />
 

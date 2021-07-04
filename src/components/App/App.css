@@ -152,3 +152,7 @@ input {
   bottom: 0;
   height: 4vh;
 }
+
+.search-field {
+  background-color: white;
+}
