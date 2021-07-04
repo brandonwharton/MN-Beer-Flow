@@ -118,27 +118,26 @@ input {
 
 .App-header-position {
   width: 100%;
-  position: fixed;
-  top: 0;
-  height: 70px;
+  min-height: 10vh;
+  max-height: 10vh;
   /* min-height: 20vw;
   max-height: 20vw; */
 }
 
 .App-nav-position {
   width: 100%;
-  position: fixed;
-  top: 0;
-  margin-top:70px;
-  height: 50px;
+  min-height: 7vh;
+  max-height: 7vh;
   /* min-height: 12vw;
   max-height: 12vw; */
 }
 
 .App-main-position {
   background-color: #f1cba7;
-  overflow: hidden;
-  position:inherit;
+  overflow: scroll;
+  /* position:inherit; */
+  min-height: 79vh;
+  max-height: 79vh;
   /* height: 100%; */
   /* padding: 120px 0 30px 0; */
   /* min-height: 130vw;
@@ -151,5 +150,5 @@ input {
   width: 100%;
   position: fixed;
   bottom: 0;
-  height: 30px;
+  height: 4vh;
 }
