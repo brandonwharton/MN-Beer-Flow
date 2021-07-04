@@ -49,7 +49,7 @@ function SearchBreweries() {
     }
 
     return (
-        <div>
+        <div className="App-main-position">
             <SearchBar />
             {/* conditionally render search results */}
             {query &&
