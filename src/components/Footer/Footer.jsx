@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 function Footer() {
   return (
-    <footer>
+    <footer className="App-footer-position">
       <Typography variant="body2" component="p">
         &copy; Prime Digital Academy
       </Typography>
