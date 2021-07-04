@@ -10,15 +10,14 @@ import { useDispatch } from 'react-redux';
 // provided boilerplate components
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
-
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import './App.css';
 // my components
 import Header from '../Header/Header';
 import MyFavoritesList from '../MyFavoritesList/MyFavoritesList';
@@ -28,9 +27,44 @@ import SearchBreweries from '../SearchBreweries/SearchBreweries';
 import RandomBrewery from '../RandomBrewery/RandomBrewery';
 // Material-UI components
 import '@fontsource/roboto';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 
 
-import './App.css';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#946644',
+      main: '#713229',
+      dark: '#413330',
+      // Contrast text?
+    },
+    secondary: {
+      light: '#cbcbc9',
+      main: '#b7987b',
+      dark: '#46626e',
+      // Contrast text?
+    },
+    // this is the color chosen for the navbar links, error was the easiest way to override an icon color
+    error: {
+      main: '#cbcbc9'
+    },
+  },
+  typography: {
+    fontFamily: [
+      '"Lexend"',
+      'Verdana',
+      'Geneva',
+      'Tahoma',
+      'sans-serif',
+    ].join(','),
+  },
+});
+
+
+
+
+
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +75,7 @@ function App() {
 
   return (
     <Router>
+      <MuiThemeProvider theme={theme}>
       <div>
         <Header />
         <Nav />
@@ -153,6 +188,7 @@ function App() {
         </Switch>
         <Footer />
       </div>
+      </MuiThemeProvider>
     </Router>
   );
 }

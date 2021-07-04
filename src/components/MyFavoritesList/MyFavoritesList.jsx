@@ -31,6 +31,7 @@ function MyFavoritesList() {
     const dispatch = useDispatch();
     // access data from brewery reducer
     const favoriteBreweryList = useSelector(store => store.breweryList)
+    const user = useSelector(store => store.user);
     // states for handling the search input and the filtered search results array
     const [searchInput, setSearchInput] = useState('');
     const [searchedArray, setSearchedArray] = useState([]);
@@ -73,14 +74,14 @@ function MyFavoritesList() {
         setSearchInput('');
     }
 
-
+    console.log(user);
     return (
         <div>
             {/* Conditionally render the favorites view normally if the user has anything in their favorites */}
             {favoriteBreweryList.length > 0 ?
-                <section>
+                <section className="App-my-favorites">
                 <Typography variant="h3" component="h3">
-                    My Favorites
+                    {user.username}'s Favorites
                 </Typography>
                 <FormControl onSubmit={handleSearch}>
                     <TextField 

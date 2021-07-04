@@ -8,8 +8,15 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
+import { makeStyles } from '@material-ui/core/styles';
+
+
+
+
+
 
 function Nav() {
+ 
   const user = useSelector((store) => store.user);
   // state for opening and closing menu
   const [anchorEl, setAnchorEl] = useState(null);
@@ -45,17 +52,14 @@ function Nav() {
         {user.id && (
           <>
             <Link className="navLink" to="/search">
-              Search
-            </Link>
-            <Link className="navLink" to="/random">
-              Random Brewery
+              Find A Brewery
             </Link>
             <Button 
               aria-controls="simple-menu"
               aria-hasopup="true"
               onClick={handleClick}
             >
-              <MenuIcon />
+              <MenuIcon color="error"/>
             </Button>
             <Menu
               id="simple-menu"
@@ -65,17 +69,22 @@ function Nav() {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>
-                <Link className="navLink" to="/mycomments">
+                <Link className="navLink-menu" to="/random">
+                  Go With the Flow
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link className="navLink-menu" to="/mycomments">
                   My Comments
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleClose}>
-                <Link className="navLink" to="/about">
+                <Link className="navLink-menu" to="/about">
                   About
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleClose}>
-                <LogOutButton className="navLink" />
+                <LogOutButton className="navLink-menu" />
               </MenuItem>
             </Menu>
           </>
