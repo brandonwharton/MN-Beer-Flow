@@ -1,7 +1,10 @@
 .App-header {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #713229;
     color: #e0e0de;
-    min-height: 16vw;
-    max-height: 16vw;
+    min-height: 20vw;
+    max-height: 20vw;
+    width: 100%;
 }

@@ -54,9 +54,6 @@ function Nav() {
             <Link className="navLink" to="/search">
               Find A Brewery
             </Link>
-            <Link className="navLink" to="/random">
-              Random Brewery
-            </Link>
             <Button 
               aria-controls="simple-menu"
               aria-hasopup="true"
@@ -71,6 +68,11 @@ function Nav() {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
+              <MenuItem onClick={handleClose}>
+                <Link className="navLink-menu" to="/random">
+                  Go With the Flow
+                </Link>
+              </MenuItem>
               <MenuItem onClick={handleClose}>
                 <Link className="navLink-menu" to="/mycomments">
                   My Comments
