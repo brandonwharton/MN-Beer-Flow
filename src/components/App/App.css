@@ -110,3 +110,8 @@ input {
   margin: 5px;
   margin-bottom: 10px;
 }
+
+
+.App-my-favorites {
+  background-color: #f1cba7;
+}

@@ -6,7 +6,7 @@ function Header() {
 
     return (
         <Typography className="App-header" variant="h3" component="h3">
-            Project Name
+            MN Beer Flow
         </Typography>
     )
 }

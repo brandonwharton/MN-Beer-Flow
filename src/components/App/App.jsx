@@ -32,6 +32,24 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 
 
 const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#946644',
+      main: '#713229',
+      dark: '#413330',
+      // Contrast text?
+    },
+    secondary: {
+      light: '#cbcbc9',
+      main: '#b7987b',
+      dark: '#46626e',
+      // Contrast text?
+    },
+    // this is the color chosen for the navbar links, error was the easiest way to override an icon color
+    error: {
+      main: '#cbcbc9'
+    },
+  },
   typography: {
     fontFamily: [
       '"Lexend"',

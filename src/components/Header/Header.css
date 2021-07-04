@@ -1,3 +1,7 @@
 .App-header {
     text-align: center;
+    background-color: #713229;
+    color: #e0e0de;
+    min-height: 16vw;
+    max-height: 16vw;
 }
