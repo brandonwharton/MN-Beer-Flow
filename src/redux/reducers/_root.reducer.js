@@ -4,6 +4,7 @@ import user from './user.reducer';
 import breweryList from './brewery.reducer';
 import commentsList from './comments.reducer';
 import ratingsData from './ratings.reducer';
+import location from './location.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   breweryList, // contains an array of brewery data
   commentsList, // contains an array of comments data
   ratingsData, // contains an object with ratings and favorites data
+  location, // contains a reducer with the user's location :: ADD MORE DETAIL
 });
 
 export default rootReducer;
