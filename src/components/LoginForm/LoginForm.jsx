@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import './LoginForm.css';
 // Material-UI components
 import Typography from '@material-ui/core/Typography';
-import FormControl from '@material-ui/core/FormControl'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
@@ -33,7 +32,7 @@ function LoginForm() {
 
   return (
     <section>
-      <form onSubmit={login} className="login-form">
+      <form onSubmit={login} className="login-register-form">
         <Typography variant="h4" component="h4">
           Login
         </Typography>
@@ -42,37 +41,41 @@ function LoginForm() {
             {errors.loginMessage}
           </h3>
         )}
-        <div>
-        <TextField 
-          label="username"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-        >
-        </TextField>
+        <div className="login-register-margin">
+          <TextField
+            className="text-field"
+            variant="outlined"
+            label="username"
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+          >
+          </TextField>
         </div>
         <div>
-        <TextField 
-          label="password"
-          value={password}
-          inputProps={{type: 'password'}}
-          onChange={(event) => setPassword(event.target.value)}
-        >
-        </TextField>
+          <TextField
+            className="text-field"
+            variant="outlined"
+            label="password"
+            value={password}
+            inputProps={{ type: 'password' }}
+            onChange={(event) => setPassword(event.target.value)}
+          >
+          </TextField>
         </div>
-        <div className="login-button">
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          onClick={login}
-        >
-          Log In
+        <div className="login-register-margin">
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            onClick={login}
+          >
+            Log In
         </Button>
         </div>
       </form>
 
 
-        {/* <label htmlFor="username">
+      {/* <label htmlFor="username">
           Username:
           <input
             type="text"
@@ -83,7 +86,7 @@ function LoginForm() {
           />
         </label> */}
 
-        {/* <label htmlFor="password">
+      {/* <label htmlFor="password">
           Password:
           <input
             type="password"

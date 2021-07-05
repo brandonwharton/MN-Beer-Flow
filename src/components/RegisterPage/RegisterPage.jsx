@@ -7,7 +7,8 @@ function RegisterPage() {
   const history = useHistory();
 
   return (
-    <div>
+    <div className="App-main-position">
+      <img src="/login.jpg" alt="beer glass" />
       <RegisterForm />
 
       <center>

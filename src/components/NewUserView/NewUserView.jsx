@@ -10,7 +10,7 @@ function NewUserView() {
     return (
         <div>
             <Typography variant="h4" component="h4">
-                Welcome to (App Name Here)
+                Welcome to MN Beer Flow
             </Typography>
             <Typography variant="body1" component="p">
                 This app is designed to allow you to maintain a list of your favorite Minnesota breweries. Any place where you see a small card 

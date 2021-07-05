@@ -111,6 +111,17 @@ input {
   margin-bottom: 10px;
 }
 
+.login-register-form {
+  margin: 10px;
+}
+
+.login-register-margin {
+  margin-top: 10px
+}
+
+.text-field {
+  background-color: rgb(240, 239, 239);
+}
 
 /* .App-my-favorites {
   background-color: #f1cba7;
