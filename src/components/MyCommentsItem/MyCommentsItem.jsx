@@ -21,6 +21,7 @@ const useStyles = makeStyles(theme => ({
     },
     card: {
         backgroundColor: '#cbcbc9',
+        margin: '12px 0'
     },
 }));
 

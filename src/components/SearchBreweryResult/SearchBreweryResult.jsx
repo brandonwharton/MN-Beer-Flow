@@ -46,23 +46,26 @@ function SearchBreweryResult({brewery}) {
     
     
     return(
-        <Card className={classes.card} onClick={() => handleClick(brewery.id)}>
-            <CardHeader 
-                title={brewery.name}
-            >
-            </CardHeader>
-            <CardMedia
-                className={classes.media}
-                image={brewery.image_url}
-            />
-            {/* evaluate needs below this */}
-            <CardContent>
-                <Typography variant="h6" component="h6">
-                    {brewery.city}
-                </Typography>
-                <AverageRating averageRating={brewery.average_rating} />
-            </CardContent>    
-        </Card>
+        <div>
+            <Card className={classes.card} onClick={() => handleClick(brewery.id)}>
+                <CardHeader 
+                    title={brewery.name}
+                >
+                </CardHeader>
+                <CardMedia
+                    className={classes.media}
+                    image={brewery.image_url}
+                />
+                {/* evaluate needs below this */}
+                <CardContent>
+                    <Typography variant="h6" component="h6">
+                        {brewery.city}
+                    </Typography>
+                </CardContent>
+
+            </Card>
+            <AverageRating averageRating={brewery.average_rating} />
+        </div>
     )
 }
 

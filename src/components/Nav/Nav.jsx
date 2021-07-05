@@ -94,7 +94,6 @@ function Nav() {
             About
           </Link>
         }
-
       </div>
     </div>
   );
