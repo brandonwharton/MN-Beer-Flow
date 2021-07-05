@@ -34,7 +34,7 @@ function LoginForm() {
     <section>
       <form onSubmit={login} className="login-register-form">
         <Typography variant="h4" component="h4">
-          Login
+          Log In
         </Typography>
         {errors.loginMessage && (
           <h3 className="alert" role="alert">
@@ -69,7 +69,7 @@ function LoginForm() {
             color="primary"
             onClick={login}
           >
-            Log In
+            Log in
         </Button>
         </div>
       </form>

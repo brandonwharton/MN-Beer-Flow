@@ -50,6 +50,9 @@ function SearchBreweries() {
 
     return (
         <div className="App-main-position">
+            <Typography variant="h4" component="h4" align="center">
+                Find your new Favorite:
+            </Typography>
             <SearchBar />
             {/* conditionally render search results */}
             {query &&

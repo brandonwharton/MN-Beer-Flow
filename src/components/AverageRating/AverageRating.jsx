@@ -39,7 +39,7 @@ function AverageRating({averageRating}) {
     return (
         <div>
             <Box component="fieldset" mb={3} borderColor="transparent">
-                <Typography component="legend">Average Rating</Typography>
+                <Typography component="legend">Average Rating:</Typography>
                 <Rating
                     name="read-only"
                     size="large"

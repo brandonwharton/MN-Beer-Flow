@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 // Material-UI components
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -12,6 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import MyFavoritesItem from '../MyFavoritesItem/MyFavoritesItem';
 import MyRatings from '../MyRatings/MyRatings';
 import NewUserView from '../NewUserView/NewUserView';
+import './MyFavoritesList.css';
 
 
 // Material-UI styles
@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,
         alignItems: 'center',
         alignContent: 'center',
+        padding: '15px 0',
     },
 }));
 
@@ -52,6 +53,7 @@ function MyFavoritesList() {
 
     // submit handler for the search favorites feature
     const handleSearch = () => {
+        event.preventDefault();
         // reset foundNoResults to remove conditionally rendered no results message
         setFoundNoResults(false);
 
@@ -80,32 +82,35 @@ function MyFavoritesList() {
             {/* Conditionally render the favorites view normally if the user has anything in their favorites */}
             {favoriteBreweryList.length > 0 ?
                 <section>
-                    <Typography variant="h4" component="h4">
+                    <Typography variant="h4" component="h4" align="center" >
                         {user.username}'s Favorites
                     </Typography>
-                    <FormControl onSubmit={handleSearch} className="search-field">
+                    <form onSubmit={handleSearch} className="favorites-search-form">
                         <TextField
                             className="text-field"
                             label="search favorites"
-                            // helperText="by name only"
+                            variant="outlined"
                             value={searchInput}
                             onChange={handleChange}
                         />
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleSearch}
-                        >
-                            Search
-                    </Button>
-                    </FormControl>
+                        <div className="form-button">
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                onClick={handleSearch}
+                            >
+                                Search
+                            </Button>
+                        </div>
+                    </form>
                     <Grid container className={classes.root} spacing={2} justify={'center'}>
                         <Grid item xs={10}>
                             {/* conditionally render a no results message for failed searches */}
                             {foundNoResults &&
-                                <Typography variant="h4" component="h4">
+                                <Typography variant="h4" component="h4" align="center">
                                     No Results Found
-                        </Typography>}
+                                </Typography>}
 
                             {/* conditionally render either the full list of user favorites or the search results if a search was done */}
                             {searchedArray.length === 0 ?

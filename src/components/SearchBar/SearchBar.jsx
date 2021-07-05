@@ -1,6 +1,8 @@
 // hooks
 import { useState } from 'react';
 import { useHistory } from 'react-router';
+// components
+import './SearchBar.css'
 // Material-UI components
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
@@ -27,24 +29,26 @@ function SearchBar() {
     }
 
     return (
-        <div>
-            <FormControl onSubmit={handleSubmit}>
+        <div className="SearchBar">
+            <form onSubmit={handleSubmit}>
                 <TextField
                     className="text-field"
                     label="Search Breweries"
-                    helperText="by name only"
                     variant="outlined"
                     onChange={handleChange}
                     value={searchString}
                 />
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSubmit}
-                >
-                    Search
-                </Button>
-            </FormControl>
+                <div className="form-button">
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                    >
+                        Look it up
+                    </Button>
+                </div>
+            </form>
         </div>
     )
 }

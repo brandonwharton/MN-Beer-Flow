@@ -55,8 +55,9 @@ function Nav() {
               Find A Brewery
             </Link>
             <Button 
+              className="menu-button"
               aria-controls="simple-menu"
-              aria-hasopup="true"
+              aria-haspopup="true"
               onClick={handleClick}
             >
               <MenuIcon color="error"/>
@@ -94,7 +95,6 @@ function Nav() {
             About
           </Link>
         }
-
       </div>
     </div>
   );

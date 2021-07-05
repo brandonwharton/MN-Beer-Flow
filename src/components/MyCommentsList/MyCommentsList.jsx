@@ -41,7 +41,7 @@ function MyCommentsList() {
     console.log(userCommentsList);
     return (
         <div className="App-main-position">
-            <Typography variant="h4" component="h4">
+            <Typography variant="h4" component="h4" align="center">
                 Comments You've Left
             </Typography>
             <Grid container className={classes.root} spacing={2} justify={'center'}>
