@@ -52,6 +52,7 @@ function MyFavoritesList() {
 
     // submit handler for the search favorites feature
     const handleSearch = () => {
+        event.preventDefault();
         // reset foundNoResults to remove conditionally rendered no results message
         setFoundNoResults(false);
 
@@ -80,10 +81,10 @@ function MyFavoritesList() {
             {/* Conditionally render the favorites view normally if the user has anything in their favorites */}
             {favoriteBreweryList.length > 0 ?
                 <section>
-                    <Typography variant="h4" component="h4">
+                    <Typography variant="h4" component="h4" align="center" >
                         {user.username}'s Favorites
                     </Typography>
-                    <FormControl onSubmit={handleSearch} className="search-field">
+                    <form onSubmit={handleSearch}>
                         <TextField
                             className="text-field"
                             label="search favorites"
@@ -91,14 +92,17 @@ function MyFavoritesList() {
                             value={searchInput}
                             onChange={handleChange}
                         />
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleSearch}
-                        >
-                            Search
-                    </Button>
-                    </FormControl>
+                        <div>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                onClick={handleSearch}
+                            >
+                                Search
+                            </Button>
+                        </div>
+                    </form>
                     <Grid container className={classes.root} spacing={2} justify={'center'}>
                         <Grid item xs={10}>
                             {/* conditionally render a no results message for failed searches */}
