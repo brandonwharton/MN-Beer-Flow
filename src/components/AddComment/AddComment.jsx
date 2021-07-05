@@ -35,20 +35,24 @@ function AddComment({breweryId}) {
 
 
     return (
-        <div>
+        <div className="container">
             <TextField
+                className="text-field"
                 label="leave a comment"
+                variant="outlined"
                 onChange={handleChange}
                 value={newComment}
             >
             </TextField>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={handleClick}
-            >
-                Add Comment
-            </Button>
+            <div>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleClick}
+                >
+                    Add Comment
+                </Button>
+            </div>
         </div>
 
     )

@@ -25,7 +25,8 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(2),
     },
     card: {
-        backgroundColor: '#999',
+        backgroundColor: '#cbcbc9',
+        margin: '12px 0'
     },
 }));
 
@@ -60,28 +61,31 @@ function BreweryDetails() {
 
     return (
         <div className="App-main-position">
-            <Typography variant="h3" component="h3">
+            <Typography variant="h3" component="h3" align="center">
                 {brewery?.name}
             </Typography>
-            
+        
             {/* conditionally render either a message saying a brewery is on user's favorites or an add to favorites button */}
-            {ratingsData.userRatingsData.isFavorite ? 
-                <Typography variant="h5" component="h5">
-                    One of your Favorites
-                </Typography> 
-                :
-                <AddToFavorites breweryId={id} />
-            }
-
+            <div>
+                {ratingsData.userRatingsData.isFavorite ? 
+                    <Typography variant="h5" component="h5" className="container">
+                        One of your Favorites
+                    </Typography> 
+                    :
+                    <AddToFavorites breweryId={id} />
+                }
+            </div>
+            {/* Image and details */}
             <img src={brewery?.image_url} alt={brewery?.name} />
-            <Typography variant="h5" component="h5">
-                {brewery?.city}
-            </Typography>
-
+            <div className="image-margin">
+                <Typography variant="h5" component="h5">
+                    {brewery?.city}
+                </Typography>
+            </div>
+            {/* Ratings */}
             <MyRatings breweryId={id} origin={'breweryDetails'} rating={ratingsData.userRatingsData.rating} />
             <AverageRating averageRating={ratingsData.averageRatingsData.averageRating} />
-
-            
+            {/* Comment form and list of comments */}
             <AddComment breweryId={id} />
             <Grid container className={classes.root} spacing={2} justify={'center'}>
                 <Grid item xs={10}>
@@ -97,10 +101,8 @@ function BreweryDetails() {
                             </CardContent>
                         </Card>
                     ))}
-
                 </Grid>
             </Grid>
-            {/* Back button goes here */}
         </div>
     )
 }
