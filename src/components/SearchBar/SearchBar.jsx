@@ -30,6 +30,7 @@ function SearchBar() {
         <div>
             <FormControl onSubmit={handleSubmit}>
                 <TextField
+                    className="text-field"
                     label="Search Breweries"
                     helperText="by name only"
                     variant="outlined"

@@ -59,7 +59,7 @@ function BreweryDetails() {
  
 
     return (
-        <div>
+        <div className="App-main-position">
             <Typography variant="h3" component="h3">
                 {brewery?.name}
             </Typography>

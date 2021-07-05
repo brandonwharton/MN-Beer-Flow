@@ -31,7 +31,7 @@ function RandomBrewery() {
 
 
     return(
-        <div>
+        <div className="App-main-position">
             <Button
                 variant="contained"
                 color="primary"
