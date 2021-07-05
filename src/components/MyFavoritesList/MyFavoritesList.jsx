@@ -93,7 +93,7 @@ function MyFavoritesList() {
                             value={searchInput}
                             onChange={handleChange}
                         />
-                        <div>
+                        <div className="form-button">
                             <Button
                                 type="submit"
                                 variant="contained"

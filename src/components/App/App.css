@@ -74,6 +74,7 @@ Button
   background: none;
   font: inherit;
   color: #444;
+  margin-bottom: 20px;
 }
 
 .btn_asLink:hover {
@@ -120,11 +121,12 @@ input {
 Login and Register needs 
 -------------------------------------------------------------------------------- */
 .login-register-form {
-  margin: 10px;
+  text-align: center;
+  margin: 0 7px;
 }
 
 .login-register-margin {
-  margin-top: 10px
+  margin: 7px 0;
 }
 
 /* --------------------------------------------------------------------------------
@@ -162,4 +164,8 @@ Shared items
 -------------------------------------------------------------------------------- */
 .text-field {
   background-color: rgb(240, 239, 239);
+}
+
+.form-button {
+  margin: 7px 25%;
 }

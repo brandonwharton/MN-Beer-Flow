@@ -38,14 +38,14 @@ function SearchBar() {
                     onChange={handleChange}
                     value={searchString}
                 />
-                <div>
+                <div className="form-button">
                     <Button
                         type="submit"
                         variant="contained"
                         color="primary"
                         onClick={handleSubmit}
                     >
-                        Search
+                        Look it up
                     </Button>
                 </div>
             </form>

@@ -45,7 +45,7 @@ function AddComment({breweryId}) {
                 value={newComment}
             >
             </TextField>
-            <div>
+            <div className="form-button">
                 <Button
                     variant="contained"
                     color="primary"
