@@ -43,7 +43,7 @@ function Nav() {
   }
 
   return (
-    <div className="nav">
+    <div className="nav App-nav-position">
       <div>
         <Link className="navLink" to={loginLinkData.path}>
           {loginLinkData.text}

@@ -40,7 +40,7 @@ function MyCommentsList() {
 
     console.log(userCommentsList);
     return (
-        <div>
+        <div className="App-main-position">
             <Typography variant="h4" component="h4">
                 Comments You've Left
             </Typography>

@@ -9,9 +9,13 @@ function Header() {
 
     return (
         <header>
-            <Typography className="App-header" variant="h3" component="h3">
+            
+
+            <Typography className="header App-header-position" variant="h3" component="h3">
                 MN Beer Flow
             </Typography>
+
+
         </header>
     )
 }

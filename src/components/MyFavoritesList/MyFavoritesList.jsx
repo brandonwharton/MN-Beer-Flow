@@ -76,59 +76,60 @@ function MyFavoritesList() {
 
     console.log(user);
     return (
-        <div>
+        <div className="App-my-favorites App-main-position">
             {/* Conditionally render the favorites view normally if the user has anything in their favorites */}
             {favoriteBreweryList.length > 0 ?
-                <section className="App-my-favorites">
-                <Typography variant="h3" component="h3">
-                    {user.username}'s Favorites
-                </Typography>
-                <FormControl onSubmit={handleSearch}>
-                    <TextField 
-                        label="search favorites"
-                        helperText="by name only"
-                        value={searchInput}
-                        onChange={handleChange}
-                    />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSearch}
-                    >
-                        Search
+                <section>
+                    <Typography variant="h4" component="h4">
+                        {user.username}'s Favorites
+                    </Typography>
+                    <FormControl onSubmit={handleSearch} className="search-field">
+                        <TextField
+                            className="text-field"
+                            label="search favorites"
+                            // helperText="by name only"
+                            value={searchInput}
+                            onChange={handleChange}
+                        />
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleSearch}
+                        >
+                            Search
                     </Button>
-                </FormControl>
-                <Grid container className={classes.root} spacing={2} justify={'center'}>
-                    <Grid item xs={10}>
-                        {/* conditionally render a no results message for failed searches */}
-                        {foundNoResults && 
-                        <Typography variant="h4" component="h4">
-                            No Results Found
+                    </FormControl>
+                    <Grid container className={classes.root} spacing={2} justify={'center'}>
+                        <Grid item xs={10}>
+                            {/* conditionally render a no results message for failed searches */}
+                            {foundNoResults &&
+                                <Typography variant="h4" component="h4">
+                                    No Results Found
                         </Typography>}
-                        
-                        {/* conditionally render either the full list of user favorites or the search results if a search was done */}
-                        {searchedArray.length === 0 ?
-                            favoriteBreweryList?.map(brewery => (
-                                <div key={brewery.id}>
-                                    <MyFavoritesItem brewery={brewery}/>
-                                    <MyRatings breweryId={brewery.id} origin={'myFavorites'} rating={brewery.rating} />
-                                </div>
-                            ))
-                            :
-                            searchedArray.map(brewery => (
-                                <div key={brewery.id}>
-                                    <MyFavoritesItem brewery={brewery}/>
-                                    <MyRatings breweryId={brewery.id} origin={'myFavorites'} rating={brewery.rating} />
-                                </div>
-                            ))
-                        }
+
+                            {/* conditionally render either the full list of user favorites or the search results if a search was done */}
+                            {searchedArray.length === 0 ?
+                                favoriteBreweryList?.map(brewery => (
+                                    <div key={brewery.id}>
+                                        <MyFavoritesItem brewery={brewery} />
+                                        <MyRatings breweryId={brewery.id} origin={'myFavorites'} rating={brewery.rating} />
+                                    </div>
+                                ))
+                                :
+                                searchedArray.map(brewery => (
+                                    <div key={brewery.id}>
+                                        <MyFavoritesItem brewery={brewery} />
+                                        <MyRatings breweryId={brewery.id} origin={'myFavorites'} rating={brewery.rating} />
+                                    </div>
+                                ))
+                            }
+                        </Grid>
                     </Grid>
-                </Grid>
                 </section>
                 :
                 // Display the NewUserView component if no favorites have been added
                 <NewUserView />
-                }
+            }
         </div>
 
     )
