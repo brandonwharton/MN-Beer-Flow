@@ -37,6 +37,7 @@ function AddComment({breweryId}) {
     return (
         <div className="container">
             <TextField
+                inputProps={{ maxLength: 255 }}
                 className="text-field"
                 label="leave a comment"
                 variant="outlined"
