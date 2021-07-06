@@ -45,6 +45,8 @@ function GetUserLocation() {
 
     useEffect(() => {
         dispatch({ type: 'FETCH_FAVORITE_BREWERIES' })
+
+
         // function callback(map) {
         //     const bounds = new window.google.maps.LatLngBounds();
         //     map.fitBounds(bounds);
