@@ -7,16 +7,16 @@ require('dotenv').config();
 import Button from '@material-ui/core/Button';
 
 // map sizing
-// const containerStyle = {
-//     width: '400px',
-//     height: '400px',
-// };
+const containerStyle = {
+    width: '100vw',
+    height: '100vw',
+};
 
 // map starting location
-// const center = {
-//     lat: 44.8969942,
-//     lng: -93.3670538,
-// };
+const center = {
+    lat: 44.8969942,
+    lng: -93.3670538,
+};
 
 const apiKey = process.env.REACT_APP_MAPS_API_KEY;
 
@@ -25,7 +25,8 @@ function GetUserLocation() {
     // load google maps data
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: apiKey
+        googleMapsApiKey: apiKey,
+        // libraries: ["Places"]
     })
 
     // const [map, setMap] = useState(null)
@@ -47,11 +48,11 @@ function GetUserLocation() {
         dispatch({ type: 'FETCH_FAVORITE_BREWERIES' })
 
 
-        // function callback(map) {
-        //     const bounds = new window.google.maps.LatLngBounds();
-        //     map.fitBounds(bounds);
-        //     setMap(map);
-        // }
+        function callback(map) {
+            const bounds = new window.google.maps.LatLngBounds();
+            map.fitBounds(bounds);
+            setMap(map);
+        }
         getUserCoordinates();
     }, [])
 
@@ -115,6 +116,18 @@ function GetUserLocation() {
         }
     }
 
+    // playing around with the Google Geometry Library
+    const geometryLibraryDistance = () => {
+        const origin = new google.maps.LatLng(44.8969841, 93.3669736); // home
+        console.log(origin);
+        const destination = new google.maps.LatLng(45.19812039, -93.38952559)
+        console.log(destination);
+        const result = google.maps.geometry.spherical.computeDistanceBetween(destination, origin);
+        console.log('result', result);
+    }
+
+
+
     const showMeState = () => {
         console.log(locationData);
         console.log('google response', googleResponse);
@@ -143,19 +156,26 @@ function GetUserLocation() {
     console.log('location reducer', location.userLocation);
     return isLoaded ? (
         <div>
-            {/* <GoogleMap
+            <GoogleMap
                 mapContainerStyle={containerStyle}
                 center={center}
-                zoom={10}
+                zoom={12}
             >
                 <></>   
-            </GoogleMap> */}
+            </GoogleMap>
             <Button
                 variant="contained"
                 color="primary"
                 onClick={calculateDistances}
             >
                 Calculate Distances
+            </Button>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={geometryLibraryDistance}
+            >
+                Spherical Geometry Distance
             </Button>
             <Button
                 variant="contained"
