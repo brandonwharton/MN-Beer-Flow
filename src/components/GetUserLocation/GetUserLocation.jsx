@@ -2,66 +2,54 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { Loader } from '@googlemaps/js-api-loader';
 require('dotenv').config();
 
 import Button from '@material-ui/core/Button';
 
+// map sizing
+// const containerStyle = {
+//     width: '400px',
+//     height: '400px',
+// };
 
-const containerStyle = {
-    width: '400px',
-    height: '400px',
-};
-
-const center = {
-    lat: 44.8969942,
-    lng: -93.3670538,
-};
+// map starting location
+// const center = {
+//     lat: 44.8969942,
+//     lng: -93.3670538,
+// };
 
 const apiKey = process.env.REACT_APP_MAPS_API_KEY;
 
 // gets the user's location using Geolocation API
 function GetUserLocation() {
+    // load google maps data
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: apiKey
     })
 
-    const [map, setMap] = useState(null)
+    // const [map, setMap] = useState(null)
 
 
 
     const dispatch = useDispatch();
+    // get user location from redux store
     const location = useSelector(store => store.location);
+    const userFavorites = useSelector(store => store.breweryList);
 
-    // const loader = new Loader({
-    //     apiKey: process.env.MAPS_API_KEY,
-    //     version: 'weekly',
-    //     ...additionalOptions,
-    // });
-    // loader.load.then(() => {
-    //     map = new google.maps.Map(document.getElementById('map'), {
-    //         center: { lat: -34.397, lng: 150.644},
-    //         zoom: 8,
-    //     });
-    // });
+    const [locationData, setLocationData] = useState([]);
+    const [googleResponse, setGoogleResponse] = useState({});
+    
 
-    // let map;
-
-    // function initMap() {
-    //     map = new google.maps.Map(document.getElementById("map"), {
-    //         center: {lat: -34.397, lng: 150.644},
-    //         zoom: 8,
-    //     });
-    // }
 
 
     useEffect(() => {
-        function callback(map) {
-            const bounds = new window.google.maps.LatLngBounds();
-            map.fitBounds(bounds);
-            setMap(map);
-        }
+        dispatch({ type: 'FETCH_FAVORITE_BREWERIES' })
+        // function callback(map) {
+        //     const bounds = new window.google.maps.LatLngBounds();
+        //     map.fitBounds(bounds);
+        //     setMap(map);
+        // }
         getUserCoordinates();
     }, [])
 
@@ -78,44 +66,57 @@ function GetUserLocation() {
         });
     }
     const calculateDistances = () => {
-        if (isLoaded) {
-        var origin1 = new google.maps.LatLng(44.8969866, -93.3670445); // home
-        var destinationA = new google.maps.LatLng(45.19812039, -93.38952559); // 10k
-        var destinationB = new google.maps.LatLng(44.89304675, -93.2813885); // wild minds
-
-        console.log(origin1);
-        var service = new google.maps.DistanceMatrixService();
+        if (isLoaded && location.userLocation.latitude) {
+        const origin1 = new google.maps.LatLng(location.userLocation.latitude, location.userLocation.longitude); // home
+        // create destinations for google to find
+        let destinationArray = [];
+        userFavorites.forEach(brewery => {
+            console.log('brewery details', brewery);
+            destinationArray.push(`${brewery.address} ${brewery.city}`);
+        })
+        
+        const service = new google.maps.DistanceMatrixService();
         service.getDistanceMatrix(
         {
             origins: [origin1],
-            destinations: [destinationA, destinationB],
+            destinations: destinationArray,
             travelMode: 'DRIVING',
         }, callback);
 
         function callback(response, status) {
             if (status == 'OK') {
-            var origins = response.originAddresses;
-            var destinations = response.destinationAddresses;
-            const results2 = response.rows
-            console.log('results2', results2);
-        
-            for (var i = 0; i < origins.length; i++) {
-                var results = response.rows[i].elements;
-                for (var j = 0; j < results.length; j++) {
-                var element = results[j];
+            const origins = response.originAddresses;
+            const destinations = response.destinationAddresses;
+            const results = response.rows[0].elements
+
+            let resultsArray = [];
+            for (var j = 0; j < results.length; j++) {
+                const element = results[j];
                 console.log(element);
-                // var distance = element.distance.text;
-                // var duration = element.duration.text;
-                var from = origins[i];
-                var to = destinations[j];
-                console.log('in callback distance duration from to:', from, to);
+                const distance = element.distance;
+                const duration = element.duration;
+                const from = origins[0];
+                const to = destinations[j];
+                // console.log('in callback distance duration from to:', distance, duration, from, to);
+                const newDistanceObject = {
+                    distance: distance,
+                    duration: duration,
+                    startingLocation: from,
+                    destination: to
                 }
+                resultsArray.push(newDistanceObject);
             }
+            setLocationData(resultsArray);
+            setGoogleResponse(response);
             }
         }
         }
     }
 
+    const showMeState = () => {
+        console.log(locationData);
+        console.log('google response', googleResponse);
+    }
 
     // function callback(response, status) {
     //     if (status == 'OK') {
@@ -140,19 +141,26 @@ function GetUserLocation() {
     console.log('location reducer', location.userLocation);
     return isLoaded ? (
         <div>
-            <GoogleMap
+            {/* <GoogleMap
                 mapContainerStyle={containerStyle}
                 center={center}
                 zoom={10}
             >
                 <></>   
-            </GoogleMap>
+            </GoogleMap> */}
             <Button
                 variant="contained"
                 color="primary"
                 onClick={calculateDistances}
             >
                 Calculate Distances
+            </Button>
+            <Button
+                variant="contained"
+                color="secondary"
+                onClick={showMeState}
+            >
+                Show me State
             </Button>
         </div>
     ) : <></>
