@@ -37,7 +37,7 @@ IconContainer.propTypes = {
 function MyRatings({breweryId, origin, rating}) {
     const dispatch = useDispatch();
     // create a unique name for the component using the breweryId
-    const componentName = `rating${breweryId}`;
+    const componentName = `rating${breweryId}`; 
 
     // const ratingsData = useSelector(store => store.ratingsData);
 
