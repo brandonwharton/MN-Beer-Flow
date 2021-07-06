@@ -10,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 // components
 import MyFavoritesItem from '../MyFavoritesItem/MyFavoritesItem';
 import MyRatings from '../MyRatings/MyRatings';
+import AverageRating from '../AverageRating/AverageRating';
 import NewUserView from '../NewUserView/NewUserView';
 import './MyFavoritesList.css';
 
@@ -118,6 +119,7 @@ function MyFavoritesList() {
                                     <div key={brewery.id}>
                                         <MyFavoritesItem brewery={brewery} />
                                         <MyRatings breweryId={brewery.id} origin={'myFavorites'} rating={brewery.rating} />
+                                        <AverageRating averageRating={brewery.average_rating} />
                                     </div>
                                 ))
                                 :
@@ -125,6 +127,7 @@ function MyFavoritesList() {
                                     <div key={brewery.id}>
                                         <MyFavoritesItem brewery={brewery} />
                                         <MyRatings breweryId={brewery.id} origin={'myFavorites'} rating={brewery.rating} />
+                                        <AverageRating averageRating={brewery.average_rating} />
                                     </div>
                                 ))
                             }
