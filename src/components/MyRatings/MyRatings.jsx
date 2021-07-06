@@ -36,6 +36,8 @@ IconContainer.propTypes = {
 // component for displaying user brewery ratings, allowing user to adjust ratings fluidly
 function MyRatings({breweryId, origin, rating}) {
     const dispatch = useDispatch();
+    // create a unique name for the component using the breweryId
+    const componentName = `rating${breweryId}`; 
 
     // const ratingsData = useSelector(store => store.ratingsData);
 
@@ -57,7 +59,7 @@ function MyRatings({breweryId, origin, rating}) {
             <Box component="fieldset" mb={3} borderColor="transparent">
                 <Typography component="legend">Your Rating:</Typography>
                 <Rating
-                    name="simple-controlled"
+                    name={componentName}
                     size="large"
                     value={rating}
                     // precision={0.5} : play around with this, may be too small
