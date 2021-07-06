@@ -5,6 +5,9 @@ import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { Loader } from '@googlemaps/js-api-loader';
 require('dotenv').config();
 
+import Button from '@material-ui/core/Button';
+
+
 const containerStyle = {
     width: '400px',
     height: '400px',
@@ -74,38 +77,84 @@ function GetUserLocation() {
             }});
         });
     }
+    const calculateDistances = () => {
+        if (isLoaded) {
+        var origin1 = new google.maps.LatLng(44.8969866, -93.3670445); // home
+        var destinationA = new google.maps.LatLng(45.19812039, -93.38952559); // 10k
+        var destinationB = new google.maps.LatLng(44.89304675, -93.2813885); // wild minds
 
-    // var origin1 = new google.maps.LatLng(55.930385, -3.118425);
-    // var destinationA = new google.maps.LatLng();
-    // var destinationB = new google.maps.LatLng(50.087692, 14.421150);
+        console.log(origin1);
+        var service = new google.maps.DistanceMatrixService();
+        service.getDistanceMatrix(
+        {
+            origins: [origin1],
+            destinations: [destinationA, destinationB],
+            travelMode: 'DRIVING',
+        }, callback);
 
-    // var service = new google.maps.DistanceMatrixService();
-    // service.getDistanceMatrix(
-    // {
-    //     origins: [origin1, origin2],
-    //     destinations: [destinationA, destinationB],
-    //     travelMode: 'DRIVING',
-    //     transitOptions: TransitOptions,
-    //     drivingOptions: DrivingOptions,
-    //     unitSystem: UnitSystem,
-    //     avoidHighways: Boolean,
-    //     avoidTolls: Boolean,
-    // }, callback);
+        function callback(response, status) {
+            if (status == 'OK') {
+            var origins = response.originAddresses;
+            var destinations = response.destinationAddresses;
+            const results2 = response.rows
+            console.log('results2', results2);
+        
+            for (var i = 0; i < origins.length; i++) {
+                var results = response.rows[i].elements;
+                for (var j = 0; j < results.length; j++) {
+                var element = results[j];
+                console.log(element);
+                // var distance = element.distance.text;
+                // var duration = element.duration.text;
+                var from = origins[i];
+                var to = destinations[j];
+                console.log('in callback distance duration from to:', from, to);
+                }
+            }
+            }
+        }
+        }
+    }
+
 
     // function callback(response, status) {
-    // // See Parsing the Results for
-    // // the basics of a callback function.
+    //     if (status == 'OK') {
+    //         var origins = response.originAddresses;
+    //         var destinations = response.destinationAddresses;
+
+    //         for (let i = 0; i < origins.length; i++) {
+    //             var results = response.rows[i].elements;
+    //             for (let j = 0; j < results.length; j++) {
+    //                 var element = results[j];
+    //                 var distance = element.distance?.text;
+    //                 var duration = element.duration?.text;
+    //                 var from = origins[i];
+    //                 var to = destinations[j];
+    //                 console.log('in callback distance duration from to:', distance, duration, from, to);
+    //             }
+    //         }
+    //     }
     // }
+    
 
     console.log('location reducer', location.userLocation);
     return isLoaded ? (
-        <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={center}
-            zoom={10}
-        >
-            <></>
-        </GoogleMap>
+        <div>
+            <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={center}
+                zoom={10}
+            >
+                <></>   
+            </GoogleMap>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={calculateDistances}
+            >
+                Calculate Distances
+            </Button>
+        </div>
     ) : <></>
         
 
