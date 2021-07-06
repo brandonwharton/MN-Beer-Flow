@@ -55,7 +55,7 @@ function MyRatings({breweryId, origin, rating}) {
     return (
         <div>
             <Box component="fieldset" mb={3} borderColor="transparent">
-                <Typography component="legend">Your Rating</Typography>
+                <Typography component="legend">Your Rating:</Typography>
                 <Rating
                     name="simple-controlled"
                     size="large"

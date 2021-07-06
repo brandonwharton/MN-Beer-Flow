@@ -1,3 +1,5 @@
+// hooks
+import { useDispatch } from 'react-redux';
 // Material-UI components
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -5,7 +7,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
-import { useDispatch } from 'react-redux';
+import DeleteIcon from '@material-ui/icons/Delete'
 
 // Material-UI styles
 const useStyles = makeStyles(theme => ({
@@ -18,7 +20,8 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(2),
     },
     card: {
-        backgroundColor: '#999',
+        backgroundColor: '#cbcbc9',
+        margin: '12px 0'
     },
 }));
 
@@ -51,7 +54,7 @@ function MyCommentsItem({comment}) {
                     color="secondary"
                     onClick={() => handleClick(comment.id, comment.user_id)}
                 >
-                    Remove Comment
+                    <DeleteIcon />
                 </Button>
             </CardActions>
         </Card>

@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 // components
 import AddToFavorites from '../AddToFavorites/AddToFavorites';
 import MyRatings from '../MyRatings/MyRatings';
+import AverageRating from '../AverageRating/AverageRating';
 import AddComment from '../AddComment/AddComment';
 // Material-UI components
 import Typography from '@material-ui/core/Typography';
@@ -24,7 +25,8 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(2),
     },
     card: {
-        backgroundColor: '#999',
+        backgroundColor: '#cbcbc9',
+        margin: '12px 0'
     },
 }));
 
@@ -53,32 +55,37 @@ function BreweryDetails() {
         dispatch({ type: 'FETCH_BREWERY_COMMENTS', payload: id });
         // dispatch to ratings Saga to get ratings data and favorites data for the current user
         dispatch({ type: 'FETCH_SINGLE_RATING_FAVORITE', payload: id });
+        dispatch({ type: 'FETCH_AVERAGE_RATING', payload: id });
     }, [id]);
+ 
 
-    console.log(ratingsData);
     return (
-        <div>
-            <Typography variant="h3" component="h3">
+        <div className="App-main-position">
+            <Typography variant="h3" component="h3" align="center">
                 {brewery?.name}
             </Typography>
-            
+        
             {/* conditionally render either a message saying a brewery is on user's favorites or an add to favorites button */}
-            {ratingsData.isFavorite ? 
-                <Typography variant="h5" component="h5">
-                    One of your Favorites
-                </Typography> 
-                :
-                <AddToFavorites breweryId={id} />
-            }
-
+            <div>
+                {ratingsData.userRatingsData.isFavorite ? 
+                    <Typography variant="h5" component="h5" className="container">
+                        One of your Favorites
+                    </Typography> 
+                    :
+                    <AddToFavorites breweryId={id} />
+                }
+            </div>
+            {/* Image and details */}
             <img src={brewery?.image_url} alt={brewery?.name} />
-            <Typography variant="h5" component="h5">
-                {brewery?.city}
-            </Typography>
-
-            <MyRatings breweryId={id} origin={'breweryDetails'} rating={ratingsData.rating}/>
-            {/* Need average ratings here */}
-            
+            <div className="image-margin">
+                <Typography variant="h5" component="h5">
+                    {brewery?.city}
+                </Typography>
+            </div>
+            {/* Ratings */}
+            <MyRatings breweryId={id} origin={'breweryDetails'} rating={ratingsData.userRatingsData.rating} />
+            <AverageRating averageRating={ratingsData.averageRatingsData.averageRating} />
+            {/* Comment form and list of comments */}
             <AddComment breweryId={id} />
             <Grid container className={classes.root} spacing={2} justify={'center'}>
                 <Grid item xs={10}>
@@ -94,10 +101,8 @@ function BreweryDetails() {
                             </CardContent>
                         </Card>
                     ))}
-
                 </Grid>
             </Grid>
-            {/* Back button goes here */}
         </div>
     )
 }

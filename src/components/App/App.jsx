@@ -10,24 +10,61 @@ import { useDispatch } from 'react-redux';
 // provided boilerplate components
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
-
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import './App.css';
 // my components
+import Header from '../Header/Header';
 import MyFavoritesList from '../MyFavoritesList/MyFavoritesList';
 import MyCommentsList from '../MyCommentsList/MyCommentsList';
 import BreweryDetails from '../BreweryDetails/BreweryDetails';
+import SearchBreweries from '../SearchBreweries/SearchBreweries';
+import RandomBrewery from '../RandomBrewery/RandomBrewery';
 // Material-UI components
 import '@fontsource/roboto';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 
 
-import './App.css';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#946644',
+      main: '#713229',
+      dark: '#413330',
+      // Contrast text?
+    },
+    secondary: {
+      light: '#cbcbc9',
+      main: '#b7987b',
+      dark: '#46626e',
+      // Contrast text?
+    },
+    // this is the color chosen for the navbar links, error was the easiest way to override an icon color
+    error: {
+      main: '#cbcbc9'
+    },
+  },
+  typography: {
+    fontFamily: [
+      '"Lexend"',
+      'Verdana',
+      'Geneva',
+      'Tahoma',
+      'sans-serif',
+    ].join(','),
+  },
+});
+
+
+
+
+
 
 function App() {
   const dispatch = useDispatch();
@@ -38,7 +75,9 @@ function App() {
 
   return (
     <Router>
+      <MuiThemeProvider theme={theme}>
       <div>
+        <Header />
         <Nav />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/myfavorites */}
@@ -58,11 +97,11 @@ function App() {
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
             Even though it seems like they are different pages, the user is always on localhost:3000/user */}
           <ProtectedRoute
-            // logged in shows UserPage else shows LoginPage
+            // logged in shows MyFavorites page else shows LoginPage
             exact
-            path="/user"
+            path="/myfavorites"
           >
-            <UserPage />
+            <MyFavoritesList />
           </ProtectedRoute>
 
           <ProtectedRoute
@@ -82,7 +121,7 @@ function App() {
             // - else shows LoginPage at /login
             exact
             path="/login"
-            authRedirect="/user"
+            authRedirect="/myfavorites"
           >
             <LoginPage />
           </ProtectedRoute>
@@ -93,7 +132,7 @@ function App() {
             // - else shows RegisterPage at "/registration"
             exact
             path="/registration"
-            authRedirect="/user"
+            authRedirect="/myfavorites"
           >
             <RegisterPage />
           </ProtectedRoute>
@@ -104,7 +143,7 @@ function App() {
             // - else shows LandingPage at "/home"
             exact
             path="/home"
-            authRedirect="/user"
+            authRedirect="/myfavorites"
           >
             <LandingPage />
           </ProtectedRoute>
@@ -126,7 +165,22 @@ function App() {
             children={<BreweryDetails />}
           >
           </ProtectedRoute>
-
+          <ProtectedRoute
+            exact
+            path="/search"
+          >
+            <SearchBreweries />
+          </ProtectedRoute>
+          <ProtectedRoute
+            path="/search/:query"
+            children={<SearchBreweries />}
+          >
+          </ProtectedRoute>
+          <ProtectedRoute
+            path="/random"
+          >
+            <RandomBrewery />
+          </ProtectedRoute>
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
             <h1>404</h1>
@@ -134,6 +188,7 @@ function App() {
         </Switch>
         <Footer />
       </div>
+      </MuiThemeProvider>
     </Router>
   );
 }
