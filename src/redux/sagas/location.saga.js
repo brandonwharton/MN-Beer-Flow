@@ -7,12 +7,15 @@ function* fetchBreweryCoordinates (action){
     
     try {
         // action.payload contains address information
-        yield axios.get(`/api/google`, {
+        const locationResult = yield axios.get(`/api/google`, {
             params: {
                 address: action.payload.address,
                 city: action.payload.city
             }
         });
+        console.log('result', locationResult.data.results[0]);
+        // then send request to DB
+        yield put({ type: 'POST_BREWERY_COORDINATES'});
         
     } catch (error) {
         console.error('Error with fetchBreweryCoordinates in locationSaga', error);

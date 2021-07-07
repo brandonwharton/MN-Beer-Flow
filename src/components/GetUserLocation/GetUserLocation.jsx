@@ -25,52 +25,32 @@ const libraries = ['geometry'];
 
 // gets the user's location using Geolocation API
 function GetUserLocation() {
-    // load google maps data
-    // const loader = new Loader({
-    //     apiKey: apiKey,
-    //     version: "weekly",
-    //     libraries: ["geometry"]
-    // })
-
-    // loader
-    // .load()
-    // .then(() =>{
-
-    // })
-    // .catch(error =>{
-    //     console.log('error with maps', error);
-    // })
-
+    // load Map scripts
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: apiKey,
         libraries,
     });
 
-    // const [map, setMap] = useState(null)
-
-
-
     const dispatch = useDispatch();
     // get user location from redux store
     const location = useSelector(store => store.location);
     const userFavorites = useSelector(store => store.breweryList);
-
+    // states to temporarily store google results for my own use in parsing data responses
     const [locationData, setLocationData] = useState([]);
     const [googleResponse, setGoogleResponse] = useState({});
     
 
-
-
     useEffect(() => {
+        // get list of user's favorite breweries on page load
         dispatch({ type: 'FETCH_FAVORITE_BREWERIES' })
-
 
         function callback(map) {
             const bounds = new window.google.maps.LatLngBounds();
             map.fitBounds(bounds);
             setMap(map);
         }
+        // run getUserCoordinates to store user's location
         getUserCoordinates();
     }, [])
 
@@ -86,16 +66,19 @@ function GetUserLocation() {
             }});
         });
     }
+
+    // request using Google maps to find the distance and drive time between two sets of latitude and longitude coordinates or addresses
     const calculateDistances = () => {
         if (isLoaded  && location.userLocation.latitude) {
         const origin1 = new google.maps.LatLng(location.userLocation.latitude, location.userLocation.longitude); // home
         // create destinations for google to find
         let destinationArray = [];
+        // go through list of user's favorite breweries, store the address information for each in the destination array
         userFavorites.forEach(brewery => {
             console.log('brewery details', brewery);
             destinationArray.push(`${brewery.address} ${brewery.city}`);
         })
-        
+        // request to Googles Distance Matrix service to get multiple sets of locatations data
         const service = new google.maps.DistanceMatrixService();
         service.getDistanceMatrix(
         {
@@ -104,6 +87,7 @@ function GetUserLocation() {
             travelMode: 'DRIVING',
         }, callback);
 
+        // callback function that is called once Google's results come back
         function callback(response, status) {
             if (status == 'OK') {
             const origins = response.originAddresses;
