@@ -95,7 +95,8 @@ function GetUserLocation() {
             const results = response.rows[0].elements
 
             let resultsArray = [];
-            for (var j = 0; j < results.length; j++) {
+            // loop through each result to store data locally
+            for (let j = 0; j < results.length; j++) {
                 const element = results[j];
                 console.log(element);
                 const distance = element.distance;
@@ -103,6 +104,8 @@ function GetUserLocation() {
                 const from = origins[0];
                 const to = destinations[j];
                 // console.log('in callback distance duration from to:', distance, duration, from, to);
+                
+                // create an object with the returned distance data and store in the temporary resultsArray
                 const newDistanceObject = {
                     distance: distance,
                     duration: duration,
@@ -111,6 +114,7 @@ function GetUserLocation() {
                 }
                 resultsArray.push(newDistanceObject);
             }
+            // store results locally
             setLocationData(resultsArray);
             setGoogleResponse(response);
             }
@@ -118,6 +122,7 @@ function GetUserLocation() {
         }
     }
 
+    
     // playing around with the Google Geometry Library
     const geometryLibraryDistance = () => {
         const origin = new google.maps.LatLng(44.8969841, -93.3669736); // home
