@@ -14,8 +14,8 @@ function* fetchBreweryCoordinates (action){
             }
         });
         console.log('result', locationResult.data.results[0]);
-        // then send request to DB
-        yield put({ type: 'POST_BREWERY_COORDINATES'});
+        // then send request to update DB with latitude and longitude data
+        // yield axios.put(``)
         
     } catch (error) {
         console.error('Error with fetchBreweryCoordinates in locationSaga', error);

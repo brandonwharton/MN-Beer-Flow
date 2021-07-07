@@ -52,7 +52,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 
 
 // Handles GET requests for all breweries in DB and sends them back to be filtered with a search query
-router.get('/', rejectUnauthenticated, (req, res) =>{
+router.get('/', rejectUnauthenticated, (req, res) => {
     // SQL string to GET all breweries from the brewery table as well as their average rating. If no rating has been provided, average_rating will be null
     const queryText = `SELECT "brewery".*, AVG("user_brewery".rating) AS "average_rating" FROM "brewery"
                        FULL OUTER JOIN "user_brewery" ON "user_brewery".brewery_id = "brewery".id
@@ -68,6 +68,11 @@ router.get('/', rejectUnauthenticated, (req, res) =>{
             res.sendStatus(500);
         })
 });
+
+router.put('/coordinates', rejectUnauthenticated, (req, res) => {
+    console.log('Got to coordinates PUT with data:', req.body, req.params.id);
+    res.sendStatus(200);
+})
 
 
 module.exports = router;

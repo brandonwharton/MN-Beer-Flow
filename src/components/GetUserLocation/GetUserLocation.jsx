@@ -35,7 +35,8 @@ function GetUserLocation() {
     const dispatch = useDispatch();
     // get user location from redux store
     const location = useSelector(store => store.location);
-    const userFavorites = useSelector(store => store.breweryList);
+    // const userFavorites = useSelector(store => store.breweryList);
+    const breweryList = useSelector(store => store.breweryList);
     // states to temporarily store google results for my own use in parsing data responses
     const [locationData, setLocationData] = useState([]);
     const [googleResponse, setGoogleResponse] = useState({});
@@ -43,7 +44,7 @@ function GetUserLocation() {
 
     useEffect(() => {
         // get list of user's favorite breweries on page load
-        dispatch({ type: 'FETCH_FAVORITE_BREWERIES' })
+        dispatch({ type: 'FETCH_ALL_BREWERIES' })
 
         function callback(map) {
             const bounds = new window.google.maps.LatLngBounds();
@@ -134,11 +135,19 @@ function GetUserLocation() {
         console.log('result', result);
     }
 
-    const breweryAddress = {
-        address: '2005 2nd Ave',
-        city: 'Anoka'
-    }
+
+    console.log('brewery list length', breweryList.length);
+    // const breweryAddress = {
+    //     address: '2005 2nd Ave',
+    //     city: 'Anoka'
+    // }
+
+    
     const getCoordinates = () => {
+        const breweryAddress = {
+            address: breweryList[0].address,
+            city: breweryList[0].city
+        }
         dispatch({ type: 'FETCH_BREWERY_COORDINATES', payload: breweryAddress })
     }
 
