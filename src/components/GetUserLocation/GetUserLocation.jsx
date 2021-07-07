@@ -35,7 +35,8 @@ function GetUserLocation() {
     const dispatch = useDispatch();
     // get user location from redux store
     const location = useSelector(store => store.location);
-    const userFavorites = useSelector(store => store.breweryList);
+    // const userFavorites = useSelector(store => store.breweryList);
+    const allBreweries = useSelector(store => store.breweryList);
     // states to temporarily store google results for my own use in parsing data responses
     const [locationData, setLocationData] = useState([]);
     const [googleResponse, setGoogleResponse] = useState({});
@@ -44,6 +45,8 @@ function GetUserLocation() {
     useEffect(() => {
         // get list of user's favorite breweries on page load
         dispatch({ type: 'FETCH_FAVORITE_BREWERIES' })
+        // get list of all breweries on page load
+        dispatch({ type: 'FETCH_ALL_BREWERIES'})
 
         function callback(map) {
             const bounds = new window.google.maps.LatLngBounds();
@@ -122,16 +125,28 @@ function GetUserLocation() {
         }
     }
 
-    
+    let sortedByDistanceArray = [];
     // playing around with the Google Geometry Library
     const geometryLibraryDistance = () => {
-        const origin = new google.maps.LatLng(44.8969841, -93.3669736); // home
-        console.log(origin);
-        const destination = new google.maps.LatLng(45.19812039, -93.38952559) // 10k
-        console.log(destination);
-        const result = google.maps.geometry.spherical.computeDistanceBetween(destination, origin);
+        const userLatitude = location.userLocation.latitude;
+        const userLongitude = location.userLocation.longitude;
+        const origin = new google.maps.LatLng(userLatitude, userLongitude); // home
+        
+        // loop over breweries and find the Spherical Geometry distance between them
+        allBreweries.forEach(brewery => {
+            const destination = new google.maps.LatLng(brewery.latitude, brewery.longitude)
+            const result = google.maps.geometry.spherical.computeDistanceBetween(destination, origin);
+            brewery.sphericalDistance = result;
+        })
+        // const destination = new google.maps.LatLng(45.19812039, -93.38952559) // 10k
+        // console.log(destination);
+        // const result = google.maps.geometry.spherical.computeDistanceBetween(destination, origin);
         // const result = google.maps.geometry.spherical.computeHeading(destination, origin);
-        console.log('result', result);
+        console.log(allBreweries);
+        sortedByDistanceArray = allBreweries.sort(function(a, b) {
+            return a.sphericalDistance - b.sphericalDistance;
+        })
+        console.log(sortedByDistanceArray);
     }
 
 
