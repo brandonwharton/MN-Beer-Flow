@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { Loader } from '@googlemaps/js-api-loader'
 require('dotenv').config();
 
 import Button from '@material-ui/core/Button';
@@ -19,15 +20,32 @@ const center = {
 };
 
 const apiKey = process.env.REACT_APP_MAPS_API_KEY;
+const libraries = ['geometry'];
+
 
 // gets the user's location using Geolocation API
 function GetUserLocation() {
     // load google maps data
+    // const loader = new Loader({
+    //     apiKey: apiKey,
+    //     version: "weekly",
+    //     libraries: ["geometry"]
+    // })
+
+    // loader
+    // .load()
+    // .then(() =>{
+
+    // })
+    // .catch(error =>{
+    //     console.log('error with maps', error);
+    // })
+
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: apiKey,
-        // libraries: ["Places"]
-    })
+        libraries,
+    });
 
     // const [map, setMap] = useState(null)
 
@@ -69,7 +87,7 @@ function GetUserLocation() {
         });
     }
     const calculateDistances = () => {
-        if (isLoaded && location.userLocation.latitude) {
+        if (isLoaded  && location.userLocation.latitude) {
         const origin1 = new google.maps.LatLng(location.userLocation.latitude, location.userLocation.longitude); // home
         // create destinations for google to find
         let destinationArray = [];
@@ -118,14 +136,22 @@ function GetUserLocation() {
 
     // playing around with the Google Geometry Library
     const geometryLibraryDistance = () => {
-        const origin = new google.maps.LatLng(44.8969841, 93.3669736); // home
+        const origin = new google.maps.LatLng(44.8969841, -93.3669736); // home
         console.log(origin);
-        const destination = new google.maps.LatLng(45.19812039, -93.38952559)
+        const destination = new google.maps.LatLng(45.19812039, -93.38952559) // 10k
         console.log(destination);
         const result = google.maps.geometry.spherical.computeDistanceBetween(destination, origin);
+        // const result = google.maps.geometry.spherical.computeHeading(destination, origin);
         console.log('result', result);
     }
 
+    const breweryAddress = {
+        address: '2005 2nd Ave',
+        city: 'Anoka'
+    }
+    const getCoordinates = () => {
+        dispatch({ type: 'FETCH_BREWERY_COORDINATES', payload: breweryAddress })
+    }
 
 
     const showMeState = () => {
@@ -183,6 +209,13 @@ function GetUserLocation() {
                 onClick={showMeState}
             >
                 Show me State
+            </Button>
+            <Button 
+                variant="contained"
+                color="secondary"
+                onClick={getCoordinates}
+            >
+                Get Coordinates
             </Button>
         </div>
     ) : <></>
