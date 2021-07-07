@@ -23,7 +23,8 @@ function AddComment({breweryId}) {
     }
 
     // click handler to dispatch newComment to comments saga
-    const handleClick = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault();
         // send the newComment body along with the id of the brewery it's being added to
         dispatch({ type: 'CREATE_NEW_COMMENT', payload: { 
             newComment: newComment, 
@@ -36,24 +37,27 @@ function AddComment({breweryId}) {
 
     return (
         <div className="container">
-            <TextField
-                inputProps={{ maxLength: 255 }}
-                className="text-field"
-                label="leave a comment"
-                variant="outlined"
-                onChange={handleChange}
-                value={newComment}
-            >
-            </TextField>
-            <div className="form-button">
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleClick}
+            <form onSubmit={handleSubmit}>
+                <TextField
+                    inputProps={{ maxLength: 255 }}
+                    className="text-field"
+                    label="leave a comment"
+                    variant="outlined"
+                    onChange={handleChange}
+                    value={newComment}
                 >
-                    Add Comment
-                </Button>
-            </div>
+                </TextField>
+                <div className="form-button">
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                    >
+                        Add Comment
+                    </Button>
+                </div>
+            </form>
         </div>
 
     )
