@@ -57,39 +57,11 @@ function FindFiveClosest() {
     console.log(userLocation);
     if (allBreweries.length > 0 && userLocation.latitude) {
         let sortedArray = closestGeometryDistance(allBreweries, userLocation)
-        slicedArray = sortedArray.slice(0,6);
-        dispatch({ type: 'SET_BREWERY_DATA', payload: sortedArray })
+        slicedArray = sortedArray.slice(0,5);
     } else {
         console.log('no data yet');
     }
 
-    const displayFiveClosest = () => {
-        for (let i = 0; i < 5; i++) {
-            console.log('in loop for', i);
-            const brewery = breweryList[i];
-            return (
-                <div>
-                    <Card className={classes.card} onClick={() => handleClick(brewery.id)}>
-                        <CardHeader
-                            title={brewery.name}
-                        >
-                        </CardHeader>
-                        <CardMedia
-                            className={classes.media}
-                            image={brewery.image_url}
-                        />
-                        <CardContent>
-                            <Typography variant="h6" component="h6">
-                                {brewery.city}
-                            </Typography>
-                        </CardContent>
-
-                    </Card>
-                    <AverageRating averageRating={brewery.average_rating} />
-                </div>
-            )
-        }
-    }
 
     return (
         <div className="App-main-position">
@@ -98,9 +70,29 @@ function FindFiveClosest() {
             </Typography>
             <Grid container className={classes.root} spacing={2} justify={'center'}>
                 <Grid item xs={10}>
-                    {breweryList.length > 0 &&
+                    {slicedArray.length > 0 &&
                     <div>
-                        {displayFiveClosest()}
+                        {slicedArray.map(brewery => (
+                            <div key={brewery.id}>
+                                <Card className={classes.card} onClick={() => handleClick(brewery.id)}>
+                                    <CardHeader
+                                        title={brewery.name}
+                                    >
+                                    </CardHeader>
+                                    <CardMedia
+                                        className={classes.media}
+                                        image={brewery.image_url}
+                                    />
+                                    <CardContent>
+                                        <Typography variant="h6" component="h6">
+                                            {brewery.city}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                                <AverageRating averageRating={brewery.average_rating} />
+                            </div>
+                        ))}
+  
                     </div>
                     }
                 </Grid>
