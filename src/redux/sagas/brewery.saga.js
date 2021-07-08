@@ -115,7 +115,6 @@ function* brewerySaga () {
     // fetch all breweries
     yield takeLatest('FETCH_ALL_BREWERIES', fetchAllBreweries);
 
-
     // request from FindFiveClosest to find the five closest breweries to the user's location
     // yield takeLatest('FETCH_FIVE_CLOSEST_BREWERIES', fetchFiveClosest);
 }

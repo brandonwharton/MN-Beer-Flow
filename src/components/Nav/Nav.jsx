@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 // Material-UI components
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -16,7 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 
 function Nav() {
- 
+
   const user = useSelector((store) => store.user);
   // state for opening and closing menu
   const [anchorEl, setAnchorEl] = useState(null);
@@ -54,13 +54,13 @@ function Nav() {
             <Link className="navLink" to="/search">
               Find A Brewery
             </Link>
-            <Button 
+            <Button
               className="menu-button"
               aria-controls="simple-menu"
               aria-haspopup="true"
               onClick={handleClick}
             >
-              <MenuIcon color="error"/>
+              <MenuIcon color="error" />
             </Button>
             <Menu
               id="simple-menu"
@@ -69,6 +69,11 @@ function Nav() {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
+              <MenuItem onClick={handleClose}>
+                <Link className="navLink-menu" to="/closest">
+                  See What's Close
+                </Link>
+              </MenuItem>
               <MenuItem onClick={handleClose}>
                 <Link className="navLink-menu" to="/random">
                   Go With the Flow

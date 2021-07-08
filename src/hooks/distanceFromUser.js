@@ -2,20 +2,22 @@
 // reusable function that takes in an array of brewery objects and the user's geographical coordinates, then uses the Google Distance Matrix to 
 // determine an accurate distance and drive time between the user and each of the given breweries
 const distanceFromUser = (inputArray, userLocation) => {
+    console.log('got to DistanceFromUser', inputArray, userLocation);
+    
     const origin = new google.maps.LatLng(userLocation.latitude, userLocation.longitude);
     // // create destinations for google to find
-    // let destinationArray = [];
-    // // go through list of user's favorite breweries, store the address information for each in the destination array
-    // userFavorites.forEach(brewery => {
-    //     console.log('brewery details', brewery);
-    //     destinationArray.push(`${brewery.address} ${brewery.city}`);
-    // })
+    let destinationArray = [];
+    // go through list of user's favorite breweries, store the address information for each in the destination array
+    inputArray.forEach(brewery => {
+        console.log('brewery details', brewery);
+        destinationArray.push(`${brewery.address} ${brewery.city}`);
+    })
     // request to Googles Distance Matrix service to get multiple sets of locatations data
     const service = new google.maps.DistanceMatrixService();
     service.getDistanceMatrix(
         {
-            origins: [origin1],
-            destinations: inputArray,
+            origins: [origin],
+            destinations: destinationArray,
             travelMode: 'DRIVING',
         }, callback);
 
@@ -46,11 +48,12 @@ const distanceFromUser = (inputArray, userLocation) => {
                 }
                 resultsArray.push(newDistanceObject);
             }
-            console.log(resultsArray);
+            console.log('results array', resultsArray);
+            
+            return resultsArray;
         }
     }
 }
-
 
 
 export default distanceFromUser

@@ -6,7 +6,7 @@ import { useEffect } from "react";
 // components
 import SearchBar from '../SearchBar/SearchBar';
 import SearchBreweryResult from '../SearchBreweryResult/SearchBreweryResult';
-import FindFiveClosest from '../FindFiveClosest/FindFiveClosest';
+
 import GetUserLocation from '../GetUserLocation/GetUserLocation';
 // Material-UI components
 import { makeStyles } from '@material-ui/core/styles';
@@ -86,7 +86,7 @@ function SearchBreweries() {
                         color="primary"
                         onClick={handleClick}
                         >
-                            Find 5 Closest
+                            See What's Close
                         </Button>
                     </div>
                 </div>

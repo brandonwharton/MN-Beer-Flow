@@ -18,11 +18,12 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import './App.css';
 // my components
 import Header from '../Header/Header';
+import GetUserLocation from '../GetUserLocation/GetUserLocation';
 import MyFavoritesList from '../MyFavoritesList/MyFavoritesList';
 import MyCommentsList from '../MyCommentsList/MyCommentsList';
 import BreweryDetails from '../BreweryDetails/BreweryDetails';
 import SearchBreweries from '../SearchBreweries/SearchBreweries';
-import FindFiveClosest from '../FindFiveClosest/FindFiveClosest';
+import FindTenClosest from '../FindTenClosest/FindTenClosest';
 import RandomBrewery from '../RandomBrewery/RandomBrewery';
 import LocationPractice from '../LocationPractice/LocationPractice';
 // Material-UI components
@@ -85,6 +86,7 @@ function App() {
     <Router>
       <MuiThemeProvider theme={theme}>
       <div>
+        <GetUserLocation />
         <Header />
         <Nav />
         <Switch>
@@ -170,7 +172,7 @@ function App() {
             exact
             path="/closest"
           >
-            <FindFiveClosest />
+            <FindTenClosest />
           </ProtectedRoute>
           <ProtectedRoute
             path="/random"
