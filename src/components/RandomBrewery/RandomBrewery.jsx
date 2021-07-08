@@ -1,13 +1,22 @@
 // hooks
 import { useDispatch } from 'react-redux';
-// Material-UI components
-import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router';
+// Material-UI components
+
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import { useState } from 'react';
+
 
 // component to randomly select a brewery and send the user to the BreweryDetails view for it
 function RandomBrewery() {
     const dispatch = useDispatch();
     const history = useHistory();
+
+    const [distanceLimit, setDistanceLimit] = useState('none');
 
     // function to navigate user to the details page for a brewery
     const navToRandom = (id) => {
@@ -28,24 +37,54 @@ function RandomBrewery() {
         dispatch({ type: 'FETCH_ANY_RANDOM_BREWERY', payload: navToRandom });
     }
 
+    const handleChange = (event) => {
+        setDistanceLimit(event.target.value);
+    }
 
 
-    return(
+    console.log(distanceLimit);
+    return (
         <div className="App-main-position">
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={randomFromFavorites}
+            <Typography variant="h5" component="h5" align="center">
+                Pick a random brewery from anywhere in MN:
+            </Typography>
+            <div className="form-button">
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={anyRandomBrewery}
+                >
+                    Be Brave
+                </Button>
+            </div>
+            <Typography variant="h5" component="h5" align="center">
+                Or from just among your favorites:
+            </Typography>
+            <div className="form-button">
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={randomFromFavorites}
+                >
+                    From Favorites
+                </Button>
+            </div>
+            <Typography variant="h5" component ="h5" align="center">
+                Optional: select a maximum distance away in miles
+            </Typography>
+            <InputLabel id="distance-limit-label">Distance Limit</InputLabel>
+            <Select
+                labelId="distance-limit-label"
+                id="distance-limit"
+                value={distanceLimit}
+                onChange={handleChange}
             >
-                From Favorites
-            </Button>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={anyRandomBrewery}
-            >
-                Be Brave
-            </Button>
+                <MenuItem value={'none'}>None</MenuItem>
+                <MenuItem value={5}>Five</MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={25}>Twenty Five</MenuItem>
+                <MenuItem value={50}>Fifty</MenuItem>
+            </Select>
         </div>
     )
 }
