@@ -23,7 +23,7 @@ function FindFiveClosest() {
 
 
     console.log(userLocation);
-    if (allBreweries.length === 176) {
+    if (allBreweries.length > 0) {
         console.log(allBreweries);
     } else {
         console.log('no data yet');
@@ -32,6 +32,7 @@ function FindFiveClosest() {
     return (
         <div>
 
+            <GetUserLocation />
         </div>
     )
 }
