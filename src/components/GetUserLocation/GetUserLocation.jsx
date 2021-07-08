@@ -155,25 +155,6 @@ function GetUserLocation() {
         console.log('google response', googleResponse);
     }
 
-    // function callback(response, status) {
-    //     if (status == 'OK') {
-    //         var origins = response.originAddresses;
-    //         var destinations = response.destinationAddresses;
-
-    //         for (let i = 0; i < origins.length; i++) {
-    //             var results = response.rows[i].elements;
-    //             for (let j = 0; j < results.length; j++) {
-    //                 var element = results[j];
-    //                 var distance = element.distance?.text;
-    //                 var duration = element.duration?.text;
-    //                 var from = origins[i];
-    //                 var to = destinations[j];
-    //                 console.log('in callback distance duration from to:', distance, duration, from, to);
-    //             }
-    //         }
-    //     }
-    // }
-    
 
     console.log('location reducer', location.userLocation);
     return isLoaded ? (
