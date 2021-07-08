@@ -20,18 +20,14 @@ const center = {
     lng: -93.3670538,
 };
 
-const apiKey = process.env.REACT_APP_MAPS_API_KEY;
-const libraries = ['geometry'];
-
-
 // gets the user's location using Geolocation API
-function LocationPractice() {
+function LocationPractice({isLoaded}) {
     // load Map scripts
-    const { isLoaded } = useJsApiLoader({
-        id: 'google-map-script',
-        googleMapsApiKey: apiKey,
-        libraries,
-    });
+    // const { isLoaded } = useJsApiLoader({
+    //     id: 'google-map-script',
+    //     googleMapsApiKey: apiKey,
+    //     libraries,
+    // });
 
     const dispatch = useDispatch();
     // get user location from redux store
@@ -115,13 +111,13 @@ function LocationPractice() {
 
     let sortedByDistanceArray = [];
     // playing around with the Google Geometry Library
-    const geometryLibraryDistance = () => {
+    const geometryLibraryDistance = (inputArray, userLocation) => {
         const userLatitude = location.userLocation.latitude;
         const userLongitude = location.userLocation.longitude;
         const origin = new google.maps.LatLng(userLatitude, userLongitude); // home
         
         // loop over breweries and find the Spherical Geometry distance between them
-        allBreweries.forEach(brewery => {
+        inputArray.forEach(brewery => {
             const destination = new google.maps.LatLng(brewery.latitude, brewery.longitude)
             const result = google.maps.geometry.spherical.computeDistanceBetween(destination, origin);
             brewery.sphericalDistance = result;

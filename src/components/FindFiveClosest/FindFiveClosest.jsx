@@ -11,6 +11,8 @@ import Button from '@material-ui/core/Button';
 
 function FindFiveClosest() {
     const dispatch = useDispatch();
+
+    const sortedArray = nameAbove(inputArray, userLocation);
     // look at reducer that's holding user's geographical coordinates
     const userLocation = useSelector(store => store.location.userLocation);
 

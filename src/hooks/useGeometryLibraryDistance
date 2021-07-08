@@ -1,0 +1,30 @@
+
+
+
+const geometryLibraryDistance = (inputArray, userLocation) => {
+    let sortedByDistanceArray = []
+    const userLatitude = location.userLocation.latitude;
+    const userLongitude = location.userLocation.longitude;
+    const origin = new google.maps.LatLng(userLatitude, userLongitude); // home
+    
+    // loop over breweries and find the Spherical Geometry distance between them
+    inputArray.forEach(brewery => {
+        const destination = new google.maps.LatLng(brewery.latitude, brewery.longitude)
+        const result = google.maps.geometry.spherical.computeDistanceBetween(destination, origin);
+        brewery.sphericalDistance = result;
+    })
+    // const destination = new google.maps.LatLng(45.19812039, -93.38952559) // 10k
+    // console.log(destination);
+    // const result = google.maps.geometry.spherical.computeDistanceBetween(destination, origin);
+    // const result = google.maps.geometry.spherical.computeHeading(destination, origin);
+    console.log(allBreweries);
+    sortedByDistanceArray = allBreweries.sort(function(a, b) {
+        return a.sphericalDistance - b.sphericalDistance;
+    })
+    return sortedByDistanceArray
+}
+
+
+
+
+export default geometryLibraryDistance;

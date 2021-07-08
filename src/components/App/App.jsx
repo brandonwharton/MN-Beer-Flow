@@ -5,8 +5,9 @@ import {
   Redirect,
   Switch,
 } from 'react-router-dom';
-
 import { useDispatch } from 'react-redux';
+import { useJsApiLoader } from '@react-google-maps/api';
+require('dotenv').config();
 // provided boilerplate components
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
@@ -60,13 +61,21 @@ const theme = createMuiTheme({
   },
 });
 
-
+// needed information for Google Maps to be brought in 
+const apiKey = process.env.REACT_APP_MAPS_API_KEY;
+const libraries = ['geometry'];
 
 
 
 
 function App() {
   const dispatch = useDispatch();
+  // load Map scripts
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: apiKey,
+    libraries,
+  });
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
@@ -171,7 +180,7 @@ function App() {
           <ProtectedRoute
             path="/location"
           >
-            <LocationPractice />
+            <LocationPractice isLoaded={isLoaded}/>
           </ProtectedRoute>
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
