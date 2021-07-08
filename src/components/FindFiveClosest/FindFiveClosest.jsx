@@ -1,25 +1,53 @@
 // hooks
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import closestGeometryDistance from '../../hooks/closestGeometryDistance';
 // components
 import GetUserLocation from '../GetUserLocation/GetUserLocation';
+import AverageRating from '../AverageRating/AverageRating';
 // Material-UI components
-import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent'
+
+// Material-UI styles
+const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 1,
+        alignItems: 'center',
+        alignContent: 'center',
+    },
+    control: {
+        padding: theme.spacing(2),
+    },
+    card: {
+        backgroundColor: '#cbcbc9',
+    },
+    media: {
+        height: 0,
+        paddingTop: '56.25%',
+    },
+}));
 
 
 // component that finds the five closest breweries to the user's current location and displays them
-
 function FindFiveClosest() {
-    const dispatch = useDispatch();
+    // use the correct Material-UI styles
+    const classes = useStyles();
 
-    let sortedArray = []
-    
+    const dispatch = useDispatch();
+    let slicedArray = []
+
     // look at reducer that's holding user's geographical coordinates
     const userLocation = useSelector(store => store.location.userLocation);
 
     const allBreweries = useSelector(store => store.breweries.allBreweries);
-    
+    const breweryList = useSelector(store => store.breweries.breweryList);
+
     useEffect(() => {
         dispatch({ type: 'FETCH_ALL_BREWERIES' });
     }, []);
@@ -27,15 +55,56 @@ function FindFiveClosest() {
 
 
     console.log(userLocation);
-    if (allBreweries.length > 0) {
-        sortedArray = closestGeometryDistance(allBreweries, userLocation);
-        console.log('in sortedArray', sortedArray);
+    if (allBreweries.length > 0 && userLocation.latitude) {
+        let sortedArray = closestGeometryDistance(allBreweries, userLocation)
+        slicedArray = sortedArray.slice(0,6);
+        dispatch({ type: 'SET_BREWERY_DATA', payload: sortedArray })
     } else {
         console.log('no data yet');
     }
 
+    const displayFiveClosest = () => {
+        for (let i = 0; i < 5; i++) {
+            console.log('in loop for', i);
+            const brewery = breweryList[i];
+            return (
+                <div>
+                    <Card className={classes.card} onClick={() => handleClick(brewery.id)}>
+                        <CardHeader
+                            title={brewery.name}
+                        >
+                        </CardHeader>
+                        <CardMedia
+                            className={classes.media}
+                            image={brewery.image_url}
+                        />
+                        <CardContent>
+                            <Typography variant="h6" component="h6">
+                                {brewery.city}
+                            </Typography>
+                        </CardContent>
+
+                    </Card>
+                    <AverageRating averageRating={brewery.average_rating} />
+                </div>
+            )
+        }
+    }
+
     return (
-        <div>
+        <div className="App-main-position">
+            <Typography variant="h3" component="h3" align="center">
+                Closest to You:
+            </Typography>
+            <Grid container className={classes.root} spacing={2} justify={'center'}>
+                <Grid item xs={10}>
+                    {breweryList.length > 0 &&
+                    <div>
+                        {displayFiveClosest()}
+                    </div>
+                    }
+                </Grid>
+            </Grid>
 
             <GetUserLocation />
         </div>
