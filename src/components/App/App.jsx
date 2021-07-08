@@ -25,7 +25,7 @@ import BreweryDetails from '../BreweryDetails/BreweryDetails';
 import SearchBreweries from '../SearchBreweries/SearchBreweries';
 import FindTenClosest from '../FindTenClosest/FindTenClosest';
 import RandomBrewery from '../RandomBrewery/RandomBrewery';
-import LocationPractice from '../LocationPractice/LocationPractice';
+import CreateGoogleMap from '../CreateGoogleMap/CreateGoogleMap';
 // Material-UI components
 import '@fontsource/roboto';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
@@ -179,12 +179,15 @@ function App() {
           >
             <RandomBrewery />
           </ProtectedRoute>
-          <ProtectedRoute
+
+          {/* Route to a Google Map component that isn't ready for production*/}
+          {/* <ProtectedRoute
             path="/location"
           >
-            <LocationPractice isLoaded={isLoaded}/>
-          </ProtectedRoute>
+            <CreateGoogleMap isLoaded={isLoaded}/>
+          </ProtectedRoute> */}
           {/* If none of the other routes matched, we will show a 404. */}
+          
           <Route>
             <div className="App-main-position">
               <Typography variant="h2" component="h2" align="center">
