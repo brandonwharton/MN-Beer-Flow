@@ -10,7 +10,18 @@ const breweryList = (state = [], action) => {
     }
 }
 
+// reducer to hold favorite breweries
+const favoritesList = (state = [], action) => {
+    switch(action.type) {
+        case 'SET_FAVORITES_DATA':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 
 export default combineReducers({
     breweryList,
+    favoritesList,
 });

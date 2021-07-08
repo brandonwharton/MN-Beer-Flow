@@ -6,7 +6,7 @@ function* fetchUserFavorites() {
     try {
         const userFavorites = yield axios.get(`/api/brewery/user`);
         // send favorite breweries data to brewery reducer
-        yield put({ type: 'SET_BREWERY_DATA', payload: userFavorites.data });
+        yield put({ type: 'SET_FAVORITES_DATA', payload: userFavorites.data });
     } catch (error) {
         console.error('Error with fetchUserFavorites in brewerySaga', error);
     }
@@ -115,7 +115,7 @@ function* brewerySaga () {
     // fetch all breweries
     yield takeLatest('FETCH_ALL_BREWERIES', fetchAllBreweries);
 
-    
+
     // request from FindFiveClosest to find the five closest breweries to the user's location
     // yield takeLatest('FETCH_FIVE_CLOSEST_BREWERIES', fetchFiveClosest);
 }
