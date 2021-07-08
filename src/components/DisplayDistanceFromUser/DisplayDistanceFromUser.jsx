@@ -12,7 +12,7 @@ function DisplayDistanceFromUser ({brewery}) {
     
     useEffect(() => {
         getDistanceFromUser();
-    }, [])
+    }, [brewery])
 
     // uses Google's Distance Matrix to find the distance between the user and a provided brewery
     const getDistanceFromUser = () => {
