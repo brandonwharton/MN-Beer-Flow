@@ -18,6 +18,7 @@ function RandomBrewery() {
     const history = useHistory();
 
     const [distanceLimit, setDistanceLimit] = useState('none');
+    const [noResults, setNoResults] = useState(false);
 
     const userLocation = useSelector(store => store.location.userLocation);
 
@@ -35,6 +36,8 @@ function RandomBrewery() {
             distanceLimit: distanceLimit,
             userLocation: userLocation
         }});
+
+        
     }
 
     // click handler to select a random brewery from among every brewery in database

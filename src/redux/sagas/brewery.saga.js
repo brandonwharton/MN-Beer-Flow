@@ -62,12 +62,30 @@ function* fetchRandomFavoriteBrewery (action) {
     try {
         // GET request to get the array of user's favorites
         const userFavorites = yield axios.get(`/api/brewery/user`);
+        // variables for later
+        let randomIndex;
+        let randomBrewery;
+
+        // if the user didn't request a distance limit radius, allow any result to be chosen
+        if (action.payload.distanceLimit === 'none') {
         // selects a random number between 0 and the number of elements in the userFavorites array
-        const randomIndex = Math.floor(Math.random() * userFavorites.data.length);
-        // uses the randomly generated number to store a random brewery from the array of favorites
-        const randomFavorite = userFavorites.data[randomIndex];
+            randomIndex = Math.floor(Math.random() * userFavorites.data.length);
+            // save the details for the brewery at the random index
+            randomBrewery = userFavorites.data[randomIndex];
+        } else {
+            // run closestGeometryDistance on the userFavorites array to add the Spherical Geometry distance between them and each brewery
+            const breweryDistanceArray = closestGeometryDistance(userFavorites.data, action.payload.userLocation);
+            // filter out breweries that are too far away. NOTE: This is an approximation, Spherical Geometry isn't perfect for converting
+            // distance between points into actual driving distance when roads need to be used
+            const filteredArray = breweryDistanceArray.filter(brewery => brewery.sphericalDistance < (1100 * action.payload.distanceLimit) );
+            // select a random number between 0 and the number of elements in the filtered array
+            randomIndex = Math.floor(Math.random() * filteredArray.length);
+            // save the details for the brewery at the random index
+            randomBrewery = filteredArray[randomIndex];
+        }
+
         // action.payload contains a callback function that takes in a brewery id and navigates to the BreweryDetails page for that id
-        yield action.payload.navToRandom(randomFavorite.id);
+        yield action.payload.navToRandom(randomBrewery.id);
     } catch (error) {
         console.error('Error with fetchRandomFavoriteBrewery in brewerySaga', error);
     }
