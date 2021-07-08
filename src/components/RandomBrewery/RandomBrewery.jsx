@@ -27,18 +27,6 @@ function RandomBrewery() {
         history.push(`/details/${id}`);
     }
 
-    // click handler to select a random brewery from the user's favorites
-    const randomFromFavorites = () => {
-        // dispatches to brewery saga to find a random choice from the user's favorites list 
-        // passing navToRandom to allow navigation from inside a Saga
-        dispatch({ type: 'FETCH_RANDOM_FAVORITE_BREWERY', payload: {
-            navToRandom: navToRandom,
-            distanceLimit: distanceLimit,
-            userLocation: userLocation
-        }});
-
-        
-    }
 
     // click handler to select a random brewery from among every brewery in database
     const anyRandomBrewery = () => {
@@ -49,7 +37,25 @@ function RandomBrewery() {
             distanceLimit: distanceLimit,
             userLocation: userLocation
         }});
+        // set state of noResults to true to render a message if the view doesn't change
+        setNoResults(true);
     }
+
+
+    // click handler to select a random brewery from the user's favorites
+    const randomFromFavorites = () => {
+        // dispatches to brewery saga to find a random choice from the user's favorites list 
+        // passing navToRandom to allow navigation from inside a Saga
+        dispatch({ type: 'FETCH_RANDOM_FAVORITE_BREWERY', payload: {
+            navToRandom: navToRandom,
+            distanceLimit: distanceLimit,
+            userLocation: userLocation
+        }});
+        // set state of noResults to true to render a message if the view doesn't change
+        setNoResults(true);
+    }
+
+
 
     const handleChange = (event) => {
         setDistanceLimit(event.target.value);
@@ -99,6 +105,12 @@ function RandomBrewery() {
                 <MenuItem value={25}>Twenty Five</MenuItem>
                 <MenuItem value={50}>Fifty</MenuItem>
             </Select>
+            {/* Conditional rendering if a user selected a distance that was too close and no results were found */}
+            {noResults && 
+            <Typography variant="h4" component="h4">
+                No results exist within chosen distance limit. Please widen your radius.
+            </Typography>
+            }
             <GetUserLocation />
         </div>
     )
