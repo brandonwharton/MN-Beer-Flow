@@ -36,8 +36,8 @@ function LocationPractice() {
     const dispatch = useDispatch();
     // get user location from redux store
     const location = useSelector(store => store.location);
-    // const userFavorites = useSelector(store => store.breweryList);
-    const allBreweries = useSelector(store => store.breweryList.breweryList);
+    
+    const allBreweries = useSelector(store => store.breweries.allBreweries);
     // states to temporarily store google results for my own use in parsing data responses
     const [locationData, setLocationData] = useState([]);
     const [googleResponse, setGoogleResponse] = useState({});

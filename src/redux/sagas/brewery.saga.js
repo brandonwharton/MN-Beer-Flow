@@ -93,7 +93,7 @@ function* fetchAnyRandomBrewery (action) {
 function* fetchAllBreweries () {
     try {
         const allBreweries = yield axios.get('/api/brewery');
-        yield put({ type: 'SET_BREWERY_DATA', payload: allBreweries.data})
+        yield put({ type: 'SET_ALL_BREWERIES', payload: allBreweries.data})
     } catch (error) {
         console.error('Error with fetchAllBreweries in brewerySaga', error);
     }

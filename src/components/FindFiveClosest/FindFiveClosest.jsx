@@ -14,7 +14,7 @@ function FindFiveClosest() {
     // look at reducer that's holding user's geographical coordinates
     const userLocation = useSelector(store => store.location.userLocation);
 
-    const allBreweries = useSelector(store => store.breweryList.breweryList);
+    const allBreweries = useSelector(store => store.breweries.allBreweries);
     
     useEffect(() => {
         dispatch({ type: 'FETCH_ALL_BREWERIES' });

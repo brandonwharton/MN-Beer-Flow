@@ -30,7 +30,7 @@ function SearchBreweries() {
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const searchedList = useSelector(store => store.breweryList.breweryList);
+    const searchedList = useSelector(store => store.breweries.breweryList);
     // state for holding search string
     const [searchString, setSearchString] = useState('');
     // using params to track searches after a user has made one while still staying on this base component

@@ -20,8 +20,19 @@ const favoritesList = (state = [], action) => {
     }
 }
 
+// reducer to hold a list of all breweries for when logic needs to be done on the client side before displaying filtered results
+const allBreweries = (state = [], action) => {
+    switch(action.type) {
+        case 'SET_ALL_BREWERIES':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 
 export default combineReducers({
     breweryList,
     favoritesList,
+    allBreweries,
 });
