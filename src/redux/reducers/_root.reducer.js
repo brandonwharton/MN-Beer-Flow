@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import errors from './errors.reducer';
 import user from './user.reducer';
-import breweryList from './brewery.reducer';
+import breweries from './brewery.reducer';
 import commentsList from './comments.reducer';
 import ratingsData from './ratings.reducer';
 import location from './location.reducer';
@@ -15,7 +15,7 @@ import location from './location.reducer';
 const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
-  breweryList, // contains an array of brewery data
+  breweries, // contains an array of brewery data
   commentsList, // contains an array of comments data
   ratingsData, // contains an object with ratings and favorites data
   location, // contains a reducer with the user's location :: ADD MORE DETAIL

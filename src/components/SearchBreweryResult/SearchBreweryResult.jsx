@@ -56,7 +56,6 @@ function SearchBreweryResult({brewery}) {
                     className={classes.media}
                     image={brewery.image_url}
                 />
-                {/* evaluate needs below this */}
                 <CardContent>
                     <Typography variant="h6" component="h6">
                         {brewery.city}

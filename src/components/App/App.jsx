@@ -5,8 +5,9 @@ import {
   Redirect,
   Switch,
 } from 'react-router-dom';
-
 import { useDispatch } from 'react-redux';
+import { useJsApiLoader } from '@react-google-maps/api';
+require('dotenv').config();
 // provided boilerplate components
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
@@ -17,12 +18,14 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import './App.css';
 // my components
 import Header from '../Header/Header';
+import GetUserLocation from '../GetUserLocation/GetUserLocation';
 import MyFavoritesList from '../MyFavoritesList/MyFavoritesList';
 import MyCommentsList from '../MyCommentsList/MyCommentsList';
 import BreweryDetails from '../BreweryDetails/BreweryDetails';
 import SearchBreweries from '../SearchBreweries/SearchBreweries';
+import FindTenClosest from '../FindTenClosest/FindTenClosest';
 import RandomBrewery from '../RandomBrewery/RandomBrewery';
-import GetUserLocation from '../GetUserLocation/GetUserLocation';
+import CreateGoogleMap from '../CreateGoogleMap/CreateGoogleMap';
 // Material-UI components
 import '@fontsource/roboto';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
@@ -59,13 +62,21 @@ const theme = createMuiTheme({
   },
 });
 
-
+// needed information for Google Maps to be brought in 
+const apiKey = process.env.REACT_APP_MAPS_API_KEY;
+const libraries = ['geometry'];
 
 
 
 
 function App() {
   const dispatch = useDispatch();
+  // load Map scripts
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: apiKey,
+    libraries,
+  });
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
@@ -75,6 +86,7 @@ function App() {
     <Router>
       <MuiThemeProvider theme={theme}>
       <div>
+        <GetUserLocation />
         <Header />
         <Nav />
         <Switch>
@@ -157,16 +169,25 @@ function App() {
           >
           </ProtectedRoute>
           <ProtectedRoute
+            exact
+            path="/closest"
+          >
+            <FindTenClosest />
+          </ProtectedRoute>
+          <ProtectedRoute
             path="/random"
           >
             <RandomBrewery />
           </ProtectedRoute>
-          <ProtectedRoute
+
+          {/* Route to a Google Map component that isn't ready for production*/}
+          {/* <ProtectedRoute
             path="/location"
           >
-            <GetUserLocation />
-          </ProtectedRoute>
+            <CreateGoogleMap isLoaded={isLoaded}/>
+          </ProtectedRoute> */}
           {/* If none of the other routes matched, we will show a 404. */}
+          
           <Route>
             <div className="App-main-position">
               <Typography variant="h2" component="h2" align="center">

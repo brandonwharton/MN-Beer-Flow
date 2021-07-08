@@ -43,7 +43,7 @@ function BreweryDetails() {
     // hold database ID for page that was navigated to
     const { id } = useParams();
     // access data from brewery reducer, data comes in as an array with one element object
-    const brewery = useSelector(store => store.breweryList[0]);
+    const brewery = useSelector(store => store.breweries.breweryList[0]);
     // access data from comments reducer, data comes in as an array of comment objects
     const comments = useSelector(store => store.commentsList);
     // access data from ratings reducer
