@@ -89,6 +89,14 @@ function* fetchAnyRandomBrewery (action) {
     }
 }
 
+function* fetchAllBreweries () {
+    try {
+        const allBreweries = yield axios.get('/api/brewery');
+        yield put({ type: 'SET_BREWERY_DATA', payload: allBreweries.data})
+    } catch (error) {
+        console.error('Error with fetchAllBreweries in brewerySaga', error);
+    }
+}
 
 
 function* brewerySaga () {
@@ -102,6 +110,8 @@ function* brewerySaga () {
     yield takeLatest('FETCH_RANDOM_FAVORITE_BREWERY', fetchRandomFavoriteBrewery)
     // request from the RandomBrewery component to get a random brewery from among the entire database and navigate to that detail page
     yield takeLatest('FETCH_ANY_RANDOM_BREWERY', fetchAnyRandomBrewery)
+    // // fetch all breweries
+    yield takeLatest('FETCH_ALL_BREWERIES', fetchAllBreweries);
 }
 
 export default brewerySaga;

@@ -6,6 +6,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
 // components
 import MyFavoritesItem from '../MyFavoritesItem/MyFavoritesItem';
@@ -38,6 +41,8 @@ function MyFavoritesList() {
     const [searchInput, setSearchInput] = useState('');
     const [searchedArray, setSearchedArray] = useState([]);
     const [foundNoResults, setFoundNoResults] = useState(false);
+    // state for the order by Select menu
+    const [orderBy, setOrderBy] = useState('Rating');
 
     // on page load, get user's favorites
     useEffect(() => {
@@ -47,9 +52,15 @@ function MyFavoritesList() {
 
 
     // change handler for search input
-    const handleChange = (event) => {
+    const handleInputChange = (event) => {
         // adjust search input state on input change
         setSearchInput(event.target.value);
+    }
+
+    // changle handler for the Select menu to order data
+    const handleOrderChange = (event) => {
+        console.log(event.target.value);
+        setOrderBy(event.target.value);
     }
 
     // submit handler for the search favorites feature
@@ -77,7 +88,7 @@ function MyFavoritesList() {
         setSearchInput('');
     }
 
-    console.log(user);
+
     return (
         <div className="App-my-favorites App-main-position">
             {/* Conditionally render the favorites view normally if the user has anything in their favorites */}
@@ -92,7 +103,7 @@ function MyFavoritesList() {
                             label="search favorites"
                             variant="outlined"
                             value={searchInput}
-                            onChange={handleChange}
+                            onChange={handleInputChange}
                         />
                         <div className="form-button">
                             <Button
@@ -105,6 +116,16 @@ function MyFavoritesList() {
                             </Button>
                         </div>
                     </form>
+                    <InputLabel id="favorites-order-by-label">Order By</InputLabel>
+                    <Select
+                        labelId="favorites-order-by-label"
+                        id="favorites-order-by"
+                        value={orderBy}
+                        onChange={handleOrderChange}
+                    >
+                        <MenuItem value={'Rating'}>Your Top Rated</MenuItem>
+                        <MenuItem value={'Closest'}>Closest Distance</MenuItem>
+                    </Select>
                     <Grid container className={classes.root} spacing={2} justify={'center'}>
                         <Grid item xs={10}>
                             {/* conditionally render a no results message for failed searches */}

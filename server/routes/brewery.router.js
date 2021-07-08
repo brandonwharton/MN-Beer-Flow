@@ -52,11 +52,12 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 
 
 // Handles GET requests for all breweries in DB and sends them back to be filtered with a search query
-router.get('/', rejectUnauthenticated, (req, res) =>{
+router.get('/', rejectUnauthenticated, (req, res) => {
     // SQL string to GET all breweries from the brewery table as well as their average rating. If no rating has been provided, average_rating will be null
     const queryText = `SELECT "brewery".*, AVG("user_brewery".rating) AS "average_rating" FROM "brewery"
                        FULL OUTER JOIN "user_brewery" ON "user_brewery".brewery_id = "brewery".id
-                       GROUP BY "brewery".id;`;
+                       GROUP BY "brewery".id
+                       ORDER BY "brewery".id ASC;`;
     // GET request to DB 
     pool.query(queryText)
         .then(result => {
@@ -68,6 +69,25 @@ router.get('/', rejectUnauthenticated, (req, res) =>{
             res.sendStatus(500);
         })
 });
+
+
+router.put('/coordinates/:id', rejectUnauthenticated, (req, res) => {
+    console.log('Got to coordinates PUT with data:', req.body, req.params.id);
+    // sanitized SQL string to update brewery data with latitude and longitude values
+    const queryText = `UPDATE "brewery" SET "latitude" = $1, "longitude" = $2 WHERE "brewery".id = $3;`
+    const values = [req.body.lat, req.body.lng, req.params.id];
+    console.log('values', values);
+    
+    // UPDATE request to DB
+    pool.query(queryText, values)
+        .then(result => {
+            res.sendStatus(201);
+        })
+        .catch(error => {
+            console.log('ERROR: PUT for latitude and longitude', error);
+            res.sendStatus(500);
+        })
+})
 
 
 module.exports = router;
