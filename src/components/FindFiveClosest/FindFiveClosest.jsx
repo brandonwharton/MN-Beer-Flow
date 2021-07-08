@@ -40,7 +40,10 @@ function FindFiveClosest() {
     const classes = useStyles();
 
     const dispatch = useDispatch();
-    let slicedArray = []
+
+    let sortedArray = [];
+    let slicedArray = [];
+    let sliceValue = 5;
 
     // look at reducer that's holding user's geographical coordinates
     const userLocation = useSelector(store => store.location.userLocation);
@@ -56,8 +59,8 @@ function FindFiveClosest() {
 
     console.log(userLocation);
     if (allBreweries.length > 0 && userLocation.latitude) {
-        let sortedArray = closestGeometryDistance(allBreweries, userLocation)
-        slicedArray = sortedArray.slice(0,5);
+        sortedArray = closestGeometryDistance(allBreweries, userLocation)
+        slicedArray = sortedArray.slice(0, sliceValue);
     } else {
         console.log('no data yet');
     }
@@ -92,12 +95,11 @@ function FindFiveClosest() {
                                 <AverageRating averageRating={brewery.average_rating} />
                             </div>
                         ))}
-  
                     </div>
                     }
                 </Grid>
             </Grid>
-
+            
             <GetUserLocation />
         </div>
     )
