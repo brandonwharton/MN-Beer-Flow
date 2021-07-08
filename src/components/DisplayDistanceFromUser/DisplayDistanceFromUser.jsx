@@ -14,22 +14,30 @@ function DisplayDistanceFromUser ({brewery}) {
         getDistanceFromUser();
     }, [])
 
+    // uses Google's Distance Matrix to find the distance between the user and a provided brewery
     const getDistanceFromUser = () => {
-        // save user location provided by location reducer
+        // save user location and destination as objects using data provided by location reducer and props
         const origin = new google.maps.LatLng(userLocation.latitude, userLocation.longitude);
-        // // // create destinations for google to find
+        const destination = new google.maps.LatLng(brewery.latitude, brewery.longitude);
+
+        // this function was originally set up to handle a request between one origin and multiple destinations. I left the code this way to make future
+        // refactoring easier so this component could accomodate an array of destinations instead of one. Code that's commented out was used for this.
+
+        // // create destinations for google to find
         // let destinationArray = [];
         // // go through list of user's favorite breweries, store the address information for each in the destination array
-        // inputArray.forEach(brewery => {
+        // breweryArray.forEach(brewery => {
         //     console.log('brewery details', brewery);
         //     destinationArray.push(`${brewery.address} ${brewery.city}`);
         // })
-        // request to Googles Distance Matrix service to get multiple sets of locatations data
+
+        // request to Googles Distance Matrix service to get locations data
         const service = new google.maps.DistanceMatrixService();
         service.getDistanceMatrix(
             {
                 origins: [origin],
-                destinations: [`${brewery.address} ${brewery.city}`],
+                // destinations can be a Lat/Lng object or as a string of address and city
+                destinations: [destination],
                 travelMode: 'DRIVING',
             }, callback);
 
@@ -41,7 +49,7 @@ function DisplayDistanceFromUser ({brewery}) {
                 const results = response.rows[0].elements
 
                 let resultsArray = [];
-                // loop through each result to store data locally
+                // loop through each result to store data locally, with the current component setup there's only one result in the array
                 for (let j = 0; j < results.length; j++) {
                     const element = results[j];
                     console.log(element);
@@ -49,7 +57,6 @@ function DisplayDistanceFromUser ({brewery}) {
                     const duration = element.duration;
                     const from = origins[0];
                     const to = destinations[j];
-                    // console.log('in callback distance duration from to:', distance, duration, from, to);
 
                     // create an object with the returned distance data and store in the temporary resultsArray
                     const newDistanceObject = {
@@ -60,13 +67,13 @@ function DisplayDistanceFromUser ({brewery}) {
                     }
                     resultsArray.push(newDistanceObject);
                 }
-                console.log('results array', resultsArray);
+                // set local state for distance to the returned value, value comes back in meters
                 setDistanceFromUser(resultsArray[0].distance.value)
             }
         }
     }
 
-    console.log('got to DistanceFromUser', brewery);
+
     return (
         // component renders the distance between the user and the chosen brewery as a number in miles rounded to one decimal point
         <>{(distanceFromUser/1609.34).toFixed(1)}</>

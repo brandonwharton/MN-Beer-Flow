@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import closestGeometryDistance from '../../hooks/closestGeometryDistance';
-import distanceFromUser from '../../hooks/distanceFromUser';
 // components
 import GetUserLocation from '../GetUserLocation/GetUserLocation';
 import AverageRating from '../AverageRating/AverageRating';
@@ -54,7 +53,7 @@ function FindTenClosest() {
     const userLocation = useSelector(store => store.location.userLocation);
 
     const allBreweries = useSelector(store => store.breweries.allBreweries);
-    const breweryList = useSelector(store => store.breweries.breweryList);
+
 
     useEffect(() => {
         dispatch({ type: 'FETCH_ALL_BREWERIES' });
