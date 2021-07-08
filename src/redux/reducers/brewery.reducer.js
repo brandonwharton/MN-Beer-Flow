@@ -1,3 +1,4 @@
+import { combineReducers } from 'redux';
 
 // reducer to hold current state for brewery details
 const breweryList = (state = [], action) => {
@@ -9,4 +10,7 @@ const breweryList = (state = [], action) => {
     }
 }
 
-export default breweryList;
+
+export default combineReducers({
+    breweryList,
+});

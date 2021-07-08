@@ -24,8 +24,9 @@ import MyFavoritesList from '../MyFavoritesList/MyFavoritesList';
 import MyCommentsList from '../MyCommentsList/MyCommentsList';
 import BreweryDetails from '../BreweryDetails/BreweryDetails';
 import SearchBreweries from '../SearchBreweries/SearchBreweries';
+import FindFiveClosest from '../FindFiveClosest/FindFiveClosest';
 import RandomBrewery from '../RandomBrewery/RandomBrewery';
-import GetUserLocation from '../GetUserLocation/GetUserLocation';
+import LocationPractice from '../LocationPractice/LocationPractice';
 // Material-UI components
 import '@fontsource/roboto';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
@@ -178,6 +179,12 @@ function App() {
           >
           </ProtectedRoute>
           <ProtectedRoute
+            exact
+            path="/closest"
+          >
+            <FindFiveClosest />
+          </ProtectedRoute>
+          <ProtectedRoute
             path="/random"
           >
             <RandomBrewery />
@@ -185,7 +192,7 @@ function App() {
           <ProtectedRoute
             path="/location"
           >
-            <GetUserLocation />
+            <LocationPractice />
           </ProtectedRoute>
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>

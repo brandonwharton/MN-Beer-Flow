@@ -35,7 +35,7 @@ function MyFavoritesList() {
 
     const dispatch = useDispatch();
     // access data from brewery reducer
-    const favoriteBreweryList = useSelector(store => store.breweryList)
+    const favoriteBreweryList = useSelector(store => store.breweryList.breweryList)
     const user = useSelector(store => store.user);
     // states for handling the search input and the filtered search results array
     const [searchInput, setSearchInput] = useState('');

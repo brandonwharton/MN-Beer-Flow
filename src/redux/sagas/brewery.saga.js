@@ -89,6 +89,7 @@ function* fetchAnyRandomBrewery (action) {
     }
 }
 
+
 function* fetchAllBreweries () {
     try {
         const allBreweries = yield axios.get('/api/brewery');
@@ -97,6 +98,7 @@ function* fetchAllBreweries () {
         console.error('Error with fetchAllBreweries in brewerySaga', error);
     }
 }
+
 
 
 function* brewerySaga () {
@@ -110,8 +112,12 @@ function* brewerySaga () {
     yield takeLatest('FETCH_RANDOM_FAVORITE_BREWERY', fetchRandomFavoriteBrewery)
     // request from the RandomBrewery component to get a random brewery from among the entire database and navigate to that detail page
     yield takeLatest('FETCH_ANY_RANDOM_BREWERY', fetchAnyRandomBrewery)
-    // // fetch all breweries
+    // fetch all breweries
     yield takeLatest('FETCH_ALL_BREWERIES', fetchAllBreweries);
+
+    
+    // request from FindFiveClosest to find the five closest breweries to the user's location
+    // yield takeLatest('FETCH_FIVE_CLOSEST_BREWERIES', fetchFiveClosest);
 }
 
 export default brewerySaga;
