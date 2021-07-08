@@ -27,14 +27,20 @@ function RandomBrewery() {
     const randomFromFavorites = () => {
         // dispatches to brewery saga to find a random choice from the user's favorites list 
         // passing navToRandom to allow navigation from inside a Saga
-        dispatch({ type: 'FETCH_RANDOM_FAVORITE_BREWERY', payload: navToRandom });
+        dispatch({ type: 'FETCH_RANDOM_FAVORITE_BREWERY', payload: {
+            navToRandom: navToRandom,
+            distanceLimit: distanceLimit
+        }});
     }
 
     // click handler to select a random brewery from among every brewery in database
     const anyRandomBrewery = () => {
         // dispatches to brewery saga to find a random choice from among the entire database
         // passing navToRandom to allow navigation from inside a Saga
-        dispatch({ type: 'FETCH_ANY_RANDOM_BREWERY', payload: navToRandom });
+        dispatch({ type: 'FETCH_ANY_RANDOM_BREWERY', payload: {
+            navToRandom: navToRandom,
+            distanceLimit: distanceLimit
+        }});
     }
 
     const handleChange = (event) => {

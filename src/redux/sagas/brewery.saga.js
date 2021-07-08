@@ -65,7 +65,7 @@ function* fetchRandomFavoriteBrewery (action) {
         // uses the randomly generated number to store a random brewery from the array of favorites
         const randomFavorite = userFavorites.data[randomIndex];
         // action.payload is a callback function that takes in a brewery id and navigates to the BreweryDetails page for that id
-        yield action.payload(randomFavorite.id);
+        yield action.payload.navToRandom(randomFavorite.id);
     } catch (error) {
         console.error('Error with fetchRandomFavoriteBrewery in brewerySaga', error);
     }
@@ -83,7 +83,7 @@ function* fetchAnyRandomBrewery (action) {
         // uses the randomly generated number to store a random brewery from the array of favorites
         const randomBrewery = allBreweries.data[randomIndex];
         // action.payload is a callback function that takes in a brewery id and navigates to the BreweryDetails page for that id
-        yield action.payload(randomBrewery.id);
+        yield action.payload.navToRandom(randomBrewery.id);
     } catch (error) {
         console.error('Error with fetchAnyRandomBrewery in brewerySaga', error);
     }
