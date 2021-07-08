@@ -29,7 +29,7 @@ import GetUserLocation from '../GetUserLocation/GetUserLocation';
 // Material-UI components
 import '@fontsource/roboto';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
-
+import Typography from '@material-ui/core/Typography';
 
 
 const theme = createMuiTheme({
@@ -189,7 +189,14 @@ function App() {
           </ProtectedRoute>
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
-            <h1>404</h1>
+            <div className="App-main-position">
+              <Typography variant="h2" component="h2" align="center">
+                404:
+              </Typography>
+              <Typography variant="h3" component="h3" align="center">
+                Page Not Found
+              </Typography>
+            </div>
           </Route>
         </Switch>
         <Footer />
