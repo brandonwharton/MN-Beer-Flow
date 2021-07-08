@@ -22,12 +22,7 @@ const center = {
 
 // gets the user's location using Geolocation API
 function LocationPractice({isLoaded}) {
-    // load Map scripts
-    // const { isLoaded } = useJsApiLoader({
-    //     id: 'google-map-script',
-    //     googleMapsApiKey: apiKey,
-    //     libraries,
-    // });
+
 
     const dispatch = useDispatch();
     // get user location from redux store

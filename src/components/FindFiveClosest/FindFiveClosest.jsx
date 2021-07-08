@@ -1,6 +1,7 @@
 // hooks
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import closestGeometryDistance from '../../hooks/closestGeometryDistance';
 // components
 import GetUserLocation from '../GetUserLocation/GetUserLocation';
 // Material-UI components
@@ -12,7 +13,8 @@ import Button from '@material-ui/core/Button';
 function FindFiveClosest() {
     const dispatch = useDispatch();
 
-    const sortedArray = nameAbove(inputArray, userLocation);
+    let sortedArray = []
+    
     // look at reducer that's holding user's geographical coordinates
     const userLocation = useSelector(store => store.location.userLocation);
 
@@ -26,7 +28,8 @@ function FindFiveClosest() {
 
     console.log(userLocation);
     if (allBreweries.length > 0) {
-        console.log(allBreweries);
+        sortedArray = closestGeometryDistance(allBreweries, userLocation);
+        console.log('in sortedArray', sortedArray);
     } else {
         console.log('no data yet');
     }
