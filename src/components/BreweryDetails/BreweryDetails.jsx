@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 // components
 import AddToFavorites from '../AddToFavorites/AddToFavorites';
+import DisplayDistanceFromUser from '../DisplayDistanceFromUser/DisplayDistanceFromUser';
 import MyRatings from '../MyRatings/MyRatings';
 import AverageRating from '../AverageRating/AverageRating';
 import AddComment from '../AddComment/AddComment';
+import GetUserLocation from '../GetUserLocation/GetUserLocation';
 // Material-UI components
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -25,7 +27,8 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(2),
     },
     card: {
-        backgroundColor: '#999',
+        backgroundColor: '#cbcbc9',
+        margin: '12px 0'
     },
 }));
 
@@ -42,11 +45,13 @@ function BreweryDetails() {
     // hold database ID for page that was navigated to
     const { id } = useParams();
     // access data from brewery reducer, data comes in as an array with one element object
-    const brewery = useSelector(store => store.breweryList[0]);
+    const brewery = useSelector(store => store.breweries.breweryList[0]);
     // access data from comments reducer, data comes in as an array of comment objects
     const comments = useSelector(store => store.commentsList);
     // access data from ratings reducer
     const ratingsData = useSelector(store => store.ratingsData);
+    // access user location data
+    const userLocation = useSelector(store => store.location.userLocation);
 
     // on navigation to specific details page, fetch details for specified brewery
     useEffect(()=> {
@@ -56,32 +61,46 @@ function BreweryDetails() {
         dispatch({ type: 'FETCH_SINGLE_RATING_FAVORITE', payload: id });
         dispatch({ type: 'FETCH_AVERAGE_RATING', payload: id });
     }, [id]);
+
+    const displayDistanceAway = () => {
+        if (userLocation.latitude) {
+            return (
+            <span>- <DisplayDistanceFromUser brewery={brewery} /> miles away</span>
+            )
+        } else {
+            return <></>
+        }
+    }
+
  
 
     return (
-        <div>
-            <Typography variant="h3" component="h3">
+        <div className="App-main-position">
+            <Typography variant="h3" component="h3" align="center">
                 {brewery?.name}
             </Typography>
-            
+        
             {/* conditionally render either a message saying a brewery is on user's favorites or an add to favorites button */}
-            {ratingsData.userRatingsData.isFavorite ? 
-                <Typography variant="h5" component="h5">
-                    One of your Favorites
-                </Typography> 
-                :
-                <AddToFavorites breweryId={id} />
-            }
-
+            <div>
+                {ratingsData.userRatingsData.isFavorite ? 
+                    <Typography variant="h5" component="h5" className="container">
+                        One of your Favorites
+                    </Typography> 
+                    :
+                    <AddToFavorites breweryId={id} />
+                }
+            </div>
+            {/* Image and details */}
             <img src={brewery?.image_url} alt={brewery?.name} />
-            <Typography variant="h5" component="h5">
-                {brewery?.city}
-            </Typography>
-
+            <div className="image-margin">
+                <Typography variant="h6" component="h6">
+                    {brewery?.city} { userLocation.latitude && displayDistanceAway() }
+                </Typography>
+            </div>
+            {/* Ratings */}
             <MyRatings breweryId={id} origin={'breweryDetails'} rating={ratingsData.userRatingsData.rating} />
             <AverageRating averageRating={ratingsData.averageRatingsData.averageRating} />
-
-            
+            {/* Comment form and list of comments */}
             <AddComment breweryId={id} />
             <Grid container className={classes.root} spacing={2} justify={'center'}>
                 <Grid item xs={10}>
@@ -97,10 +116,9 @@ function BreweryDetails() {
                             </CardContent>
                         </Card>
                     ))}
-
                 </Grid>
             </Grid>
-            {/* Back button goes here */}
+            <GetUserLocation />
         </div>
     )
 }

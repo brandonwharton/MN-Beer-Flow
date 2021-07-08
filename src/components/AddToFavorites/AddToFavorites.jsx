@@ -18,7 +18,7 @@ function AddToFavorites({breweryId}) {
     }
 
     return (
-        <>
+        <div className="container">
             <Button
                 variant="contained"
                 color="primary"
@@ -26,7 +26,7 @@ function AddToFavorites({breweryId}) {
             >
                 Add to Favorites
             </Button>
-        </>
+        </div>
 
     )
 } 

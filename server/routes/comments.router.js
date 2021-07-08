@@ -13,7 +13,8 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     // sanitized SQL string to get all comments created by current user along with the brewery name that they relate to
     const queryText = `SELECT "comments".*, "brewery".name FROM "comments"
                        JOIN "brewery" ON "comments".brewery_id = "brewery".id
-                       WHERE "comments".user_id = $1;`
+                       WHERE "comments".user_id = $1
+                       ORDER BY "comments".id DESC;`
     // GET request to DB using current user id
     pool.query(queryText, [req.user.id])
         .then(result => {

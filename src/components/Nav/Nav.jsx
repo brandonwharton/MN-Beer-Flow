@@ -2,14 +2,21 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 // Material-UI components
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
+import { makeStyles } from '@material-ui/core/styles';
+
+
+
+
+
 
 function Nav() {
+
   const user = useSelector((store) => store.user);
   // state for opening and closing menu
   const [anchorEl, setAnchorEl] = useState(null);
@@ -36,7 +43,7 @@ function Nav() {
   }
 
   return (
-    <div className="nav">
+    <div className="nav App-nav-position">
       <div>
         <Link className="navLink" to={loginLinkData.path}>
           {loginLinkData.text}
@@ -45,17 +52,15 @@ function Nav() {
         {user.id && (
           <>
             <Link className="navLink" to="/search">
-              Search
+              Find A Brewery
             </Link>
-            <Link className="navLink" to="/random">
-              Random Brewery
-            </Link>
-            <Button 
+            <Button
+              className="menu-button"
               aria-controls="simple-menu"
-              aria-hasopup="true"
+              aria-haspopup="true"
               onClick={handleClick}
             >
-              <MenuIcon />
+              <MenuIcon color="error" />
             </Button>
             <Menu
               id="simple-menu"
@@ -65,17 +70,27 @@ function Nav() {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>
-                <Link className="navLink" to="/mycomments">
+                <Link className="navLink-menu" to="/closest">
+                  See What's Close
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link className="navLink-menu" to="/random">
+                  Go With the Flow
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link className="navLink-menu" to="/mycomments">
                   My Comments
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleClose}>
-                <Link className="navLink" to="/about">
+                <Link className="navLink-menu" to="/about">
                   About
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleClose}>
-                <LogOutButton className="navLink" />
+                <LogOutButton className="navLink-menu" />
               </MenuItem>
             </Menu>
           </>
@@ -85,7 +100,6 @@ function Nav() {
             About
           </Link>
         }
-
       </div>
     </div>
   );

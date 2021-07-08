@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2),
     },
     card: {
-        backgroundColor: '#aaa',
+        backgroundColor: '#cbcbc9',
     },
     media: {
         height: 0,
@@ -57,9 +57,11 @@ function MyFavoritesItem({brewery}) {
                 image={brewery.image_url}
             />
             {/* evaluate needs below this */}
-            <CardActionArea>
-                {/* <MyRatings breweryId={brewery.id} /> */}
-            </CardActionArea>
+            <CardContent>
+                <Typography variant="h6" component="h6">
+                    {brewery.city}
+                </Typography>
+            </CardContent>
         </Card>
     )
 }

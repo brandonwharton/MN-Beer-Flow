@@ -5,35 +5,78 @@ import {
   Redirect,
   Switch,
 } from 'react-router-dom';
-
 import { useDispatch } from 'react-redux';
+import { useJsApiLoader } from '@react-google-maps/api';
+require('dotenv').config();
 // provided boilerplate components
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
-
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-
 import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import './App.css';
 // my components
 import Header from '../Header/Header';
+import GetUserLocation from '../GetUserLocation/GetUserLocation';
 import MyFavoritesList from '../MyFavoritesList/MyFavoritesList';
 import MyCommentsList from '../MyCommentsList/MyCommentsList';
 import BreweryDetails from '../BreweryDetails/BreweryDetails';
 import SearchBreweries from '../SearchBreweries/SearchBreweries';
+import FindTenClosest from '../FindTenClosest/FindTenClosest';
 import RandomBrewery from '../RandomBrewery/RandomBrewery';
+import CreateGoogleMap from '../CreateGoogleMap/CreateGoogleMap';
 // Material-UI components
 import '@fontsource/roboto';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography';
 
 
-import './App.css';
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#946644',
+      main: '#713229',
+      dark: '#413330',
+      // Contrast text?
+    },
+    secondary: {
+      light: '#cbcbc9',
+      main: '#b7987b',
+      dark: '#46626e',
+      // Contrast text?
+    },
+    // this is the color chosen for the navbar links, error was the easiest way to override an icon color
+    error: {
+      main: '#cbcbc9'
+    },
+  },
+  typography: {
+    fontFamily: [
+      '"Lexend"',
+      'Verdana',
+      'Geneva',
+      'Tahoma',
+      'sans-serif',
+    ].join(','),
+  },
+});
+
+// needed information for Google Maps to be brought in 
+const apiKey = process.env.REACT_APP_MAPS_API_KEY;
+const libraries = ['geometry'];
+
+
+
 
 function App() {
   const dispatch = useDispatch();
+  // load Map scripts
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: apiKey,
+    libraries,
+  });
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
@@ -41,7 +84,9 @@ function App() {
 
   return (
     <Router>
+      <MuiThemeProvider theme={theme}>
       <div>
+        <GetUserLocation />
         <Header />
         <Nav />
         <Switch>
@@ -58,23 +103,15 @@ function App() {
           </Route>
 
           {/* For protected routes, the view could show one of several things on the same route.
-            Visiting localhost:3000/user will show the UserPage if the user is logged in.
+            Visiting localhost:3000/user will show the MyFavorites if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
             Even though it seems like they are different pages, the user is always on localhost:3000/user */}
           <ProtectedRoute
-            // logged in shows MyFavorites page else shows LoginPage
+            // logged in shows MyFavorites page else shows the LoginPage
             exact
             path="/myfavorites"
           >
             <MyFavoritesList />
-          </ProtectedRoute>
-
-          <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
-            exact
-            path="/info"
-          >
-            <InfoPage />
           </ProtectedRoute>
 
           {/* When a value is supplied for the authRedirect prop the user will
@@ -102,16 +139,6 @@ function App() {
             <RegisterPage />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            // with authRedirect:
-            // - if logged in, redirects to "/user"
-            // - else shows LandingPage at "/home"
-            exact
-            path="/home"
-            authRedirect="/myfavorites"
-          >
-            <LandingPage />
-          </ProtectedRoute>
           {/******************** My Routes *********************/}
           <ProtectedRoute
             exact
@@ -142,17 +169,39 @@ function App() {
           >
           </ProtectedRoute>
           <ProtectedRoute
+            exact
+            path="/closest"
+          >
+            <FindTenClosest />
+          </ProtectedRoute>
+          <ProtectedRoute
             path="/random"
           >
             <RandomBrewery />
           </ProtectedRoute>
+
+          {/* Route to a Google Map component that isn't ready for production*/}
+          {/* <ProtectedRoute
+            path="/location"
+          >
+            <CreateGoogleMap isLoaded={isLoaded}/>
+          </ProtectedRoute> */}
           {/* If none of the other routes matched, we will show a 404. */}
+          
           <Route>
-            <h1>404</h1>
+            <div className="App-main-position">
+              <Typography variant="h2" component="h2" align="center">
+                404:
+              </Typography>
+              <Typography variant="h3" component="h3" align="center">
+                Page Not Found
+              </Typography>
+            </div>
           </Route>
         </Switch>
         <Footer />
       </div>
+      </MuiThemeProvider>
     </Router>
   );
 }

@@ -4,14 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 // Material-UI components
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
 // components
 import MyFavoritesItem from '../MyFavoritesItem/MyFavoritesItem';
 import MyRatings from '../MyRatings/MyRatings';
+import AverageRating from '../AverageRating/AverageRating';
 import NewUserView from '../NewUserView/NewUserView';
+import './MyFavoritesList.css';
 
 
 // Material-UI styles
@@ -20,6 +24,7 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,
         alignItems: 'center',
         alignContent: 'center',
+        padding: '15px 0',
     },
 }));
 
@@ -30,11 +35,14 @@ function MyFavoritesList() {
 
     const dispatch = useDispatch();
     // access data from brewery reducer
-    const favoriteBreweryList = useSelector(store => store.breweryList)
+    const favoriteBreweryList = useSelector(store => store.breweries.favoritesList)
+    const user = useSelector(store => store.user);
     // states for handling the search input and the filtered search results array
     const [searchInput, setSearchInput] = useState('');
     const [searchedArray, setSearchedArray] = useState([]);
     const [foundNoResults, setFoundNoResults] = useState(false);
+    // state for the order by Select menu
+    const [orderBy, setOrderBy] = useState('Rating');
 
     // on page load, get user's favorites
     useEffect(() => {
@@ -44,13 +52,20 @@ function MyFavoritesList() {
 
 
     // change handler for search input
-    const handleChange = (event) => {
+    const handleInputChange = (event) => {
         // adjust search input state on input change
         setSearchInput(event.target.value);
     }
 
+    // changle handler for the Select menu to order data
+    const handleOrderChange = (event) => {
+        console.log(event.target.value);
+        setOrderBy(event.target.value);
+    }
+
     // submit handler for the search favorites feature
     const handleSearch = () => {
+        event.preventDefault();
         // reset foundNoResults to remove conditionally rendered no results message
         setFoundNoResults(false);
 
@@ -75,59 +90,75 @@ function MyFavoritesList() {
 
 
     return (
-        <div>
+        <div className="App-my-favorites App-main-position">
             {/* Conditionally render the favorites view normally if the user has anything in their favorites */}
             {favoriteBreweryList.length > 0 ?
                 <section>
-                <Typography variant="h3" component="h3">
-                    My Favorites
-                </Typography>
-                <FormControl onSubmit={handleSearch}>
-                    <TextField 
-                        label="search favorites"
-                        helperText="by name only"
-                        value={searchInput}
-                        onChange={handleChange}
-                    />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSearch}
+                    <Typography variant="h4" component="h4" align="center" >
+                        {user.username}'s Favorites
+                    </Typography>
+                    <form onSubmit={handleSearch} className="favorites-search-form">
+                        <TextField
+                            className="text-field"
+                            label="search favorites"
+                            variant="outlined"
+                            value={searchInput}
+                            onChange={handleInputChange}
+                        />
+                        <div className="form-button">
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                onClick={handleSearch}
+                            >
+                                Search
+                            </Button>
+                        </div>
+                    </form>
+                    <InputLabel id="favorites-order-by-label">Order By</InputLabel>
+                    <Select
+                        labelId="favorites-order-by-label"
+                        id="favorites-order-by"
+                        value={orderBy}
+                        onChange={handleOrderChange}
                     >
-                        Search
-                    </Button>
-                </FormControl>
-                <Grid container className={classes.root} spacing={2} justify={'center'}>
-                    <Grid item xs={10}>
-                        {/* conditionally render a no results message for failed searches */}
-                        {foundNoResults && 
-                        <Typography variant="h4" component="h4">
-                            No Results Found
-                        </Typography>}
-                        
-                        {/* conditionally render either the full list of user favorites or the search results if a search was done */}
-                        {searchedArray.length === 0 ?
-                            favoriteBreweryList?.map(brewery => (
-                                <div key={brewery.id}>
-                                    <MyFavoritesItem brewery={brewery}/>
-                                    <MyRatings breweryId={brewery.id} origin={'myFavorites'} rating={brewery.rating} />
-                                </div>
-                            ))
-                            :
-                            searchedArray.map(brewery => (
-                                <div key={brewery.id}>
-                                    <MyFavoritesItem brewery={brewery}/>
-                                    <MyRatings breweryId={brewery.id} origin={'myFavorites'} rating={brewery.rating} />
-                                </div>
-                            ))
-                        }
+                        <MenuItem value={'Rating'}>Your Top Rated</MenuItem>
+                        <MenuItem value={'Closest'}>Closest Distance</MenuItem>
+                    </Select>
+                    <Grid container className={classes.root} spacing={2} justify={'center'}>
+                        <Grid item xs={10}>
+                            {/* conditionally render a no results message for failed searches */}
+                            {foundNoResults &&
+                                <Typography variant="h4" component="h4" align="center">
+                                    No Results Found
+                                </Typography>}
+
+                            {/* conditionally render either the full list of user favorites or the search results if a search was done */}
+                            {searchedArray.length === 0 ?
+                                favoriteBreweryList?.map(brewery => (
+                                    <div key={brewery.id}>
+                                        <MyFavoritesItem brewery={brewery} />
+                                        <MyRatings breweryId={brewery.id} origin={'myFavorites'} rating={brewery.rating} />
+                                        <AverageRating averageRating={brewery.average_rating} />
+                                    </div>
+                                ))
+                                :
+                                searchedArray.map(brewery => (
+                                    <div key={brewery.id}>
+                                        <MyFavoritesItem brewery={brewery} />
+                                        <MyRatings breweryId={brewery.id} origin={'myFavorites'} rating={brewery.rating} />
+                                        <AverageRating averageRating={brewery.average_rating} />
+                                    </div>
+                                ))
+                            }
+                        </Grid>
                     </Grid>
-                </Grid>
                 </section>
                 :
                 // Display the NewUserView component if no favorites have been added
                 <NewUserView />
-                }
+            }
         </div>
 
     )
