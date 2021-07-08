@@ -18,7 +18,7 @@ function DisplayDistanceFromUser ({brewery}) {
     const getDistanceFromUser = () => {
         // save user location and destination as objects using data provided by location reducer and props
         const origin = new google.maps.LatLng(userLocation.latitude, userLocation.longitude);
-        const destination = new google.maps.LatLng(brewery.latitude, brewery.longitude);
+        const destination = new google.maps.LatLng(brewery?.latitude, brewery?.longitude);
 
         // this function was originally set up to handle a request between one origin and multiple destinations. I left the code this way to make future
         // refactoring easier so this component could accomodate an array of destinations instead of one. Code that's commented out was used for this.
