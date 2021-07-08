@@ -13,8 +13,6 @@ import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import './App.css';
@@ -30,7 +28,7 @@ import LocationPractice from '../LocationPractice/LocationPractice';
 // Material-UI components
 import '@fontsource/roboto';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
-
+import Typography from '@material-ui/core/Typography';
 
 
 const theme = createMuiTheme({
@@ -106,14 +104,6 @@ function App() {
             <MyFavoritesList />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
-            exact
-            path="/info"
-          >
-            <InfoPage />
-          </ProtectedRoute>
-
           {/* When a value is supplied for the authRedirect prop the user will
             be redirected to the path supplied when logged in, otherwise they will
             be taken to the component and path supplied. */}
@@ -139,16 +129,6 @@ function App() {
             <RegisterPage />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            // with authRedirect:
-            // - if logged in, redirects to "/user"
-            // - else shows LandingPage at "/home"
-            exact
-            path="/home"
-            authRedirect="/myfavorites"
-          >
-            <LandingPage />
-          </ProtectedRoute>
           {/******************** My Routes *********************/}
           <ProtectedRoute
             exact
@@ -196,7 +176,14 @@ function App() {
           </ProtectedRoute>
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
-            <h1>404</h1>
+            <div className="App-main-position">
+              <Typography variant="h2" component="h2" align="center">
+                404:
+              </Typography>
+              <Typography variant="h3" component="h3" align="center">
+                Page Not Found
+              </Typography>
+            </div>
           </Route>
         </Switch>
         <Footer />
