@@ -1,6 +1,8 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
+import closestGeometryDistance from '../../hooks/closestGeometryDistance';
+
 // worker Saga: makes a GET request to get details for user's favorite breweries
 function* fetchUserFavorites() {
     try {
@@ -64,7 +66,7 @@ function* fetchRandomFavoriteBrewery (action) {
         const randomIndex = Math.floor(Math.random() * userFavorites.data.length);
         // uses the randomly generated number to store a random brewery from the array of favorites
         const randomFavorite = userFavorites.data[randomIndex];
-        // action.payload is a callback function that takes in a brewery id and navigates to the BreweryDetails page for that id
+        // action.payload contains a callback function that takes in a brewery id and navigates to the BreweryDetails page for that id
         yield action.payload.navToRandom(randomFavorite.id);
     } catch (error) {
         console.error('Error with fetchRandomFavoriteBrewery in brewerySaga', error);
@@ -72,17 +74,35 @@ function* fetchRandomFavoriteBrewery (action) {
 }
 
 
-// worker Saga: makes a GET request for every brewery in the database, selects one at random, 
-// and sends user to the BreweryDetails page for that brewery
+// worker Saga: makes a GET request for every brewery in the database, selects one at random with a possible distance limit constraint sent by user, 
+// and sends user to the BreweryDetails page for that brewery 
 function* fetchAnyRandomBrewery (action) {
     try {
         // GET request to get the array of user's favorites
         const allBreweries = yield axios.get(`/api/brewery`);
-        // selects a random number between 0 and the number of elements in the userFavorites array
-        const randomIndex = Math.floor(Math.random() * allBreweries.data.length);
-        // uses the randomly generated number to store a random brewery from the array of favorites
-        const randomBrewery = allBreweries.data[randomIndex];
-        // action.payload is a callback function that takes in a brewery id and navigates to the BreweryDetails page for that id
+        // variables for later
+        let randomIndex;
+        let randomBrewery;
+
+        // if the user didn't request a distance limit radius, allow any result to be chosen
+        if (action.payload.distanceLimit === 'none') {
+        // selects a random number between 0 and the number of elements in the allBreweries array
+            randomIndex = Math.floor(Math.random() * allBreweries.data.length);
+            // save the details for the brewery at the random index
+            randomBrewery = allBreweries.data[randomIndex];
+        } else {
+            // run closestGeometryDistance on the allBreweries array to add the Spherical Geometry distance between them and each brewery
+            const breweryDistanceArray = closestGeometryDistance(allBreweries.data, action.payload.userLocation);
+            // filter out breweries that are too far away. NOTE: This is an approximation, Spherical Geometry isn't perfect for converting
+            // distance between points into actual driving distance when roads need to be used
+            const filteredArray = breweryDistanceArray.filter(brewery => brewery.sphericalDistance < (1100 * action.payload.distanceLimit) );
+            // select a random number between 0 and the number of elements in the filtered array
+            randomIndex = Math.floor(Math.random() * filteredArray.length);
+            // save the details for the brewery at the random index
+            randomBrewery = filteredArray[randomIndex];
+        }
+
+        // action.payload contains a callback function that takes in a brewery id and navigates to the BreweryDetails page for that id
         yield action.payload.navToRandom(randomBrewery.id);
     } catch (error) {
         console.error('Error with fetchAnyRandomBrewery in brewerySaga', error);

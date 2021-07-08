@@ -1,8 +1,9 @@
 // hooks
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+// components
+import GetUserLocation from '../GetUserLocation/GetUserLocation';
 // Material-UI components
-
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -18,6 +19,8 @@ function RandomBrewery() {
 
     const [distanceLimit, setDistanceLimit] = useState('none');
 
+    const userLocation = useSelector(store => store.location.userLocation);
+
     // function to navigate user to the details page for a brewery
     const navToRandom = (id) => {
         history.push(`/details/${id}`);
@@ -29,7 +32,8 @@ function RandomBrewery() {
         // passing navToRandom to allow navigation from inside a Saga
         dispatch({ type: 'FETCH_RANDOM_FAVORITE_BREWERY', payload: {
             navToRandom: navToRandom,
-            distanceLimit: distanceLimit
+            distanceLimit: distanceLimit,
+            userLocation: userLocation
         }});
     }
 
@@ -39,7 +43,8 @@ function RandomBrewery() {
         // passing navToRandom to allow navigation from inside a Saga
         dispatch({ type: 'FETCH_ANY_RANDOM_BREWERY', payload: {
             navToRandom: navToRandom,
-            distanceLimit: distanceLimit
+            distanceLimit: distanceLimit,
+            userLocation: userLocation
         }});
     }
 
@@ -91,6 +96,7 @@ function RandomBrewery() {
                 <MenuItem value={25}>Twenty Five</MenuItem>
                 <MenuItem value={50}>Fifty</MenuItem>
             </Select>
+            <GetUserLocation />
         </div>
     )
 }
