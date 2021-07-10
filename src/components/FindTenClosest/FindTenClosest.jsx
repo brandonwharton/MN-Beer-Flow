@@ -15,27 +15,12 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
+
+import breweryCardTheme from '../../material-ui-themes/brewery.card.theme';
 
 
 // Material-UI styles
-const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1,
-        alignItems: 'center',
-        alignContent: 'center',
-    },
-    control: {
-        padding: theme.spacing(2),
-    },
-    card: {
-        backgroundColor: '#cbcbc9',
-    },
-    media: {
-        height: 0,
-        paddingTop: '56.25%',
-    },
-}));
+const useStyles = breweryCardTheme;
 
 
 // component that finds the ten closest breweries to the user's current location and displays them

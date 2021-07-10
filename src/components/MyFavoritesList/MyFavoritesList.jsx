@@ -152,7 +152,7 @@ function MyFavoritesList() {
                             {/* conditionally render either the full list of user favorites or the search results if a search was done */}
                             {searchedArray.length === 0 ?
                                 favoriteBreweryList?.map(brewery => (
-                                    <div key={brewery.id} className="card-spacing">
+                                    <div key={brewery.id}>
                                         <MyFavoritesItem brewery={brewery} />
                                         <MyRatings breweryId={brewery.id} origin={'myFavorites'} rating={brewery.rating} />
                                         <AverageRating averageRating={brewery.average_rating} />

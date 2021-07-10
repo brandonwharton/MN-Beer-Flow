@@ -12,26 +12,12 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent'
 import CardActionArea from '@material-ui/core/CardActionArea'
 
+import breweryCardTheme from '../../material-ui-themes/brewery.card.theme';
+
 
 
 // Material-UI styles
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-        alignItems: 'center',
-        alignContent: 'center',
-    },
-    control: {
-        padding: theme.spacing(2),
-    },
-    card: {
-        backgroundColor: '#cbcbc9',
-    },
-    media: {
-        height: 0,
-        paddingTop: '56.25%',
-    },
-}));
+const useStyles = breweryCardTheme;
 
 
 // component to display the clickable cards after brewery searches
