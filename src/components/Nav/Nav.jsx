@@ -101,7 +101,7 @@ function Nav() {
           </>
         )}
         {!user.id &&
-          <div className="nav-child">
+          <div className="nav-child nav-child-4">
             <Link className="navLink" to="/about">
               About
             </Link>

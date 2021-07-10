@@ -93,32 +93,39 @@ function MyFavoritesList() {
 
 
     return (
-        <div className="App-my-favorites App-main-position">
-            {/* Conditionally render the favorites view normally if the user has anything in their favorites */}
+        <div className="App-main-position">
+            {/* Conditionally render the favorites view normally if the user has brewery data in their favorites list*/}
             {favoriteBreweryList.length > 0 ?
                 <section>
-                    <Typography variant="h4" component="h4" align="center" >
-                        {user.username}'s Favorites
-                    </Typography>
-                    <form onSubmit={handleSearch} className="favorites-search-form">
-                        <TextField
-                            className="text-field"
-                            label="search favorites"
-                            variant="outlined"
-                            value={searchInput}
-                            onChange={handleInputChange}
-                        />
-                        <div className="form-button">
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                onClick={handleSearch}
-                            >
-                                Search
-                            </Button>
+                    <div className="my-favorites-parent">
+                        <div className="my-favorites-child">
+                            <Typography variant="h4" component="h4" align="center">
+                                {user.username}'s Favorites
+                            </Typography>
+                            
+                            <form onSubmit={handleSearch}>
+                                <div className="center-this">
+                                    <TextField
+                                        className="text-field"
+                                        label="search favorites"
+                                        variant="outlined"
+                                        value={searchInput}
+                                        onChange={handleInputChange}
+                                    />
+                                    <div className="form-button">
+                                        <Button
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={handleSearch}
+                                        >
+                                            Search
+                                        </Button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
 
                     {/* This is a an unfinished sorting feature for the favorites list */}
 
@@ -135,10 +142,10 @@ function MyFavoritesList() {
 
 
                     <Grid container className={classes.root} spacing={2} justify={'center'}>
-                        <Grid item xs={10}>
+                        <Grid item xs={10} lg={4}>
                             {/* conditionally render a no results message for failed searches */}
                             {foundNoResults &&
-                                <Typography variant="h4" component="h4" align="center">
+                                <Typography variant="h4" component="h4" align="center" gutterBottom="true">
                                     No Results Found
                                 </Typography>}
 
