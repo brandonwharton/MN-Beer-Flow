@@ -41,8 +41,9 @@ function MyFavoritesList() {
     const [searchInput, setSearchInput] = useState('');
     const [searchedArray, setSearchedArray] = useState([]);
     const [foundNoResults, setFoundNoResults] = useState(false);
-    // state for the order by Select menu
-    const [orderBy, setOrderBy] = useState('Rating');
+    
+    // state for the order by Select menu - CURRENTLY INACTIVE
+    // const [orderBy, setOrderBy] = useState('Rating');
 
     // on page load, get user's favorites
     useEffect(() => {
@@ -57,11 +58,13 @@ function MyFavoritesList() {
         setSearchInput(event.target.value);
     }
 
-    // changle handler for the Select menu to order data
-    const handleOrderChange = (event) => {
-        console.log(event.target.value);
-        setOrderBy(event.target.value);
-    }
+
+    // changle handler for the Select menu to order data : CURRENTLY INACTIVE
+    // const handleOrderChange = (event) => {
+    //     console.log(event.target.value);
+    //     setOrderBy(event.target.value);
+    // }
+
 
     // submit handler for the search favorites feature
     const handleSearch = () => {
@@ -116,7 +119,10 @@ function MyFavoritesList() {
                             </Button>
                         </div>
                     </form>
-                    <InputLabel id="favorites-order-by-label">Order By</InputLabel>
+
+                    {/* This is a an unfinished sorting feature for the favorites list */}
+
+                    {/* <InputLabel id="favorites-order-by-label">Order By</InputLabel>
                     <Select
                         labelId="favorites-order-by-label"
                         id="favorites-order-by"
@@ -125,7 +131,9 @@ function MyFavoritesList() {
                     >
                         <MenuItem value={'Rating'}>Your Top Rated</MenuItem>
                         <MenuItem value={'Closest'}>Closest Distance</MenuItem>
-                    </Select>
+                    </Select> */}
+
+
                     <Grid container className={classes.root} spacing={2} justify={'center'}>
                         <Grid item xs={10}>
                             {/* conditionally render a no results message for failed searches */}
