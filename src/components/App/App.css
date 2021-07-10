@@ -11,11 +11,23 @@ body {
   overflow: hidden;
 }
 
+
+/* image styling for larger screens */
 img {
   display: flex;
-  max-width: 84%;
-  margin: 0 8%;
+  width: 40%;
+  margin: 0 30%;
   border: 2px solid black;
+}
+
+/* image styling for smaller screens */
+@media only screen and (max-width: 720px) {
+  img {
+    display: flex;
+    max-width: 84%;
+    margin: 0 8%;
+    border: 2px solid black;
+  }
 }
 
 /* --------------------------------------------------------------------------------
@@ -26,9 +38,18 @@ Container
   padding: 20px;
 }
 
+/* large screen margin to line up with images */
 .image-margin {
-  margin-left: 8.3%;
+  margin-left: 30%;
 }
+
+/* small screen margin to line up with images */
+@media only screen and (max-width: 720px) {
+  .image-margin {
+    margin-left: 8.3%;
+  }
+}
+
 
 /* --------------------------------------------------------------------------------
 Button

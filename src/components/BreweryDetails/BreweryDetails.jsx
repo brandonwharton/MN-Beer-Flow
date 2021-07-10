@@ -16,6 +16,7 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
+
 // Material-UI styles
 const useStyles = makeStyles(theme => ({
     root: {
@@ -102,7 +103,7 @@ function BreweryDetails() {
             <AverageRating averageRating={ratingsData.averageRatingsData.averageRating} />
             {/* Comment form and list of comments */}
             <AddComment breweryId={id} />
-            <Grid container className={classes.root} spacing={2} justify={'center'}>
+            <Grid container spacing={2} justify={'center'}>
                 <Grid item xs={10}>
                     {comments?.map(comment => (
                         <Card key={comment.id} className={classes.card}>
