@@ -131,7 +131,7 @@ function MyFavoritesList() {
 
 
                     <Grid container spacing={2} justify={'center'}>
-                        <Grid item xs={9} lg={4}>
+                        <Grid item xs={10} lg={4}>
                             {/* conditionally render a no results message for failed searches */}
                             {foundNoResults &&
                                 <Typography variant="h4" component="h4" align="center" gutterBottom="true">

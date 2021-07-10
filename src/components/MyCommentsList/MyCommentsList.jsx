@@ -26,7 +26,7 @@ function MyCommentsList() {
                 Comments You've Left
             </Typography>
             <Grid container spacing={2} justify={'center'}>
-                <Grid item xs={9} lg={6}>
+                <Grid item xs={10} lg={6}>
                     {userCommentsList.map(comment => (
                         <MyCommentsItem key={comment.id} comment={comment} />
                     ))}

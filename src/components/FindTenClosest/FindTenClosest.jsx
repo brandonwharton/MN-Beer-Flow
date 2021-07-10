@@ -65,7 +65,7 @@ function FindTenClosest() {
                 Closest to You:
             </Typography>
             <Grid container className={classes.root} spacing={2} justify={'center'}>
-                <Grid item xs={10}>
+                <Grid item xs={10} lg={4}>
                     {slicedArray.length > 0 &&
                     <div>
                         {slicedArray.map( (brewery, index) => (
