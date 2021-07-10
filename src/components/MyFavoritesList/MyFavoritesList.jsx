@@ -142,7 +142,7 @@ function MyFavoritesList() {
 
 
                     <Grid container className={classes.root} spacing={2} justify={'center'}>
-                        <Grid item xs={10} lg={4}>
+                        <Grid item xs={9} lg={4}>
                             {/* conditionally render a no results message for failed searches */}
                             {foundNoResults &&
                                 <Typography variant="h4" component="h4" align="center" gutterBottom="true">
@@ -152,7 +152,7 @@ function MyFavoritesList() {
                             {/* conditionally render either the full list of user favorites or the search results if a search was done */}
                             {searchedArray.length === 0 ?
                                 favoriteBreweryList?.map(brewery => (
-                                    <div key={brewery.id}>
+                                    <div key={brewery.id} className="card-spacing">
                                         <MyFavoritesItem brewery={brewery} />
                                         <MyRatings breweryId={brewery.id} origin={'myFavorites'} rating={brewery.rating} />
                                         <AverageRating averageRating={brewery.average_rating} />
