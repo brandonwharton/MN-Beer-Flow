@@ -192,3 +192,8 @@ Shared items
 .form-button {
   margin: 7px 0;
 }
+
+.center-this {
+  margin-top: 7px;
+  text-align: center;
+}

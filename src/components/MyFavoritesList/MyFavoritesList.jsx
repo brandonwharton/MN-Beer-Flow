@@ -2,14 +2,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // Material-UI components
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
+// not currently used
+// import InputLabel from '@material-ui/core/InputLabel';
+// import Select from '@material-ui/core/Select';
+// import MenuItem from '@material-ui/core/MenuItem';
+
 // components
 import MyFavoritesItem from '../MyFavoritesItem/MyFavoritesItem';
 import MyRatings from '../MyRatings/MyRatings';
@@ -18,20 +19,8 @@ import NewUserView from '../NewUserView/NewUserView';
 import './MyFavoritesList.css';
 
 
-// Material-UI styles
-const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1,
-        alignItems: 'center',
-        alignContent: 'center',
-        padding: '15px 0',
-    },
-}));
-
 // "Home Page" component after login that shows the user their list of breweries they've marked as favorite
 function MyFavoritesList() {
-    // use the correct Material-UI styles
-    const classes = useStyles();
 
     const dispatch = useDispatch();
     // access data from brewery reducer
@@ -141,7 +130,7 @@ function MyFavoritesList() {
                     </Select> */}
 
 
-                    <Grid container className={classes.root} spacing={2} justify={'center'}>
+                    <Grid container spacing={2} justify={'center'}>
                         <Grid item xs={9} lg={4}>
                             {/* conditionally render a no results message for failed searches */}
                             {foundNoResults &&

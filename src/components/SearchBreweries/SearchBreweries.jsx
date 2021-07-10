@@ -6,8 +6,8 @@ import { useEffect } from "react";
 // components
 import SearchBar from '../SearchBar/SearchBar';
 import SearchBreweryResult from '../SearchBreweryResult/SearchBreweryResult';
-
 import GetUserLocation from '../GetUserLocation/GetUserLocation';
+import './SearchBreweries.css';
 // Material-UI components
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -63,8 +63,8 @@ function SearchBreweries() {
             <SearchBar />
             {/* conditionally render search results */}
             {query ? (
-                <div>
-                    <Typography variant="h5" component="h5">
+                <div className="search-view-margin">
+                    <Typography variant="h5" component="h5" align="center">
                         Previous Search: {query}
                     </Typography>
                     <Grid container className={classes.root} spacing={2} justify={'center'}>
@@ -76,11 +76,11 @@ function SearchBreweries() {
                     </Grid>
                 </div>)
             : (
-                <div>
+                <div className="search-view-margin">
                     <Typography variant="h4" component="h4" align="center">
                         Or:
                     </Typography>
-                    <div className="form-button">
+                    <div className="center-this">
                         <Button 
                         variant="contained"
                         color="primary"
