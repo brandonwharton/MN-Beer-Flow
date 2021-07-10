@@ -60,6 +60,14 @@ const theme = createMuiTheme({
       'sans-serif',
     ].join(','),
   },
+  // overrides: {
+  //   MuiBox: {
+  //     root: {
+  //       padding: '50px',
+  //       borderColor: 'transparent',
+  //     },
+  //   },
+  // },
 });
 
 // needed information for Google Maps to be brought in 
