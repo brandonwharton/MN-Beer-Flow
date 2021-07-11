@@ -42,10 +42,16 @@ function SearchBreweries() {
         }
     }, [query])
 
-    // click handler for the Find 5 Closest button
-    const handleClick = () => {
+    // click handler for the Find 10 Closest button
+    const seeWhatsClose = () => {
         history.push('/closest');
     }
+
+    // click handler for the search clear button
+    const handleClear = () => {
+        history.push('/search');
+    }
+
 
     const showNoResults = () => {
         if (query && searchedList.length === 0) {
@@ -67,6 +73,15 @@ function SearchBreweries() {
                     <Typography variant="h5" component="h5" align="center">
                         Previous Search: {query}
                     </Typography>
+                    <div className="center-this">
+                        <Button
+                            color="secondary"
+                            variant="contained"
+                            onClick={handleClear}
+                        >
+                            Clear Search
+                        </Button>
+                    </div>
                     <Grid container className={classes.root} spacing={2} justify={'center'}>
                         <Grid item xs={10}>
                             {searchedList.map(brewery => (
@@ -84,7 +99,7 @@ function SearchBreweries() {
                         <Button 
                         variant="contained"
                         color="primary"
-                        onClick={handleClick}
+                        onClick={seeWhatsClose}
                         >
                             See What's Close
                         </Button>
