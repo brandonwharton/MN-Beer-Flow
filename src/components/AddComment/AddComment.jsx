@@ -7,16 +7,13 @@ import Button from '@material-ui/core/Button';
 
 
 
-
-
-
-// component for a form to add a comment to a brewery
+// component that renders a simple form to add a comment to a brewery
 function AddComment({breweryId}) {
     const dispatch = useDispatch();
-    // state to track changes to TextField
+    // state to track changes to new comment TextField
     const [newComment, setNewComment] = useState('');
 
-    // change handler for comment TextField
+    // change handler for new comment TextField
     const handleChange = (event) => {
         // set state to whatever is being typed into TextField by user
         setNewComment(event.target.value);
@@ -34,7 +31,7 @@ function AddComment({breweryId}) {
         setNewComment('');
     }
 
-
+    
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>
