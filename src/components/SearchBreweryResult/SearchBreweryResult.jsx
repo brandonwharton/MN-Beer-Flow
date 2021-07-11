@@ -2,29 +2,27 @@
 import { useHistory } from "react-router";
 // components
 import AverageRating from '../AverageRating/AverageRating';
-import AddToFavorites from '../AddToFavorites/AddToFavorites';
 // Material-UI components
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent'
-import CardActionArea from '@material-ui/core/CardActionArea'
 
 import breweryCardTheme from '../../material-ui-themes/brewery.card.theme';
-
 
 
 // Material-UI styles
 const useStyles = breweryCardTheme;
 
 
-// component to display the clickable cards after brewery searches
+// component to render the clickable cards and a brewery's average rating after a brewery search is made on the SearchBar
 function SearchBreweryResult({brewery}) {
-    const history = useHistory();
+    // use correct Material-UI classes
     const classes = useStyles();
+    const history = useHistory();
 
+    // click handler for navigation when a user clicks on a search result card
     const handleClick = (id) => {
         // on click of the brewery card, send user to the details view for that brewery
         history.push(`/details/${id}`)
@@ -47,7 +45,6 @@ function SearchBreweryResult({brewery}) {
                         {brewery.city}
                     </Typography>
                 </CardContent>
-
             </Card>
             <AverageRating averageRating={brewery.average_rating} />
         </div>
