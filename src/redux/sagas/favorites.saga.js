@@ -15,7 +15,7 @@ function* addToFavorites (action) {
 }
 
 
-
+// watcher Saga: looks for requests to add a brewery to user's favorites
 function* favoritesSaga() {
     // request from AddToFavorites to add the currently viewed BreweryDetails brewery to user's favorites
     yield takeLatest('CREATE_NEW_FAVORITE', addToFavorites);

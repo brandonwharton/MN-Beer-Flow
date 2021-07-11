@@ -14,8 +14,7 @@ function* fetchUserComments () {
 }
 
 
-
-// worker Saga: makes a GET request to get the comments for a single brewery based on provided DB id
+// worker Saga: makes a GET request to get the comments for a single brewery from all users based on provided DB id
 function* fetchBreweryComments (action) {
     // id to find is what's sent in action.payload
     const breweryId = action.payload;
@@ -29,6 +28,7 @@ function* fetchBreweryComments (action) {
     }
 }
 
+
 // worker Saga: makes a POST request to add a new comment to the comments table
 function* postNewComment (action) {
     try {
@@ -41,6 +41,7 @@ function* postNewComment (action) {
         console.error('Error with postNewComment in commentsSaga', error);
     }
 }
+
 
 // worker Saga: makes a DELETE request to remove a specific comment from the database
 function* removeUserComment (action) {
@@ -58,6 +59,7 @@ function* removeUserComment (action) {
 }
 
 
+// watcher Saga: looks for dispatches for comments data
 function* commentsSaga() {
     // request from MyCommentsList to get all data for comments created by the current user
     yield takeLatest('FETCH_USER_COMMENTS', fetchUserComments);
