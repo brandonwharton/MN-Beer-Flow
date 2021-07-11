@@ -1,20 +1,17 @@
 const express = require('express');
-const {
-  rejectUnauthenticated,
-} = require('../modules/authentication-middleware');
+require('dotenv').config();
 const router = express.Router();
 const axios = require('axios');
-require('dotenv').config();
 
-
-// GET request to Google's Geocoding API to convert a given address to latitude and longitude coordinates
-router.get('/', rejectUnauthenticated, (req, res) => {
-    // request to Google's Geocoding API enpoint with supplied address and city information. Set up for Minnesota only currently.
+// GET request to Google's geocoding API to convert given addresses to latitude and longitude
+router.get('/', (req, res) => {
+    // request to Google's geocoding API enpoint with supplied address and city information. Works for Minnesota only.
     const queryText = `https://maps.googleapis.com/maps/api/geocode/json?address=${req.query.address},${req.query.city},+MN&key=${process.env.MAPS_API_KEY}`;
-    // axios request to API
+
     axios.get(queryText)
+        // get first response, then send second request
         .then(response => {
-            // send back all the data from Geocoding API
+            console.log('Response for address', response.data);
             res.send(response.data)
         })
         .catch(err => {
