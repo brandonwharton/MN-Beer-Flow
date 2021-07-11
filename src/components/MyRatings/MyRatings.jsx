@@ -1,50 +1,25 @@
 // hooks
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-// import PropTypes from 'prop-types';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 // Material-UI components
-import { withStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 
-const StyledRating = withStyles({
-  iconFilled: {
-    color: '#ff6d75',
-  },
-  iconHover: {
-    color: '#ff3d47',
-  },
-})(Rating);
 
+// component for displaying user brewery ratings, allows user to adjust ratings fluidly with DB updates no matter where this component is displayed
+// needs to be given props for the breweryId and the brewery's rating. Origin is a string which is different depending on which component
+// is rendering the ratings which helps with redux data re-renders when the user adjusts ratings. Current origin strings are 'breweryDetails' for 
+// mounts from the BreweryDetails component and 'myFavorites' for mounts from the MyFavorites component. All logic using origins is handled in the
+// ratings saga
 
-// check to see if this is necessary
-function IconContainer(props) {
-    const { value, ...other } = props;
-    return <span {...other}>{customIcons[value].icon}</span>
-}
-
-IconContainer.propTypes = {
-    value: PropTypes.number.isRequired,
-};
-// through here
-
-
-// component for displaying user brewery ratings, allowing user to adjust ratings fluidly
 function MyRatings({breweryId, origin, rating}) {
     const dispatch = useDispatch();
-    // create a unique name for the component using the breweryId
+    // create a unique name for the Material-UI Rating component using the breweryId
     const componentName = `rating${breweryId}`; 
 
-    // const ratingsData = useSelector(store => store.ratingsData);
-
-    // useEffect(() => {
-    //     dispatch({ type: 'FETCH_SINGLE_RATING_FAVORITE', payload: breweryId })
-    // }, [])
-
+    // change handler for whenever a user clicks on a different rating star to change their rating
     const handleChange = (event) => {
         dispatch({ type: 'SET_RATING_VALUE', payload: {
             newRating: Number(event.target.value), 
@@ -54,6 +29,7 @@ function MyRatings({breweryId, origin, rating}) {
         }})
     }
 
+
     return (
         <div>
             <Box component="fieldset" mb={0} borderColor="transparent">
@@ -62,7 +38,8 @@ function MyRatings({breweryId, origin, rating}) {
                     name={componentName}
                     size="large"
                     value={rating}
-                    // precision={0.5} : play around with this, may be too small
+                    // precision={0.5} : Option to allow users to rate in half-star increments. Stars are too small to be UI friendly on a 
+                    // mobile device for half ratings
                     onChange={() => handleChange(event)}
                 />
             </Box>
