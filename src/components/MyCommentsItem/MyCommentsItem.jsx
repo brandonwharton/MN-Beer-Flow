@@ -2,7 +2,6 @@
 import { useDispatch } from 'react-redux';
 // Material-UI components
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -19,7 +18,7 @@ const useStyles = breweryCardTheme;
 function MyCommentsItem({comment}) {
     // use the correct Material-UI styles
     const classes = useStyles();
-
+    
     const dispatch = useDispatch();
 
     // click handler for Remove Comment buttons to delete the comment

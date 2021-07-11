@@ -19,12 +19,13 @@ function MyCommentsList() {
         dispatch({ type: 'FETCH_USER_COMMENTS' })
     }, [])
 
-    console.log(userCommentsList);
+
     return (
         <div className="App-main-position">
             <Typography variant="h4" component="h4" align="center">
                 Comments You've Left
             </Typography>
+            {/* Display list of user comments as cards by mapping through data and passing it to MyCommentItem as props */}
             <Grid container spacing={2} justify={'center'}>
                 <Grid item xs={10} lg={6}>
                     {userCommentsList.map(comment => (
