@@ -1,5 +1,7 @@
 // hooks
 import { useDispatch } from 'react-redux';
+
+import './AddToFavorites.css';
 // Material-UI components
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router';
@@ -18,7 +20,7 @@ function AddToFavorites({breweryId}) {
     }
 
     return (
-        <div className="container">
+        <div className="add-button-spacing">
             <Button
                 variant="contained"
                 color="primary"

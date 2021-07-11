@@ -37,9 +37,9 @@ function LoginForm() {
           Log In
         </Typography>
         {errors.loginMessage && (
-          <h3 className="alert" role="alert">
+          <Typography variant="h6" component="h6" className="alert" role="alert">
             {errors.loginMessage}
-          </h3>
+          </Typography>
         )}
         <div className="login-register-margin">
           <TextField

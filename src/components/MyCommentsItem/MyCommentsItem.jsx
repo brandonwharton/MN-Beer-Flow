@@ -9,21 +9,11 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete'
 
+// use the same brewery card styling for the comments
+import breweryCardTheme from '../../material-ui-themes/brewery.card.theme';
+
 // Material-UI styles
-const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1,
-        alignItems: 'center',
-        alignContent: 'center',
-    },
-    control: {
-        padding: theme.spacing(2),
-    },
-    card: {
-        backgroundColor: '#cbcbc9',
-        margin: '12px 0'
-    },
-}));
+const useStyles = breweryCardTheme;
 
 // component for the individual cards that are shown on the MyCommentsList view
 function MyCommentsItem({comment}) {

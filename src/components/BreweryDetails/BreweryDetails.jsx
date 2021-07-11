@@ -16,6 +16,7 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
+
 // Material-UI styles
 const useStyles = makeStyles(theme => ({
     root: {
@@ -76,14 +77,14 @@ function BreweryDetails() {
 
     return (
         <div className="App-main-position">
-            <Typography variant="h3" component="h3" align="center">
+            <Typography variant="h3" component="h3" align="center" gutterBottom>
                 {brewery?.name}
             </Typography>
         
             {/* conditionally render either a message saying a brewery is on user's favorites or an add to favorites button */}
-            <div>
+            <div className="image-margin">
                 {ratingsData.userRatingsData.isFavorite ? 
-                    <Typography variant="h5" component="h5" className="container">
+                    <Typography variant="h5" component="h5">
                         One of your Favorites
                     </Typography> 
                     :
@@ -93,7 +94,7 @@ function BreweryDetails() {
             {/* Image and details */}
             <img src={brewery?.image_url} alt={brewery?.name} />
             <div className="image-margin">
-                <Typography variant="h6" component="h6">
+                <Typography variant="h6" component="h6" gutterBottom>
                     {brewery?.city} { userLocation.latitude && displayDistanceAway() }
                 </Typography>
             </div>
@@ -102,7 +103,7 @@ function BreweryDetails() {
             <AverageRating averageRating={ratingsData.averageRatingsData.averageRating} />
             {/* Comment form and list of comments */}
             <AddComment breweryId={id} />
-            <Grid container className={classes.root} spacing={2} justify={'center'}>
+            <Grid container spacing={2} justify={'center'}>
                 <Grid item xs={10}>
                     {comments?.map(comment => (
                         <Card key={comment.id} className={classes.card}>

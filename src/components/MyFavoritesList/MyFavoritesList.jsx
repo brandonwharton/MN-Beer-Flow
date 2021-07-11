@@ -2,14 +2,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // Material-UI components
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
+// not currently used
+// import InputLabel from '@material-ui/core/InputLabel';
+// import Select from '@material-ui/core/Select';
+// import MenuItem from '@material-ui/core/MenuItem';
+
 // components
 import MyFavoritesItem from '../MyFavoritesItem/MyFavoritesItem';
 import MyRatings from '../MyRatings/MyRatings';
@@ -18,20 +19,8 @@ import NewUserView from '../NewUserView/NewUserView';
 import './MyFavoritesList.css';
 
 
-// Material-UI styles
-const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1,
-        alignItems: 'center',
-        alignContent: 'center',
-        padding: '15px 0',
-    },
-}));
-
 // "Home Page" component after login that shows the user their list of breweries they've marked as favorite
 function MyFavoritesList() {
-    // use the correct Material-UI styles
-    const classes = useStyles();
 
     const dispatch = useDispatch();
     // access data from brewery reducer
@@ -91,34 +80,47 @@ function MyFavoritesList() {
         setSearchInput('');
     }
 
+    // click handler for the clear search button
+    const handleClear = () => {
+        // resets the searchedArray to display all favorites
+        setSearchedArray([]);
+    }
+
 
     return (
-        <div className="App-my-favorites App-main-position">
-            {/* Conditionally render the favorites view normally if the user has anything in their favorites */}
+        <div className="App-main-position">
+            {/* Conditionally render the favorites view normally if the user has brewery data in their favorites list*/}
             {favoriteBreweryList.length > 0 ?
                 <section>
-                    <Typography variant="h4" component="h4" align="center" >
-                        {user.username}'s Favorites
-                    </Typography>
-                    <form onSubmit={handleSearch} className="favorites-search-form">
-                        <TextField
-                            className="text-field"
-                            label="search favorites"
-                            variant="outlined"
-                            value={searchInput}
-                            onChange={handleInputChange}
-                        />
-                        <div className="form-button">
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                onClick={handleSearch}
-                            >
-                                Search
-                            </Button>
+                    <div className="my-favorites-parent">
+                        <div className="my-favorites-child">
+                            <Typography variant="h4" component="h4" align="center">
+                                {user.username}'s Favorites
+                            </Typography>
+                            
+                            <form onSubmit={handleSearch}>
+                                <div className="center-this">
+                                    <TextField
+                                        className="text-field"
+                                        label="search favorites"
+                                        variant="outlined"
+                                        value={searchInput}
+                                        onChange={handleInputChange}
+                                    />
+                                    <div className="form-button">
+                                        <Button
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={handleSearch}
+                                        >
+                                            Search
+                                        </Button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
 
                     {/* This is a an unfinished sorting feature for the favorites list */}
 
@@ -134,11 +136,11 @@ function MyFavoritesList() {
                     </Select> */}
 
 
-                    <Grid container className={classes.root} spacing={2} justify={'center'}>
-                        <Grid item xs={10}>
+                    <Grid container spacing={2} justify={'center'}>
+                        <Grid item xs={10} lg={4}>
                             {/* conditionally render a no results message for failed searches */}
                             {foundNoResults &&
-                                <Typography variant="h4" component="h4" align="center">
+                                <Typography variant="h4" component="h4" align="center" gutterBottom="true">
                                     No Results Found
                                 </Typography>}
 
@@ -162,6 +164,17 @@ function MyFavoritesList() {
                             }
                         </Grid>
                     </Grid>
+                    {searchedArray.length > 0 && 
+                    <div className="center-this container">
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            onClick={handleClear}
+                        >
+                        Clear Search
+                    </Button>
+                    </div>
+                    }
                 </section>
                 :
                 // Display the NewUserView component if no favorites have been added

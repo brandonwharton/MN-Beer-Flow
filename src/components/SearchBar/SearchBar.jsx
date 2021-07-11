@@ -1,8 +1,7 @@
 // hooks
 import { useState } from 'react';
 import { useHistory } from 'react-router';
-// components
-import './SearchBar.css'
+
 // Material-UI components
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
@@ -29,7 +28,7 @@ function SearchBar() {
     }
 
     return (
-        <div className="SearchBar">
+        <div className="center-this">
             <form onSubmit={handleSubmit}>
                 <TextField
                     className="text-field"

@@ -44,24 +44,29 @@ function Nav() {
 
   return (
     <div className="nav App-nav-position">
-      <div>
-        <Link className="navLink" to={loginLinkData.path}>
-          {loginLinkData.text}
-        </Link>
-
+      
+        <div className="nav-child nav-child-1">
+          <Link className="navLink" to={loginLinkData.path}>
+            {loginLinkData.text}
+          </Link>
+        </div>
         {user.id && (
           <>
-            <Link className="navLink" to="/search">
-              Find A Brewery
-            </Link>
-            <Button
-              className="menu-button"
-              aria-controls="simple-menu"
-              aria-haspopup="true"
-              onClick={handleClick}
-            >
-              <MenuIcon color="error" />
-            </Button>
+            <div className="nav-child nav-child-2">
+              <Link className="navLink" to="/search">
+                Find A Brewery
+              </Link> 
+            </div>
+            <div className="nav-child nav-child-3">
+              <Button
+                className="menu-button"
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                <MenuIcon color="error" />
+              </Button>
+            </div>
             <Menu
               id="simple-menu"
               anchorEl={anchorEl}
@@ -96,11 +101,13 @@ function Nav() {
           </>
         )}
         {!user.id &&
-          <Link className="navLink" to="/about">
-            About
-          </Link>
+          <div className="nav-child nav-child-4">
+            <Link className="navLink" to="/about">
+              About
+            </Link>
+          </div>
         }
-      </div>
+      
     </div>
   );
 }

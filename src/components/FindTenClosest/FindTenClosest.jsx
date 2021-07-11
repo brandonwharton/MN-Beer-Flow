@@ -15,27 +15,12 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
+
+import breweryCardTheme from '../../material-ui-themes/brewery.card.theme';
 
 
 // Material-UI styles
-const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1,
-        alignItems: 'center',
-        alignContent: 'center',
-    },
-    control: {
-        padding: theme.spacing(2),
-    },
-    card: {
-        backgroundColor: '#cbcbc9',
-    },
-    media: {
-        height: 0,
-        paddingTop: '56.25%',
-    },
-}));
+const useStyles = breweryCardTheme;
 
 
 // component that finds the ten closest breweries to the user's current location and displays them
@@ -80,7 +65,7 @@ function FindTenClosest() {
                 Closest to You:
             </Typography>
             <Grid container className={classes.root} spacing={2} justify={'center'}>
-                <Grid item xs={10}>
+                <Grid item xs={10} lg={4}>
                     {slicedArray.length > 0 &&
                     <div>
                         {slicedArray.map( (brewery, index) => (

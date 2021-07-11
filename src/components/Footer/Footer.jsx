@@ -12,7 +12,7 @@ function Footer() {
   return (
     <footer className="App-footer-position">
       <Typography variant="body2" component="p">
-        &copy; Prime Digital Academy
+        &copy; MN Beer Flow v1.0
       </Typography>
     </footer>
   )

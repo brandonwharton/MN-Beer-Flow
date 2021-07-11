@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 // components
 import GetUserLocation from '../GetUserLocation/GetUserLocation';
+import './RandomBrewery.css';
 // Material-UI components
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -65,10 +66,36 @@ function RandomBrewery() {
     console.log(distanceLimit);
     return (
         <div className="App-main-position">
+            <Typography variant="body1" component ="p" align="center" gutterBottom>
+                Optional: select a maximum distance away in miles
+            </Typography>
+            <div className="random-view-spacing select-label">
+                <InputLabel id="distance-limit-label" >Distance Limit</InputLabel>
+                <Select
+                    labelId="distance-limit-label"
+                    id="distance-limit"
+                    value={distanceLimit}
+                    onChange={handleChange}
+                >
+                    <MenuItem value={'none'}>None</MenuItem>
+                    <MenuItem value={5}>Five</MenuItem>
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={25}>Twenty Five</MenuItem>
+                    <MenuItem value={50}>Fifty</MenuItem>
+                </Select>
+            </div>
+            {/* Conditional rendering if a user selected a distance that was too close and no results were found */}
+            {noResults && 
+            <Typography variant="h5" component="h5" align="center" gutterBottom>
+                No results exist within chosen distance limit. Please widen your radius.
+            </Typography>
+            }
+
+
             <Typography variant="h5" component="h5" align="center">
                 Pick a random brewery from anywhere in MN:
             </Typography>
-            <div className="form-button">
+            <div className="center-this random-view-spacing">
                 <Button
                     variant="contained"
                     color="primary"
@@ -80,7 +107,7 @@ function RandomBrewery() {
             <Typography variant="h5" component="h5" align="center">
                 Or from just among your favorites:
             </Typography>
-            <div className="form-button">
+            <div className="center-this random-view-spacing">
                 <Button
                     variant="contained"
                     color="primary"
@@ -89,28 +116,8 @@ function RandomBrewery() {
                     From Favorites
                 </Button>
             </div>
-            <Typography variant="h5" component ="h5" align="center">
-                Optional: select a maximum distance away in miles
-            </Typography>
-            <InputLabel id="distance-limit-label">Distance Limit</InputLabel>
-            <Select
-                labelId="distance-limit-label"
-                id="distance-limit"
-                value={distanceLimit}
-                onChange={handleChange}
-            >
-                <MenuItem value={'none'}>None</MenuItem>
-                <MenuItem value={5}>Five</MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={25}>Twenty Five</MenuItem>
-                <MenuItem value={50}>Fifty</MenuItem>
-            </Select>
-            {/* Conditional rendering if a user selected a distance that was too close and no results were found */}
-            {noResults && 
-            <Typography variant="h4" component="h4">
-                No results exist within chosen distance limit. Please widen your radius.
-            </Typography>
-            }
+
+
             <GetUserLocation />
         </div>
     )
