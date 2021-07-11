@@ -9,24 +9,23 @@ import Button from '@material-ui/core/Button';
 
 
 // component that renders a reusable search bar for use in a few places, all leading to the SearchBrewery component
-
 function SearchBar() {
     const history = useHistory()
     // state for holding search string
     const [searchString, setSearchString] = useState('');
-
 
     // change handler to change the searchString state as user input is filled
     const handleChange = (event) => {
         setSearchString(event.target.value);
     }
 
+    // submit handler for the search button and form, navs user to a new route that contains their search string as params
     const handleSubmit = (event) => {
         event.preventDefault();
         history.push(`/search/${searchString}`);
-
     }
 
+    
     return (
         <div className="center-this">
             <form onSubmit={handleSubmit}>
