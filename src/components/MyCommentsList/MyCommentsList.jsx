@@ -32,7 +32,6 @@ function MyCommentsList() {
                     ))}
                 </Grid>
             </Grid>
-
         </div>
 
     )

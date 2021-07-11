@@ -30,9 +30,9 @@ function RegisterForm() {
           Register User
         </Typography>
         {errors.registrationMessage && (
-          <h3 className="alert" role="alert">
+          <Typography variant="h6" component="h6" className="alert" role="alert">
             {errors.registrationMessage}
-          </h3>
+          </Typography>
         )}
         <div className="login-register-margin">
           <TextField
