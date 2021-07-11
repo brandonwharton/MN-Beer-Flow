@@ -9,40 +9,24 @@ import MyRatings from '../MyRatings/MyRatings';
 import AverageRating from '../AverageRating/AverageRating';
 import AddComment from '../AddComment/AddComment';
 import GetUserLocation from '../GetUserLocation/GetUserLocation';
+import breweryCardTheme from '../../material-ui-themes/brewery.card.theme';
 // Material-UI components
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
 
 // Material-UI styles
-const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1,
-        alignItems: 'center',
-        alignContent: 'center',
-    },
-    control: {
-        padding: theme.spacing(2),
-    },
-    card: {
-        backgroundColor: '#cbcbc9',
-        margin: '12px 0'
-    },
-}));
-
-
-
+const useStyles = breweryCardTheme;
 
 
 // BreweryDetails is a details page that fetches data for a single brewery from the DB and renders it
 function BreweryDetails() {
     // use the correct Material-UI styles
     const classes = useStyles();
-
     const dispatch = useDispatch();
+
     // hold database ID for page that was navigated to
     const { id } = useParams();
     // access data from brewery reducer, data comes in as an array with one element object
@@ -54,34 +38,40 @@ function BreweryDetails() {
     // access user location data
     const userLocation = useSelector(store => store.location.userLocation);
 
+
     // on navigation to specific details page, fetch details for specified brewery
     useEffect(()=> {
-        dispatch({ type: 'FETCH_SINGLE_BREWERY', payload: id });
-        dispatch({ type: 'FETCH_BREWERY_COMMENTS', payload: id });
-        // dispatch to ratings Saga to get ratings data and favorites data for the current user
-        dispatch({ type: 'FETCH_SINGLE_RATING_FAVORITE', payload: id });
-        dispatch({ type: 'FETCH_AVERAGE_RATING', payload: id });
+        dispatch({ type: 'FETCH_SINGLE_BREWERY', payload: id });  // GET brewery data 
+        dispatch({ type: 'FETCH_BREWERY_COMMENTS', payload: id });  // GET brewery comments
+        // below dispatches could be removed at some point if "FETCH_SINGLE_BREWERY" above gets reworked to grab correct ratings data along with 
+        // curent payload
+        dispatch({ type: 'FETCH_SINGLE_RATING_FAVORITE', payload: id });  // GET user's rating of the brewery
+        dispatch({ type: 'FETCH_AVERAGE_RATING', payload: id });  // GET average rating for the brewery 
     }, [id]);
 
+
+    // conditional rendering function to display distance between user and the brewery being viewed
     const displayDistanceAway = () => {
+        // if the userLocation router had data in it, display the DistanceFromUser component
         if (userLocation.latitude) {
             return (
             <span>- <DisplayDistanceFromUser brewery={brewery} /> miles away</span>
             )
         } else {
-            return <></>
+            return <></>  // display nothing if userLocation isn't being updated quickly
         }
     }
 
  
-
     return (
         <div className="App-main-position">
+            <GetUserLocation /> {/* No render, GetUserLocation just runs saves the user's coordinates in the location reducer*/}
+
             <Typography variant="h3" component="h3" align="center" gutterBottom>
                 {brewery?.name}
             </Typography>
         
-            {/* conditionally render either a message saying a brewery is on user's favorites or an add to favorites button */}
+            {/* conditionally render either a message saying a brewery is on user's favorites or a clickable add to favorites button */}
             <div className="image-margin">
                 {ratingsData.userRatingsData.isFavorite ? 
                     <Typography variant="h5" component="h5">
@@ -91,16 +81,19 @@ function BreweryDetails() {
                     <AddToFavorites breweryId={id} />
                 }
             </div>
-            {/* Image and details */}
+
+            {/* Brewery image and details */}
             <img src={brewery?.image_url} alt={brewery?.name} />
             <div className="image-margin">
                 <Typography variant="h6" component="h6" gutterBottom>
                     {brewery?.city} { userLocation.latitude && displayDistanceAway() }
                 </Typography>
             </div>
+
             {/* Ratings */}
             <MyRatings breweryId={id} origin={'breweryDetails'} rating={ratingsData.userRatingsData.rating} />
             <AverageRating averageRating={ratingsData.averageRatingsData.averageRating} />
+
             {/* Comment form and list of comments */}
             <AddComment breweryId={id} />
             <Grid container spacing={2} justify={'center'}>
@@ -119,7 +112,7 @@ function BreweryDetails() {
                     ))}
                 </Grid>
             </Grid>
-            <GetUserLocation />
+            
         </div>
     )
 }
