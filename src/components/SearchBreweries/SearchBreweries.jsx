@@ -83,7 +83,7 @@ function SearchBreweries() {
                         </Button>
                     </div>
                     <Grid container className={classes.root} spacing={2} justify={'center'}>
-                        <Grid item xs={10}>
+                        <Grid item xs={10} lg={4}>
                             {searchedList.map(brewery => (
                             <SearchBreweryResult key={brewery.id} brewery={brewery} />
                             ))}
