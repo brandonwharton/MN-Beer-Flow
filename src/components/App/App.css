@@ -11,23 +11,25 @@ body {
   overflow: hidden;
 }
 
-
-/* image styling for larger screens */
-/* img {
-  display: flex;
-  width: 40%;
-  margin: 0 30%;
-  border: 2px solid black;
-} */
-
-
-
+/* default image sizing for smaller screens */
 img {
   display: flex;
   max-width: 84%;
   margin: 0 8%;
   border: 2px solid black;
 }
+
+/* image sizing for larger screens */
+@media only screen and (min-width: 600px) {
+  img {
+    display: flex;
+    width: 40%;
+    margin: 0 30%;
+    border: 2px solid black;
+  }
+}
+
+
 
 
 /* --------------------------------------------------------------------------------
@@ -38,17 +40,17 @@ Container
   padding: 20px;
 }
 
-/* large screen margin to line up with images
-.image-margin {
-  margin-left: 30%;
-} */
-
-/* small screen margin to line up with images */
-
+/* line up text with images on smaller screens */
 .image-margin {
   margin-left: 8.3%;
 }
 
+/* line up text with images on larger */
+@media only screen and (min-width: 600px) {
+  .image-margin {
+    margin-left: 30%;
+  }
+}
 
 
 /* --------------------------------------------------------------------------------

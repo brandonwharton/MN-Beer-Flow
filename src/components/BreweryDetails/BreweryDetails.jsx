@@ -77,14 +77,14 @@ function BreweryDetails() {
 
     return (
         <div className="App-main-position">
-            <Typography variant="h3" component="h3" align="center">
+            <Typography variant="h3" component="h3" align="center" gutterBottom>
                 {brewery?.name}
             </Typography>
         
             {/* conditionally render either a message saying a brewery is on user's favorites or an add to favorites button */}
-            <div>
+            <div className="image-margin">
                 {ratingsData.userRatingsData.isFavorite ? 
-                    <Typography variant="h5" component="h5" className="container">
+                    <Typography variant="h5" component="h5">
                         One of your Favorites
                     </Typography> 
                     :
@@ -94,7 +94,7 @@ function BreweryDetails() {
             {/* Image and details */}
             <img src={brewery?.image_url} alt={brewery?.name} />
             <div className="image-margin">
-                <Typography variant="h6" component="h6">
+                <Typography variant="h6" component="h6" gutterBottom>
                     {brewery?.city} { userLocation.latitude && displayDistanceAway() }
                 </Typography>
             </div>
