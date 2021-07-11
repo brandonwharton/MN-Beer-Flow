@@ -1,18 +1,21 @@
 // hooks
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-// Material-UI components
 
 
 // component that determines an accurate distance and drive time between the user and a provided brewery and displays the distance from user
 function DisplayDistanceFromUser ({brewery}) {
-
+    // look at user location from the location reducer
     const userLocation = useSelector(store => store.location.userLocation)
+    // local state to hold the distance from user after getting a result back from Google
     const [distanceFromUser, setDistanceFromUser] = useState(0);
     
+    // on component mount run the function to get distance
     useEffect(() => {
         getDistanceFromUser();
+    // use the brewery prop data as a dependency to re-run the function whenever brewery data being fed in changes
     }, [brewery])
+
 
     // uses Google's Distance Matrix to find the distance between the user and a provided brewery
     const getDistanceFromUser = () => {
@@ -31,17 +34,18 @@ function DisplayDistanceFromUser ({brewery}) {
         //     destinationArray.push(`${brewery.address} ${brewery.city}`);
         // })
 
+
         // request to Googles Distance Matrix service to get locations data
         const service = new google.maps.DistanceMatrixService();
         service.getDistanceMatrix(
             {
                 origins: [origin],
-                // destinations can be a Lat/Lng object or as a string of address and city
+                // destinations can be a Lat/Lng object or a string of an address and city
                 destinations: [destination],
                 travelMode: 'DRIVING',
             }, callback);
 
-        // callback function that is called once Google's results come back
+        // callback function that gets called once Google's results come back
         function callback(response, status) {
             if (status == 'OK') {
                 const origins = response.originAddresses;

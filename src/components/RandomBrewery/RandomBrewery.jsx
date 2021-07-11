@@ -18,6 +18,7 @@ function RandomBrewery() {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    // local states for the Distance Limit Select menu and the No Results conditional rendering
     const [distanceLimit, setDistanceLimit] = useState('none');
     const [noResults, setNoResults] = useState(false);
 
@@ -32,7 +33,7 @@ function RandomBrewery() {
     // click handler to select a random brewery from among every brewery in database
     const anyRandomBrewery = () => {
         // dispatches to brewery saga to find a random choice from among the entire database
-        // passing navToRandom to allow navigation from inside a Saga
+        // passing navToRandom to allow navigation from inside the Saga
         dispatch({ type: 'FETCH_ANY_RANDOM_BREWERY', payload: {
             navToRandom: navToRandom,
             distanceLimit: distanceLimit,
@@ -56,16 +57,16 @@ function RandomBrewery() {
         setNoResults(true);
     }
 
-
-
+    // change handler for the Distance Limit Select menu
     const handleChange = (event) => {
         setDistanceLimit(event.target.value);
     }
 
 
-    console.log(distanceLimit);
     return (
         <div className="App-main-position">
+            <GetUserLocation /> {/* No render, GetUserLocation just runs saves the user's coordinates in the location reducer*/}
+            {/* Distance limit select and instructions */}
             <Typography variant="body1" component ="p" align="center" gutterBottom>
                 Optional: select a maximum distance away in miles
             </Typography>
@@ -84,6 +85,7 @@ function RandomBrewery() {
                     <MenuItem value={50}>Fifty</MenuItem>
                 </Select>
             </div>
+
             {/* Conditional rendering if a user selected a distance that was too close and no results were found */}
             {noResults && 
             <Typography variant="h5" component="h5" align="center" gutterBottom>
@@ -91,7 +93,7 @@ function RandomBrewery() {
             </Typography>
             }
 
-
+            {/* Randomizer buttons */}
             <Typography variant="h5" component="h5" align="center">
                 Pick a random brewery from anywhere in MN:
             </Typography>
@@ -116,9 +118,6 @@ function RandomBrewery() {
                     From Favorites
                 </Button>
             </div>
-
-
-            <GetUserLocation />
         </div>
     )
 }

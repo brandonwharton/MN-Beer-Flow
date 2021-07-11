@@ -2,15 +2,13 @@ const express = require('express');
 const {
   rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
-const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
-const userStrategy = require('../strategies/user.strategy');
-
 const router = express.Router();
 
 // handles GET requests to GET all comments created by the current user from the DB for the MyCommentsList component
 router.get('/', rejectUnauthenticated, (req, res) => {
-    // sanitized SQL string to get all comments created by current user along with the brewery name that they relate to
+    // sanitized SQL string to get all comments created by current user along with the brewery name that they relate to. Order them by
+    // newest comments first
     const queryText = `SELECT "comments".*, "brewery".name FROM "comments"
                        JOIN "brewery" ON "comments".brewery_id = "brewery".id
                        WHERE "comments".user_id = $1

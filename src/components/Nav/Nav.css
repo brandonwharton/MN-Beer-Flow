@@ -1,20 +1,12 @@
 .nav {
-  /* flex box layout */
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
-  /* text-align: center; */
-  /* flex-flow: row; */
-  /* justify-content: space-between; */
-  /* align-items: center; */
   background-color: #46626e;
-  /* overflow: hidden; */
 }
 
-.nav a {
-  text-decoration: none;
-}
-
+/* --------------------------------------------------------------------------------
+Spacing and margins for the different links and menu icon in the navbar
+-------------------------------------------------------------------------------- */
 .nav-child {
   width: 100%;
 }
@@ -37,30 +29,18 @@
   padding-right: 18px;
 }
 
-
+/* --------------------------------------------------------------------------------
+Styling for the links themselves and the menu options
+-------------------------------------------------------------------------------- */
 .navLink {
-  /* display: inline-block; */
   color: #f2f2f2;
-  background-color: #46626e;
-  /* text-align: center; */
-  /* padding: 15px 10px; */
   text-decoration: none;
-
-
-  /* these last two make the logout button in
-  the nav bar look like another link */
-  /* border: none;
-  cursor: pointer;
-  outline: 0; */
 }
 
 .navLink-menu {
   color: #413330;
   text-decoration: none;
-  
 }
 
-/* .navLink:hover {
-  background-color: #79a6b9;
-} */
+
 

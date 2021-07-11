@@ -33,7 +33,7 @@ img {
 
 
 /* --------------------------------------------------------------------------------
-Container
+Container and spacing
 -------------------------------------------------------------------------------- */
 
 .container {
@@ -52,9 +52,85 @@ Container
   }
 }
 
+/* --------------------------------------------------------------------------------
+Alert
+-------------------------------------------------------------------------------- */
+
+.alert {
+  box-sizing: border-box;
+  padding: 15px 10px;
+  margin: 15px 0;
+  border: 2px solid #e01616;
+  background-color: #efefef;
+  border-radius: 3px;
+  color: #e01616;
+}
 
 /* --------------------------------------------------------------------------------
-Button
+Login and Register needs 
+-------------------------------------------------------------------------------- */
+.login-register-form {
+  text-align: center;
+  margin: 0 7px;
+}
+
+.login-register-margin {
+  margin: 7px 0;
+}
+
+/* --------------------------------------------------------------------------------
+Page Spacing and sticky header/nav/footer for main components
+-------------------------------------------------------------------------------- */
+.App-header-position {
+  width: 100%;
+  min-height: 10vh;
+  max-height: 10vh;
+}
+
+.App-nav-position {
+  width: 100%;
+  min-height: 7vh;
+  max-height: 7vh;
+}
+
+.App-main-position {
+  background-color: #f1cba7;
+  overflow: scroll;
+  padding-top: 1.5vh;
+  min-height: 79vh;
+  max-height: 79vh;
+}
+
+.App-footer-position {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  height: 4vh;
+}
+
+/* --------------------------------------------------------------------------------
+Shared items
+-------------------------------------------------------------------------------- */
+.text-field {
+  background-color: rgb(240, 239, 239);
+}
+
+.form-button {
+  margin: 7px 0;
+}
+
+.center-this {
+  margin-top: 7px;
+  text-align: center;
+}
+
+
+/* --------------------------------------------------------------------------------
+      OLD STYLING
+-------------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------------
+Button - NOT CURRENTLY USED ANYWHERE
 -------------------------------------------------------------------------------- */
 
 .btn {
@@ -109,22 +185,7 @@ Button
 }
 
 /* --------------------------------------------------------------------------------
-Alert
--------------------------------------------------------------------------------- */
-
-.alert {
-  box-sizing: border-box;
-  padding: 15px 10px;
-  margin: 15px 0;
-  border: 2px solid #e01616;
-  background-color: #efefef;
-  border-radius: 3px;
-  color: #e01616;
-  font-size: 0.8rem;
-}
-
-/* --------------------------------------------------------------------------------
-Form Treatment
+Form Treatment - NOT CURRENTLY BEING USED
 -------------------------------------------------------------------------------- */
 
 .formPanel {
@@ -141,61 +202,4 @@ Form Treatment
 input {
   margin: 5px;
   margin-bottom: 10px;
-}
-/* --------------------------------------------------------------------------------
-Login and Register needs 
--------------------------------------------------------------------------------- */
-.login-register-form {
-  text-align: center;
-  margin: 0 7px;
-}
-
-.login-register-margin {
-  margin: 7px 0;
-}
-
-/* --------------------------------------------------------------------------------
-Page Spacing
--------------------------------------------------------------------------------- */
-.App-header-position {
-  width: 100%;
-  min-height: 10vh;
-  max-height: 10vh;
-}
-
-.App-nav-position {
-  width: 100%;
-  min-height: 7vh;
-  max-height: 7vh;
-}
-
-.App-main-position {
-  background-color: #f1cba7;
-  overflow: scroll;
-  padding-top: 1.5vh;
-  min-height: 79vh;
-  max-height: 79vh;
-}
-
-.App-footer-position {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  height: 4vh;
-}
-
-/* --------------------------------------------------------------------------------
-Shared items
--------------------------------------------------------------------------------- */
-.text-field {
-  background-color: rgb(240, 239, 239);
-}
-
-.form-button {
-  margin: 7px 0;
-}
-
-.center-this {
-  margin-top: 7px;
-  text-align: center;
 }

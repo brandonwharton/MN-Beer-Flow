@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-// not currently used
+// not currently used, available for when the sort by feature gets implemented
 // import InputLabel from '@material-ui/core/InputLabel';
 // import Select from '@material-ui/core/Select';
 // import MenuItem from '@material-ui/core/MenuItem';
@@ -19,11 +19,11 @@ import NewUserView from '../NewUserView/NewUserView';
 import './MyFavoritesList.css';
 
 
-// "Home Page" component after login that shows the user their list of breweries they've marked as favorite
+// "Home Page" component after login that shows the user their list of breweries they've marked as favorite or gives new users helpful information about app
 function MyFavoritesList() {
 
     const dispatch = useDispatch();
-    // access data from brewery reducer
+    // access favorites data from brewery reducer and current user data from user reducer
     const favoriteBreweryList = useSelector(store => store.breweries.favoritesList)
     const user = useSelector(store => store.user);
     // states for handling the search input and the filtered search results array
@@ -62,9 +62,8 @@ function MyFavoritesList() {
         setFoundNoResults(false);
 
         let tempArray = []
-        // filter through the favoriteBreweryList array looking for search matches to a brewery name
+        // filter through the favoriteBreweryList array looking for matches between user search string and brewery names
         tempArray = favoriteBreweryList.filter(brewery => {
-            console.log('brewery names', brewery.name);
             // return any name matches ignoring case
             if (brewery.name.toUpperCase().includes(searchInput.toUpperCase())) {
                 return brewery;
@@ -97,7 +96,7 @@ function MyFavoritesList() {
                             <Typography variant="h4" component="h4" align="center">
                                 {user.username}'s Favorites
                             </Typography>
-                            
+                            {/* Search form rendering */}
                             <form onSubmit={handleSearch}>
                                 <div className="center-this">
                                     <TextField
@@ -135,7 +134,7 @@ function MyFavoritesList() {
                         <MenuItem value={'Closest'}>Closest Distance</MenuItem>
                     </Select> */}
 
-
+                    
                     <Grid container spacing={2} justify={'center'}>
                         <Grid item xs={10} lg={4}>
                             {/* conditionally render a no results message for failed searches */}
@@ -164,6 +163,7 @@ function MyFavoritesList() {
                             }
                         </Grid>
                     </Grid>
+                    {/* Conditionally render the clear search button to reload all favorites if the current view is a successful search*/}
                     {searchedArray.length > 0 && 
                     <div className="center-this container">
                         <Button
@@ -177,7 +177,7 @@ function MyFavoritesList() {
                     }
                 </section>
                 :
-                // Display the NewUserView component if no favorites have been added
+                // Display the NewUserView component if no favorites have been added by user
                 <NewUserView />
             }
         </div>

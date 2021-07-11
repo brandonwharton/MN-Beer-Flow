@@ -1,62 +1,63 @@
+// hooks and components
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
-import { useSelector } from 'react-redux';
 // Material-UI components
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
-import { makeStyles } from '@material-ui/core/styles';
-
-
-
-
 
 
 function Nav() {
-
+  // get user data from reducer to handle conditional rendering of navbar elements
   const user = useSelector((store) => store.user);
   // state for opening and closing menu
   const [anchorEl, setAnchorEl] = useState(null);
 
-  // click handler for additional nav menu Button
+  // click handler for the nav menu Button
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   }
 
-  // closes additional nav menu 
+  // closes nav menu 
   const handleClose = () => {
     setAnchorEl(null);
   }
 
-
+  // if a user isn't logged in, main link on navbar is login/register
   let loginLinkData = {
     path: '/login',
     text: 'Login / Register',
   };
 
+  // if user is logged in, main link turns into My favorites
   if (user.id != null) {
     loginLinkData.path = '/myfavorites';
     loginLinkData.text = 'My Favorites';
   }
 
+
   return (
     <div className="nav App-nav-position">
-      
+        {/* Navbar link that is always there but changes whether a user is logged in */}
         <div className="nav-child nav-child-1">
           <Link className="navLink" to={loginLinkData.path}>
             {loginLinkData.text}
           </Link>
         </div>
+        {/* Navbar links and menu Button that only render if a user is logged in */}
         {user.id && (
           <>
+            {/* Links that are in the main nav bar */}
             <div className="nav-child nav-child-2">
               <Link className="navLink" to="/search">
                 Find A Brewery
               </Link> 
             </div>
+            {/* Menu button link and all it's children */}
             <div className="nav-child nav-child-3">
               <Button
                 className="menu-button"
@@ -100,6 +101,7 @@ function Nav() {
             </Menu>
           </>
         )}
+        {/* If no user is logged in, display the About page link instead */}
         {!user.id &&
           <div className="nav-child nav-child-4">
             <Link className="navLink" to="/about">

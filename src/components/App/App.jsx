@@ -25,9 +25,8 @@ import BreweryDetails from '../BreweryDetails/BreweryDetails';
 import SearchBreweries from '../SearchBreweries/SearchBreweries';
 import FindTenClosest from '../FindTenClosest/FindTenClosest';
 import RandomBrewery from '../RandomBrewery/RandomBrewery';
-import CreateGoogleMap from '../CreateGoogleMap/CreateGoogleMap';
+import CreateGoogleMap from '../CreateGoogleMap/CreateGoogleMap'; // not in use currently
 // Material-UI components
-import '@fontsource/roboto';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography';
 
@@ -38,13 +37,11 @@ const theme = createMuiTheme({
       light: '#946644',
       main: '#713229',
       dark: '#413330',
-      // Contrast text?
     },
     secondary: {
       light: '#cbcbc9',
       main: '#b7987b',
       dark: '#46626e',
-      // Contrast text?
     },
     // this is the color chosen for the navbar links, error was the easiest way to override an icon color
     error: {
@@ -68,7 +65,6 @@ const libraries = ['geometry'];
 
 
 
-
 function App() {
   const dispatch = useDispatch();
   // load Map scripts
@@ -85,122 +81,128 @@ function App() {
   return (
     <Router>
       <MuiThemeProvider theme={theme}>
-      <div>
-        <GetUserLocation />
-        <Header />
-        <Nav />
-        <Switch>
-          {/* Visiting localhost:3000 will redirect to localhost:3000/myfavorites */}
-          <Redirect exact from="/" to="/myfavorites" />
-
-          {/* Visiting localhost:3000/about will show the about page. */}
-          <Route
-            // shows AboutPage at all times (logged in or not)
-            exact
-            path="/about"
-          >
-            <AboutPage />
-          </Route>
-
-          {/* For protected routes, the view could show one of several things on the same route.
-            Visiting localhost:3000/user will show the MyFavorites if the user is logged in.
-            If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
-            Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-          <ProtectedRoute
-            // logged in shows MyFavorites page else shows the LoginPage
-            exact
-            path="/myfavorites"
-          >
-            <MyFavoritesList />
-          </ProtectedRoute>
-
-          {/* When a value is supplied for the authRedirect prop the user will
-            be redirected to the path supplied when logged in, otherwise they will
-            be taken to the component and path supplied. */}
-          <ProtectedRoute
-            // with authRedirect:
-            // - if logged in, redirects to "/user"
-            // - else shows LoginPage at /login
-            exact
-            path="/login"
-            authRedirect="/myfavorites"
-          >
-            <LoginPage />
-          </ProtectedRoute>
-
-          <ProtectedRoute
-            // with authRedirect:
-            // - if logged in, redirects to "/user"
-            // - else shows RegisterPage at "/registration"
-            exact
-            path="/registration"
-            authRedirect="/myfavorites"
-          >
-            <RegisterPage />
-          </ProtectedRoute>
-
-          {/******************** My Routes *********************/}
-          <ProtectedRoute
-            exact
-            path="/myfavorites"
-          >
-            <MyFavoritesList />
-          </ProtectedRoute>
-          <ProtectedRoute
-            exact
-            path="/mycomments"
-          >
-              <MyCommentsList />
-          </ProtectedRoute>          
-          <ProtectedRoute
-            path="/details/:id"
-            children={<BreweryDetails />}
-          >
-          </ProtectedRoute>
-          <ProtectedRoute
-            exact
-            path="/search"
-          >
-            <SearchBreweries />
-          </ProtectedRoute>
-          <ProtectedRoute
-            path="/search/:query"
-            children={<SearchBreweries />}
-          >
-          </ProtectedRoute>
-          <ProtectedRoute
-            exact
-            path="/closest"
-          >
-            <FindTenClosest />
-          </ProtectedRoute>
-          <ProtectedRoute
-            path="/random"
-          >
-            <RandomBrewery />
-          </ProtectedRoute>
-
-          {/* Route to a Google Map component that isn't ready for production*/}
-          {/* <ProtectedRoute
-            path="/location"
-          >
-            <CreateGoogleMap isLoaded={isLoaded}/>
-          </ProtectedRoute> */}
-          {/* If none of the other routes matched, we will show a 404. */}
+        <div>
+          <GetUserLocation /> {/* No render, GetUserLocation just runs saves the user's coordinates in the location reducer*/}
+          {/* Seen on all views */}
+          <Header />
+          <Nav />
           
-          <Route>
-            <div className="App-main-position">
-              <Typography variant="h2" component="h2" align="center">
-                404:
-              </Typography>
-              <Typography variant="h3" component="h3" align="center">
-                Page Not Found
-              </Typography>
-            </div>
-          </Route>
-        </Switch>
-        <Footer />
-      </div>
+          <Switch>
+            {/* Visiting localhost:3000 will redirect to localhost:3000/myfavorites */}
+            <Redirect exact from="/" to="/myfavorites" />
+            {/* Visiting localhost:3000/about will show the about page. */}
+            <Route
+              // shows AboutPage, route isn't protected so anyone can see it, even if they're not logged in
+              exact
+              path="/about"
+            >
+              <AboutPage />
+            </Route>
+
+            {/* For protected routes, the view could show one of several things on the same route.
+              Visiting localhost:3000/myfavorites will show the MyFavorites if the user is logged in.
+              If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
+              Even though it seems like they are different pages, the user is always on localhost:3000/myfavorites */}
+            <ProtectedRoute
+              // logged in shows MyFavorites page else shows the LoginPage
+              exact
+              path="/myfavorites"
+            >
+              <MyFavoritesList />
+            </ProtectedRoute>
+
+            {/* When a value is supplied for the authRedirect prop the user will
+              be redirected to the path supplied when logged in, otherwise they will
+              be taken to the component and path supplied. */}
+            <ProtectedRoute
+              // with authRedirect:
+              // - if logged in, redirects to "/myfavorites"
+              // - else shows LoginPage at /login
+              exact
+              path="/login"
+              authRedirect="/myfavorites"
+            >
+              <LoginPage />
+            </ProtectedRoute>
+
+            <ProtectedRoute
+              // with authRedirect:
+              // - if logged in, redirects to "/myfavorites"
+              // - else shows RegisterPage at "/registration"
+              exact
+              path="/registration"
+              authRedirect="/myfavorites"
+            >
+              <RegisterPage />
+            </ProtectedRoute>
+
+            {/******************** My Routes *********************/}
+            <ProtectedRoute
+              exact
+              path="/mycomments"
+            >
+                <MyCommentsList />
+            </ProtectedRoute>  
+            
+            {/* Route using params to get brewery details */}
+            <ProtectedRoute
+              path="/details/:id"
+              children={<BreweryDetails />}
+            >
+            </ProtectedRoute>
+            
+            {/* /search is a search view where users search for breweries. After entering a search string, theyre */}
+            {/* sent to /search/:query to hold whatever their search query was as params */}
+            <ProtectedRoute
+              exact
+              path="/search"
+            >
+              <SearchBreweries />
+            </ProtectedRoute>
+            <ProtectedRoute
+              path="/search/:query"
+              children={<SearchBreweries />}
+            >
+            </ProtectedRoute>
+            
+            {/* Route that shows the ten breweries closest to user's location */}
+            <ProtectedRoute
+              exact
+              path="/closest"
+            >
+              <FindTenClosest />
+            </ProtectedRoute>
+
+            {/* Route that generates a random brewery and brings user to the details view for it */}
+            <ProtectedRoute
+              path="/random"
+            >
+              <RandomBrewery />
+            </ProtectedRoute>
+
+            {/* Route to a Google Map component that isn't ready for production*/}
+            {/* <ProtectedRoute
+              path="/location"
+            >
+              <CreateGoogleMap isLoaded={isLoaded}/>
+            </ProtectedRoute> */}
+
+            {/* If none of the other routes matched, we will show a 404. */}
+            <Route>
+              <div className="App-main-position">
+                <Typography variant="h2" component="h2" align="center">
+                  404:
+                </Typography>
+                <Typography variant="h3" component="h3" align="center">
+                  Page Not Found
+                </Typography>
+              </div>
+            </Route>
+          </Switch>
+
+          {/* Footer shown on all views */}
+          <Footer />
+        </div>
       </MuiThemeProvider>
     </Router>
   );

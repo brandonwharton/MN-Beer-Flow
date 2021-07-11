@@ -1,19 +1,13 @@
 // hooks
 import { useHistory } from 'react-router';
-// components
-import MyRatings from '../MyRatings/MyRatings';
 // Material-UI components
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent'
-import CardActionArea from '@material-ui/core/CardActionArea'
 
 import breweryCardTheme from '../../material-ui-themes/brewery.card.theme';
-// will likely need card actions for ratings
-
 
 // Material-UI styles
 const useStyles = breweryCardTheme;
@@ -22,7 +16,6 @@ const useStyles = breweryCardTheme;
 function MyFavoritesItem({brewery}) {
     // use the correct Material-UI styles
     const classes = useStyles();
-    // bring in useHistory for navigation
     const history = useHistory();
 
     // click handler for somebody clicking on a brewery card, sends them to the details page for that brewery
@@ -41,7 +34,6 @@ function MyFavoritesItem({brewery}) {
                 className={classes.media}
                 image={brewery.image_url}
             />
-            {/* evaluate needs below this */}
             <CardContent>
                 <Typography variant="h6" component="h6">
                     {brewery.city}

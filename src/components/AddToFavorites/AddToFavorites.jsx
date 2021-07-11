@@ -1,17 +1,14 @@
 // hooks
 import { useDispatch } from 'react-redux';
-
 import './AddToFavorites.css';
 // Material-UI components
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router';
 
 
-// component for an AddToFavorites button on the BreweryDetails view that adds the current brewery to user's 
-// favorites list
+// component for an AddToFavorites button on the BreweryDetails view that adds the current brewery to user's favorites list
 function AddToFavorites({breweryId}) {
     const dispatch = useDispatch();
-    const history = useHistory();
 
     // click handler for Add to Favorites button
     const handleClick = () => {

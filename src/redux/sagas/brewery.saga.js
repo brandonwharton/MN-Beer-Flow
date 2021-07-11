@@ -24,7 +24,6 @@ function* fetchSingleBrewery (action) {
         const breweryInfo = yield axios.get(`/api/brewery/${breweryId}`);
         // send brewery data to brewery reducer
         yield put({ type: 'SET_BREWERY_DATA', payload: breweryInfo.data });
-
     } catch (error) {
         console.error('Error with fetchSingleBrewery in brewerySaga', error);
     }
@@ -42,7 +41,7 @@ function* fetchSearchResults (action) {
                 return brewery;
             }
         })
-        // replace all null values with 0
+        // replace all null values for average ratings with 0s
         searchedBreweries.forEach(brewery => {
             if (brewery.average_rating === null) {
                 return brewery.average_rating = 0;
@@ -85,6 +84,7 @@ function* fetchRandomFavoriteBrewery (action) {
         }
 
         // action.payload contains a callback function that takes in a brewery id and navigates to the BreweryDetails page for that id
+        // run the function and pass it the id of the randomly chosen brewery
         yield action.payload.navToRandom(randomBrewery.id);
     } catch (error) {
         console.error('Error with fetchRandomFavoriteBrewery in brewerySaga', error);
@@ -121,6 +121,7 @@ function* fetchAnyRandomBrewery (action) {
         }
 
         // action.payload contains a callback function that takes in a brewery id and navigates to the BreweryDetails page for that id
+        // run the function and pass it the id of the randomly chosen brewery
         yield action.payload.navToRandom(randomBrewery.id);
     } catch (error) {
         console.error('Error with fetchAnyRandomBrewery in brewerySaga', error);
@@ -128,6 +129,7 @@ function* fetchAnyRandomBrewery (action) {
 }
 
 
+// worker Saga: makes a get request for every brewery in the database to be parsed and filtered elsewhere
 function* fetchAllBreweries () {
     try {
         const allBreweries = yield axios.get('/api/brewery');
@@ -138,7 +140,7 @@ function* fetchAllBreweries () {
 }
 
 
-
+// watcher Saga: looks for dispatch requests for brewery data
 function* brewerySaga () {
     // request from MyFavoritesList to get all breweries on the current user's list of favorites
     yield takeLatest('FETCH_FAVORITE_BREWERIES', fetchUserFavorites);
@@ -152,9 +154,6 @@ function* brewerySaga () {
     yield takeLatest('FETCH_ANY_RANDOM_BREWERY', fetchAnyRandomBrewery)
     // fetch all breweries
     yield takeLatest('FETCH_ALL_BREWERIES', fetchAllBreweries);
-
-    // request from FindFiveClosest to find the five closest breweries to the user's location
-    // yield takeLatest('FETCH_FIVE_CLOSEST_BREWERIES', fetchFiveClosest);
 }
 
 export default brewerySaga;

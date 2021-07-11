@@ -2,14 +2,13 @@ const express = require('express');
 const {
   rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
-const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
-const userStrategy = require('../strategies/user.strategy');
-
 const router = express.Router();
+
 
 // handles GET requests for a user's ratings and is_favorite data for a specific brewery
 router.get('/:id', rejectUnauthenticated, (req, res) => {
+
     // sanitized SQL string to get favorites and ratings data for the current user for a specified brewery
     // no results will come back if the brewery isn't a favorite AND the user hasn't rated the brewery yet
     // one result will come back if the user has marked the brewery as a favorite, if they've rated the brewery,
@@ -29,10 +28,10 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
         })
 });
 
-// handles GET requests to get any ratings data for a brewery in order to calculate an average rating
+
+// handles GET requests to get any existing ratings data for a brewery in order to calculate an average rating
 router.get('/average/:id', rejectUnauthenticated, (req, res) => {
-    console.log('got to average GET', req.params.id);
-    
+
     // sanitized SQL string to get all ratings data associated with a single brewery if any exists
     // no results will come back if the brewery isn't a marked as a favorite or rated by anybody yet
     // if any users have marked a brewery as one of their favorites or rated that brewery it will send back one result
@@ -51,7 +50,6 @@ router.get('/average/:id', rejectUnauthenticated, (req, res) => {
             console.log('ERROR: GET average ratings for a single brewery', error)
         })
 });
-
 
 
 // handles POST requests to add a brewery to a user's list of favorites
@@ -78,6 +76,7 @@ router.post('/favorite', rejectUnauthenticated, (req, res) => {
         })
 });
 
+
 // handles POST requests to create or update a user rating of a brewery
 router.post('/', rejectUnauthenticated, (req, res) => {
     // sanitized SQL string to UPSERT a user's rating of a brewery. Since user_brewery has a unique constraint on pairs
@@ -91,7 +90,6 @@ router.post('/', rejectUnauthenticated, (req, res) => {
                        DO UPDATE SET "rating" = $3;`;
     // save values to add, using req.user to find the currently logged in user id
     const values = [req.user.id, req.body.breweryId, req.body.newRating];
-
     // POST request to DB
     pool.query(queryText, values)
         .then(result => {
@@ -102,5 +100,6 @@ router.post('/', rejectUnauthenticated, (req, res) => {
             res.sendStatus(500);
         })
 });
+
 
 module.exports = router;

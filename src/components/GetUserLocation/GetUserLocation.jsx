@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 
-// reusable function that uses geolocation to get the user's current location
+// reusable function component that uses geolocation to get the user's current location
 // takes a few seconds to get data back
 function GetUserLocation() {
     const dispatch = useDispatch();
@@ -13,7 +13,7 @@ function GetUserLocation() {
         getUserCoordinates();
     }, [])
 
-    // uses geolocation to get the user's current geographical location. 
+    // uses geolocation API to get the user's current geographical location. 
     const getUserCoordinates = () => {
         // get geographical coordinates
         navigator.geolocation.getCurrentPosition(position => {

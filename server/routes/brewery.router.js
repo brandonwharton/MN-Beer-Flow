@@ -2,11 +2,9 @@ const express = require('express');
 const {
   rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
-const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
-const userStrategy = require('../strategies/user.strategy');
-
 const router = express.Router();
+
 
 // Handles GET requests to GET all breweries marked as a user's favorites for the MyFavoritesList component
 router.get('/user', rejectUnauthenticated, (req, res) => {
@@ -51,7 +49,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 });
 
 
-// Handles GET requests for all breweries in DB and sends them back to be filtered with a search query
+// Handles GET requests for all breweries in DB and sends them back to be filtered with a search or distance query
 router.get('/', rejectUnauthenticated, (req, res) => {
     // SQL string to GET all breweries from the brewery table as well as their average rating. If no rating has been provided, average_rating will be null
     const queryText = `SELECT "brewery".*, AVG("user_brewery".rating) AS "average_rating" FROM "brewery"
@@ -71,13 +69,14 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 });
 
 
+// PUT request to adjust latitude and longitude coordinates for a brewery in the database. Requests currently come from the 
+// location Saga, which gets data from Google's Geocoding API and sends them to this route
 router.put('/coordinates/:id', rejectUnauthenticated, (req, res) => {
     console.log('Got to coordinates PUT with data:', req.body, req.params.id);
     // sanitized SQL string to update brewery data with latitude and longitude values
     const queryText = `UPDATE "brewery" SET "latitude" = $1, "longitude" = $2 WHERE "brewery".id = $3;`
     const values = [req.body.lat, req.body.lng, req.params.id];
-    console.log('values', values);
-    
+
     // UPDATE request to DB
     pool.query(queryText, values)
         .then(result => {
