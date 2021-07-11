@@ -80,6 +80,12 @@ function MyFavoritesList() {
         setSearchInput('');
     }
 
+    // click handler for the clear search button
+    const handleClear = () => {
+        // resets the searchedArray to display all favorites
+        setSearchedArray([]);
+    }
+
 
     return (
         <div className="App-main-position">
@@ -158,6 +164,17 @@ function MyFavoritesList() {
                             }
                         </Grid>
                     </Grid>
+                    {searchedArray.length > 0 && 
+                    <div className="center-this container">
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            onClick={handleClear}
+                        >
+                        Clear Search
+                    </Button>
+                    </div>
+                    }
                 </section>
                 :
                 // Display the NewUserView component if no favorites have been added
