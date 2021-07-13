@@ -29,7 +29,7 @@ CREATE TABLE "user_brewery" (
 	"is_favorite" BOOL NOT NULL DEFAULT 'FALSE'
 );
 
--- make user_brewery pairs unique
+-- make user_brewery pairs unique to allow UPSERT statements for ratings and favorites data to work properly
 ALTER TABLE "user_brewery"
 	ADD CONSTRAINT user_brewery_uq
 	UNIQUE ("user_id", "brewery_id");

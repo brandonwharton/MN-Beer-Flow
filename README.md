@@ -3,14 +3,22 @@
 
 ## Description
 
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
+Duration: Two-Week Sprint
 
-We **STRONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
+This project was designed and scoped as a two-week passion project to create a full-stack CRUD application to help a user maintain a list of their
+favorite craft breweries in Minnesota. I implemented a system that allowed users to create a list of their favorites from among a database of breweries
+with the capacity to easily rate them and update their ratings. User's can also leave comments visible by anyone on the details pages for each of the
+breweries. 
 
-## Use the Template for This Repository (Don't Clone)
+I used the Geolocation API to get and store the user's current location to assist in distance-based brewery finding. With the help of the Google Maps
+Platform Geocoding API, along with the Spherical Geometry library and the Distance Matrix API, user's can populate a list of the ten breweries closest
+to their current location. There is also a feature that allows users to randomly choose a brewery from among their list of favorites, or from the entire
+database, in order to assist users in deciding where to go or help in finding someplace new. The randomizer has a distance radius limit that lets a user
+choose a maximum distance from their current location and limit random results to within that distance.
 
-- Don't Fork or Clone. Instead, click the `Use this Template` button, and make a copy to your personal account.
+This app was designed to be mobile-first and is best viewed on a mobile device. 
 
+## Screen Shots
 
 ## Prerequisites
 
