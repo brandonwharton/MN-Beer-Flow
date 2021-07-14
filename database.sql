@@ -3,6 +3,9 @@
 -- You must use double quotes in every query that user is in:
 -- ex. SELECT * FROM "user";
 -- Otherwise you will have errors!
+
+-- database name: "mn_beer_flow"
+
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
     "username" VARCHAR (80) UNIQUE NOT NULL,
@@ -29,7 +32,7 @@ CREATE TABLE "user_brewery" (
 	"is_favorite" BOOL NOT NULL DEFAULT 'FALSE'
 );
 
--- make user_brewery pairs unique
+-- make user_brewery pairs unique to allow UPSERT statements for ratings and favorites data to work properly
 ALTER TABLE "user_brewery"
 	ADD CONSTRAINT user_brewery_uq
 	UNIQUE ("user_id", "brewery_id");
