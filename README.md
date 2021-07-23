@@ -16,7 +16,7 @@ to their current location. There is also a feature that allows users to randomly
 database, in order to assist users in deciding where to go or help in finding someplace new. The randomizer has a distance radius limit that lets a user
 choose a maximum distance from their current location and limit random results to within that distance.
 
-This app was designed to be mobile-first and is best viewed on a mobile device. You can view this project on heroku [here](https://mn-beer-flow.herokuapp.com/). It may take a moment to load.
+This app was designed to be mobile-first and is best viewed on a mobile device. You can view this project on Heroku [here](https://mn-beer-flow.herokuapp.com/). It may take a moment to load.
 
 ## Screen Shots
 
