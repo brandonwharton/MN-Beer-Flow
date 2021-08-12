@@ -105,3 +105,7 @@ Stock photos provided in the database were found at [https://www.pexels.com/](ht
 
 Thanks to [Prime Digital Academy](https://www.primeacademy.io/) for the wealth of knowledge shared to get this project running, to my instructor
 Dane Smith for the expert bugfixes, and to each member of my cohort who helped with ideas, troubleshooting, and support along the way.
+
+## Support
+
+If you have suggestions or issues, feel free to email me at [whartonbm@gmail.com](mailto:whartonbm@gmail.com). 
