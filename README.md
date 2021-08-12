@@ -3,7 +3,7 @@
 
 ## Description
 
-Duration: Two-Week Sprint
+_Duration: Two-Week Sprint_
 
 This project was designed and scoped as a two-week passion project to create a full-stack CRUD application to help a user maintain a list of their
 favorite craft breweries in Minnesota. I implemented a system that allowed users to create a list of their favorites from among a database of breweries
@@ -55,7 +55,7 @@ tables are provided by users interacting with the app.
   ```
   REACT_APP_MAPS_API_KEY=YOUR_GOOGLE_MAPS_PLATFORM_API_KEY
   ```
-  While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
+  While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning when you start your server.
 
   Replace YOUR_GOOGLE_MAPS_PLATFORM_API_KEY with an actual API key provided by [Google](https://developers.google.com/maps/gmp-get-started).
 - Start postgres if not running already by using `brew services start postgresql`
@@ -63,6 +63,28 @@ tables are provided by users interacting with the app.
 - Run `npm run server`
 - Run `npm run client`
 - Navigate to `localhost:3000` in a browser. App view is optimized in Google Chrome by toggling the device toolbar and selecting iPhone 6/7/8 Plus.
+
+## Usage
+
+1. After registration and login, the loading page is at /myfavorites which contains a list of the breweries that have been marked as your favorite. 
+   there's a search bar that lets you find specific favorites, you can click on any of the brewery cards to visit the details view for that brewery,
+   and you can update any of your ratings for the breweries you've marked as your favorite right from here.
+2. The "Find A Brewery" button in the navbar brings you to a search menu that allows you to search for any brewery in the database. The Look It Up button
+   displays a list of search results based on what you've entered in the search field. After searching, you can click on any of these cards as well to visit
+   the details view for the brewery shown. The See What's Close button here does the same thing as the See What's Close option in the nav menu.
+3. The See What's Close feature shows the ten breweries that are closest to your current location. They're displayed from closest to farthest, and like
+   other display cards, can be clicked on to navigate to the details view.
+4. The details view shows a button prompting you to add a brewery to your list of favorites if not already there, or displays a message confirming it's 
+   a favorite. There's a display that shows how far away the brewery is from the user, and a display of your rating and the average rating for the brewery.
+   You can rate a brewery from here whether or not it's a favorite of yours. There is a comments section for that specific brewery at the bottom of the 
+   details view. You can also comment on breweries whether or not you've made them a favorite. 
+5. The Go With The Flow option in the nav menu takes you to a view that lets you select a brewery at and directs you to the details page for the brewery
+   chosen. There's a distance limit that lets you keep your random result within a certain distance radius from your location. The Be Brave button selects
+   your random brewery from everything in the database within your specified distance radius. The From Favorites button selects a random brewery within 
+   the distance limit from among your favorites.
+6. The My Comments option in the nav menu brings you to a view of all of the comments you've left for any brewery. There's a delete button for each of
+   them if you'd like to remove the comment you've left. 
+7. The About option in the nav menu provides a small amount of in-app instruction for how the app functions.
 
 ## Built With
 
